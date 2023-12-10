@@ -13,9 +13,10 @@ import {
 import { Tablet } from './components/Tablet';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
-import { Router, Routes, Route } from 'react-router-dom';
-import { CommunitiesList } from './sections/CommunitiesList';
+import {  Routes, Route } from 'react-router-dom';
+// import { CommunitiesList } from './sections/CommunitiesList';
 import { TaskList } from './components/TaskList';
+import { Communities } from './pages/communities';
 
 function App() {
   return (
@@ -25,8 +26,9 @@ function App() {
           <Container  maxW='container.xl'>
             <Tablet />
             <Routes>
-              <Route path="/communities" element={<CommunitiesList />} />
-              <Route path="/tasks" element={<TaskList />} />
+              <Route path="/communities" element={<Communities />} />
+              <Route path="/join" element={<Communities />} />
+              <Route path="/manage" element={<TaskList />} />
               <Route />
             </Routes>
           </Container>

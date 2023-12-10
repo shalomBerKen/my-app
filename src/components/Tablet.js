@@ -1,6 +1,6 @@
 import { Tab, Tabs, TabPanel, TabPanels, TabList } from '@chakra-ui/react';
 // import { Routes, Route, Link } from "react-router-dom";
-import {Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 // import {TaskList} from "./TaskList"
 // import { CommunitiesList } from '../sections/CommunitiesList';
 export function Tablet(props) {
@@ -8,26 +8,26 @@ export function Tablet(props) {
     <>
       <Tabs variant="enclosed">
         <TabList>
-        <Link to={"/communities"}>
-          <Tab>My Communities</Tab>
+          <Link to={'/communities'}>
+            <Tab>All Communities</Tab>
           </Link>
-          <Link to={"/tasks"}>
-          <Tab>Search For Tasks</Tab>
-            </Link>
-          <Tab>My Tasks</Tab>
+          <Link to={'/join'}>
+            <Tab>Join Community</Tab>
+          </Link>
+          <Link to={'/manage'}>
+            <Tab>Manage Community</Tab>
+          </Link>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <p>my communities!</p>
+            <p>all communities!</p>
             {/* <CommunitiesList/> */}
           </TabPanel>
           <TabPanel>
-            <p>Search for tasks!</p>
+            <p>join community!</p>
           </TabPanel>
           <TabPanel>
-            <a href='/tasks'>
-            <p>my tasks!</p>
-            </a>
+            <p>manage community!</p>
           </TabPanel>
         </TabPanels>
       </Tabs>
