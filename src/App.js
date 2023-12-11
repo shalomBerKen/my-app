@@ -17,6 +17,8 @@ import {  Routes, Route } from 'react-router-dom';
 // import { CommunitiesList } from './sections/CommunitiesList';
 import { TaskList } from './components/TaskList';
 import { Communities } from './pages/communities';
+import { Home } from './pages/home';
+import LogIn from './pages/login';
 
 function App() {
   return (
@@ -24,14 +26,15 @@ function App() {
       <Box textAlign="center" fontSize="xl">
         <Grid minH="100vh" p={3}>
           <Container  maxW='container.xl'>
-            <Tablet />
+            {/* <Tablet /> */}
             <Routes>
-              <Route path="/communities" element={<Communities />} />
+              <Route path="/" element={<Home />} />
               <Route path="/join" element={<Communities />} />
               <Route path="/manage" element={<TaskList />} />
               <Route />
             </Routes>
           </Container>
+          {/* <Home/> */}
           <VStack spacing={8}>
             <Logo h="40vmin" pointerEvents="none" />
             <Text>
