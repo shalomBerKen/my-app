@@ -19,20 +19,23 @@ import { TaskList } from './components/TaskList';
 import { Communities } from './pages/communities';
 import { Home } from './pages/home';
 import LogIn from './pages/login';
+import SideMenu from './components/SideMenu';
+import DrawerBar from './components/Drawer';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <Container  maxW='container.xl'>
-            {/* <Tablet /> */}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/join" element={<Communities />} />
               <Route path="/manage" element={<TaskList />} />
               <Route />
             </Routes>
+            {/* <DrawerBar/> */}
+      <Box textAlign="center" fontSize="xl">
+        <Grid minH="100vh" p={3}>
+          <Container  maxW='container.xl'>
+            <Tablet />
           </Container>
           {/* <Home/> */}
           <VStack spacing={8}>

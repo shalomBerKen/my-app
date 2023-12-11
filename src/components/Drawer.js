@@ -14,6 +14,8 @@ import React from 'react';
 import { Button, Input, useDisclosure } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import SideMenu from './SideMenu';
+import { Home } from '../pages/home';
+import { Link, Outlet } from 'react-router-dom';
 
 export default function DrawerBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -21,11 +23,11 @@ export default function DrawerBar() {
 
   return (
     <>
-    <Container alignSelf={'end'}>
-      <Button boxSize={12} ref={btnRef} colorScheme="teal" onClick={onOpen}>
+    {/* <Link to={<Home/>}> */}
+      <Button boxSize={12} ref={btnRef} colorScheme="teal" onClick={onOpen} m={6}>
         <HamburgerIcon boxSize={6} />
       </Button>
-      </Container>
+      {/* </Link> */}
       <Drawer
         isOpen={isOpen}
         placement="left"
