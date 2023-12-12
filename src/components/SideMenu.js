@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { Button, ButtonGroup, Stack } from '@chakra-ui/react';
 import {EditIcon, CheckIcon} from'@chakra-ui/icons'
+import { Link } from 'react-router-dom';
 
 export default function SideMenu() {
   return (
@@ -52,9 +53,11 @@ export default function SideMenu() {
           <AccordionPanel pb={4}>
           <Stack direction="row" spacing={4} align="left">
               <Wrap>
+                <Link to={'comid'}>
                 <Button colorScheme="teal" variant="ghost">
                 The workers from our building
                 </Button>
+                </Link>
                 <br />
                 <Button colorScheme="teal" variant="ghost">
                 {'My tasks'}

@@ -5,21 +5,32 @@ import {
     FormHelperText,
     Input,
     Button,
+    Container,
   } from '@chakra-ui/react'
   import { Field, Form, Formik} from 'formik'
+import { Link, Navigate } from 'react-router-dom'
 
 export default function LogIn () {
     function validateName(value) {
       let error
       if (!value) {
         error = 'Name is required'
-      } else if (value.toLowerCase() !== 'naruto') {
+      } else if (value.toLowerCase() !== 'sh') {
         error = "Jeez! You're not a fan 😱"
       }
       return error
     }
+    function validatePassword(value) {
+        let error
+        if (!value) {
+          error = 'Password is required'
+        } else if (value.toLowerCase() !== '770') {
+          error = "Jeez! You're not a fan 😱"
+        }
+        return error
+      }
   
-    return (
+    return (<Container textAlign={'center'}mt={48}>
       <Formik
         initialValues={{ name: 'Sasuke' }}
         onSubmit={(values, actions) => {
@@ -40,6 +51,15 @@ export default function LogIn () {
                 </FormControl>
               )}
             </Field>
+            <Field name='password' validate={validatePassword}>
+              {({ field, form }) => (
+                <FormControl isInvalid={form.errors.password && form.touched.password}>
+                  <FormLabel>Password</FormLabel>
+                  <Input {...field} placeholder='password' />
+                  <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                </FormControl>
+              )}
+            </Field>
             <Button
               mt={4}
               colorScheme='teal'
@@ -51,5 +71,6 @@ export default function LogIn () {
           </Form>
         )}
       </Formik>
+      </Container>
     )
   }

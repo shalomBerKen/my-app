@@ -23,11 +23,9 @@ export default function DrawerBar() {
 
   return (
     <>
-    {/* <Link to={<Home/>}> */}
       <Button boxSize={12} ref={btnRef} colorScheme="teal" onClick={onOpen} m={6}>
         <HamburgerIcon boxSize={6} />
       </Button>
-      {/* </Link> */}
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -38,9 +36,11 @@ export default function DrawerBar() {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>
-            <Button colorScheme="teal" variant="ghost" >
+            <Link to={"/"}>
+            <Button colorScheme="teal" variant="ghost" onClick={onClose}>
               Home
             </Button>
+            </Link>
           </DrawerHeader>
 
           <DrawerBody>

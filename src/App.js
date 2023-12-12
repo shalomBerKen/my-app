@@ -19,26 +19,28 @@ import { TaskList } from './components/TaskList';
 import { Communities } from './pages/communities';
 import { Home } from './pages/home';
 import LogIn from './pages/login';
-import SideMenu from './components/SideMenu';
-import DrawerBar from './components/Drawer';
+import ComPage from './pages/ComManage';
+import ComPartner from './pages/ComPartner';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/join" element={<Communities />} />
-              <Route path="/manage" element={<TaskList />} />
+              <Route path="/" element={<Home />} > 
+                <Route path="join" element={<Communities />} />
+                <Route path="comid" element={<ComPartner />} />
+                <Route path="manage" element={<TaskList />} />
+              </Route>
+              <Route path="/login" element={<LogIn />} />
               <Route />
             </Routes>
-            {/* <DrawerBar/> */}
-      <Box textAlign="center" fontSize="xl">
+      <Box  fontSize="xl">
         <Grid minH="100vh" p={3}>
           <Container  maxW='container.xl'>
-            <Tablet />
+            {/* <Tablet /> */}
           </Container>
           {/* <Home/> */}
-          <VStack spacing={8}>
+          {/* <VStack spacing={8}>
             <Logo h="40vmin" pointerEvents="none" />
             <Text>
               Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
@@ -52,7 +54,7 @@ function App() {
             >
               Learn Chakra
             </Link>
-          </VStack>
+          </VStack> */}
           <ColorModeSwitcher justifySelf="flex-end" />
         </Grid>
       </Box>
