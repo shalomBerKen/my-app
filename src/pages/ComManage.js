@@ -17,7 +17,6 @@ import {
   MenuList,
   MenuOptionGroup,
   MenuItemOption,
-  MenuDivider
 } from '@chakra-ui/react';
 import { ChevronDownIcon, LockIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
@@ -78,7 +77,7 @@ export default function ComManage(props) {
                     >
                       <Menu closeOnSelect={false}>
                         <MenuButton as={Button} colorScheme="blue">
-                          MenuItem
+                        waiting
                         </MenuButton>
                         <MenuList minWidth="240px">
                           <MenuOptionGroup title="Country" type="checkbox">
@@ -97,10 +96,12 @@ export default function ComManage(props) {
                           </MenuOptionGroup>
                         </MenuList>
                       </Menu>
+                      <Box textAlign={'center'}>
                       <Heading size="xs" textTransform="uppercase">
                         {task.heder}
                       </Heading>
                       <Text fontSize="sm">{task.text}</Text>
+                      </Box>
                     <Button
                       colorScheme="teal"
                       variant="outline"
