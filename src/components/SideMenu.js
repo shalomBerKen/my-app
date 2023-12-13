@@ -27,10 +27,12 @@ export default function SideMenu() {
           <AccordionPanel pb={4}>
             <Stack direction="row" spacing={4} align="left">
               <Wrap>
+              <Link to={'coma'}>
 
                 <Button colorScheme="teal" variant="ghost">
                   Friends in the neighborhood
                 </Button>
+                </Link>
                 <br />
                 <Button colorScheme="teal" variant="ghost">
                 {'Checking tasks'}
@@ -53,7 +55,7 @@ export default function SideMenu() {
           <AccordionPanel pb={4}>
           <Stack direction="row" spacing={4} align="left">
               <Wrap>
-                <Link to={'comid'}>
+                <Link to={'comp'}>
                 <Button colorScheme="teal" variant="ghost">
                 The workers from our building
                 </Button>

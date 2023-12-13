@@ -21,6 +21,7 @@ import { Home } from './pages/home';
 import LogIn from './pages/login';
 import ComPage from './pages/ComManage';
 import ComPartner from './pages/ComPartner';
+import ComManage from './pages/ComManage';
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} > 
                 <Route path="join" element={<Communities />} />
-                <Route path="comid" element={<ComPartner />} />
+                <Route path="comp" element={<ComPartner />} />
+                <Route path="coma" element={<ComManage />} />
                 <Route path="manage" element={<TaskList />} />
               </Route>
               <Route path="/login" element={<LogIn />} />

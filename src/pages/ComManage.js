@@ -11,14 +11,52 @@ import {
   Checkbox,
   ButtonGroup,
   Button,
-  Menu, 
+  Menu,
   MenuButton,
-  MenuItem, 
-  MenuList
+  MenuItem,
+  MenuList,
+  MenuOptionGroup,
+  MenuItemOption,
+  MenuDivider
 } from '@chakra-ui/react';
-import {ChevronDownIcon} from '@chakra-ui/icons'
+import { ChevronDownIcon, LockIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
+const tasks = [
+  {
+    heder: 'Summary',
+    text: 'View a summary of all your clients over the last month.',
+    done: true,
+    disabled: false,
+    waiting: [
+      { name: 'Moshe', confirmed: true },
+      { name: 'David', confirmed: true },
+      { name: 'Baruch', confirmed: true },
+      { name: 'Shlomo', confirmed: true },
+    ],
+  },
+  {
+    heder: 'Overview',
+    text: 'Check out the overview of your clients.',
+    done: true,
+    disabled: true,
+    waiting: [
+      { name: 'Moshe', confirmed: true },
+      { name: 'David', confirmed: true },
+      { name: 'Baruch', confirmed: true },
+      { name: 'Shlomo', confirmed: true },
+    ],
+  },
+  {
+    heder: 'Analysis',
+    text: 'See a detailed analysis of all your business clients.',
+    done: false,
+    disabled: false,
+    waiting: [],
+  },
+];
 
 export default function ComManage(props) {
+  const [data, setData] = useState(tasks.map(task => ({ ...task })));
   return (
     <>
       <Container maxW="container.md">
@@ -31,29 +69,52 @@ export default function ComManage(props) {
             <Stack divider={<StackDivider />} spacing="4">
               {data.map((task, index) => {
                 return (
-                  <Box
-                    p={'auto'}
-                    display={'flex'}
-                    justifyContent={'space-between'}
-                    alignItems={'center'}
-                  >
-                    <Heading size="xs" textTransform="uppercase">
-                      {task.heder}
-                    </Heading>
-                    <Text fontSize="sm">{task.text}</Text>
-                    <Menu>
-                      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                        Actions
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem>Download</MenuItem>
-                        <MenuItem>Create a Copy</MenuItem>
-                        <MenuItem>Mark as Draft</MenuItem>
-                        <MenuItem>Delete</MenuItem>
-                        <MenuItem>Attend a Workshop</MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Box>
+                  <>
+                    <Box
+                      p={'auto'}
+                      display={'flex'}
+                      justifyContent={'space-between'}
+                      alignItems={'center'}
+                    >
+                      <Menu closeOnSelect={false}>
+                        <MenuButton as={Button} colorScheme="blue">
+                          MenuItem
+                        </MenuButton>
+                        <MenuList minWidth="240px">
+                          <MenuOptionGroup title="Country" type="checkbox">
+                          {task.waiting[0] ? (
+                            task.waiting.map(user => {
+                              return (
+                                <MenuItemOption placement='left' value={user.name}>
+                                  {user.name}
+                                </MenuItemOption>
+                              );
+                            })
+                          ) : (
+                            <MenuItem>There are still no one waiting</MenuItem>
+                          )}
+
+                          </MenuOptionGroup>
+                        </MenuList>
+                      </Menu>
+                      <Heading size="xs" textTransform="uppercase">
+                        {task.heder}
+                      </Heading>
+                      <Text fontSize="sm">{task.text}</Text>
+                    <Button
+                      colorScheme="teal"
+                      variant="outline"
+                      w={6}
+
+                      onClick={() => {
+                        tasks[index].disabled = !tasks[index].disabled;
+                        setData(tasks.map(task => ({ ...task })));
+                      }}
+                    >
+                      {task.disabled ? <LockIcon /> : 'open'}
+                    </Button>
+                    </Box>
+                  </>
                 );
               })}
               <ButtonGroup variant="outline" spacing="6" ml={6}>
@@ -67,24 +128,3 @@ export default function ComManage(props) {
     </>
   );
 }
-
-const data = [
-  {
-    heder: 'Summary',
-    text: 'View a summary of all your clients over the last month.',
-    done: true,
-    disabled: false,
-  },
-  {
-    heder: 'Overview',
-    text: 'Check out the overview of your clients.',
-    done: true,
-    disabled: true,
-  },
-  {
-    heder: 'Analysis',
-    text: 'See a detailed analysis of all your business clients.',
-    done: false,
-    disabled: false,
-  },
-];
