@@ -80,11 +80,11 @@ export default function ComManage(props) {
                         waiting
                         </MenuButton>
                         <MenuList minWidth="240px">
-                          <MenuOptionGroup title="Country" type="checkbox">
+                          <MenuOptionGroup title="Country" type="checkbox"  >
                           {task.waiting[0] ? (
                             task.waiting.map(user => {
                               return (
-                                <MenuItemOption placement='left' value={user.name}>
+                                <MenuItemOption placement='left' value={user.name} isDisabled={task.disabled}>
                                   {user.name}
                                 </MenuItemOption>
                               );
