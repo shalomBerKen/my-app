@@ -18,7 +18,7 @@ import {
   MenuOptionGroup,
   MenuItemOption,
 } from '@chakra-ui/react';
-import { ChevronDownIcon, LockIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 const tasks = [
   {
@@ -80,7 +80,7 @@ export default function ComManage(props) {
                         waiting
                         </MenuButton>
                         <MenuList minWidth="240px">
-                          <MenuOptionGroup title="Country" type="checkbox"  >
+                          <MenuOptionGroup title="volunteers" type="checkbox"  >
                           {task.waiting[0] ? (
                             task.waiting.map(user => {
                               return (
@@ -103,16 +103,16 @@ export default function ComManage(props) {
                       <Text fontSize="sm">{task.text}</Text>
                       </Box>
                     <Button
-                      colorScheme="teal"
+                      colorScheme={task.disabled ? 'red': "teal"}
                       variant="outline"
                       w={6}
-
+                      // colorScheme='red'
                       onClick={() => {
                         tasks[index].disabled = !tasks[index].disabled;
                         setData(tasks.map(task => ({ ...task })));
                       }}
                     >
-                      {task.disabled ? <LockIcon /> : 'open'}
+                      {task.disabled ? <LockIcon /> : <UnlockIcon/>}
                     </Button>
                     </Box>
                   </>
