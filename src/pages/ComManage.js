@@ -20,41 +20,42 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
-const tasks = [
-  {
-    heder: 'Summary',
-    text: 'View a summary of all your clients over the last month.',
-    done: true,
-    disabled: false,
-    waiting: [
-      { name: 'Moshe', confirmed: true },
-      { name: 'David', confirmed: true },
-      { name: 'Baruch', confirmed: true },
-      { name: 'Shlomo', confirmed: true },
-    ],
-  },
-  {
-    heder: 'Overview',
-    text: 'Check out the overview of your clients.',
-    done: true,
-    disabled: true,
-    waiting: [
-      { name: 'Moshe', confirmed: true },
-      { name: 'David', confirmed: true },
-      { name: 'Baruch', confirmed: true },
-      { name: 'Shlomo', confirmed: true },
-    ],
-  },
-  {
-    heder: 'Analysis',
-    text: 'See a detailed analysis of all your business clients.',
-    done: false,
-    disabled: false,
-    waiting: [],
-  },
-];
+// const tasks = [
+//   {
+//     heder: 'Summary',
+//     text: 'View a summary of all your clients over the last month.',
+//     done: true,
+//     disabled: false,
+//     waiting: [
+//       { name: 'Moshe', confirmed: true },
+//       { name: 'David', confirmed: true },
+//       { name: 'Baruch', confirmed: true },
+//       { name: 'Shlomo', confirmed: true },
+//     ],
+//   },
+//   {
+//     heder: 'Overview',
+//     text: 'Check out the overview of your clients.',
+//     done: true,
+//     disabled: true,
+//     waiting: [
+//       { name: 'Moshe', confirmed: true },
+//       { name: 'David', confirmed: true },
+//       { name: 'Baruch', confirmed: true },
+//       { name: 'Shlomo', confirmed: true },
+//     ],
+//   },
+//   {
+//     heder: 'Analysis',
+//     text: 'See a detailed analysis of all your business clients.',
+//     done: false,
+//     disabled: false,
+//     waiting: [],
+//   },
+// ];
 
 export default function ComManage(props) {
+  const tasks = props.missions.tasks;
   const [data, setData] = useState(tasks.map(task => ({ ...task })));
   return (
     <>

@@ -13,28 +13,30 @@ import {
     Button
   } from '@chakra-ui/react';
   import {useState} from 'react'
-  const tasks = [
-    {
-      heder: 'Summary',
-      text: 'View a summary of all your clients over the last month.',
-      done: true,
-      disabled: false,
-    },
-    {
-      heder: 'Overview',
-      text: 'Check out the overview of your clients.',
-      done: true,
-      disabled: true,
-    },
-    {
-      heder: 'Analysis',
-      text: 'See a detailed analysis of all your business clients.',
-      done: false,
-      disabled: false,
-    },
-  ];
+  // const tasks = [
+  //   {
+  //     heder: 'Summary',
+  //     text: 'View a summary of all your clients over the last month.',
+  //     done: true,
+  //     disabled: false,
+  //   },
+  //   {
+  //     heder: 'Overview',
+  //     text: 'Check out the overview of your clients.',
+  //     done: true,
+  //     disabled: true,
+  //   },
+  //   {
+  //     heder: 'Analysis',
+  //     text: 'See a detailed analysis of all your business clients.',
+  //     done: false,
+  //     disabled: false,
+  //   },
+  // ];
   
   export default function ComPartner(props) {
+    const tasks = props.missions.tasks;
+     
     const [data, setData] = useState(tasks.map((task)=>({...task})));
     return (
       <>

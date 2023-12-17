@@ -36,7 +36,7 @@ export default function DrawerBar() {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>
-            <Link to={"/"}>
+            <Link to={"/home"}>
             <Button colorScheme="teal" variant="ghost" onClick={onClose}>
               Home
             </Button>
