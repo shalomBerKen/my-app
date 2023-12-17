@@ -35,15 +35,17 @@ import {
   // ];
   
   export default function ComPartner(props) {
-    const tasks = props.missions.tasks;
+    const comName = props.userData.comName;
+    const tasks = props.userData.tasks;
      
     const [data, setData] = useState(tasks.map((task)=>({...task})));
     return (
       <>
         <Container maxW="container.md">
+
           <Card>
             <CardHeader>
-              <Heading size="md">Client Report</Heading>
+              <Heading size="md" textAlign={'center'}>{comName}</Heading>
             </CardHeader>
   
             <CardBody>

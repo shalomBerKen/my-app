@@ -14,24 +14,23 @@ import {
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 // import { Logo } from './Logo';
 import { Routes, Route } from 'react-router-dom';
-// import { CommunitiesList } from './sections/CommunitiesList';
 import { TaskList } from './components/TaskList';
 import { Communities } from './pages/communities';
 import { Home } from './pages/home';
 import LogIn from './pages/login';
-// import ComPage from './pages/ComManage';
 import ComPartner from './pages/ComPartner';
 import ComManage from './pages/ComManage';
 import Overview from './pages/Overview';
 
-let allData = {
+let userData = {
   userId: 2,
-  userName: 'Moshe Zuchmir',
+  userName: 'Moshe',
   password: '1234',
   communities: {
     manag: [
       {
         comName: 'Friends in the neighborhood',
+        description : 'View a summary of all your customers over the last month.',
         tasks: [
           {
             heder: 'Summary',
@@ -69,7 +68,8 @@ let allData = {
     ],
     partner: [
       {
-        comName: 'Friends in the neighborhood',
+        comName: 'The workers from our building',
+        description : 'View a summary of all your customers over the last month.',
         tasks: [
           {
             heder: 'Summary',
@@ -99,15 +99,15 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Routes>
-        <Route path="/" element={<Home />}>
-          <Route path="home" element={<Overview />} />
+        <Route path="/" element={<LogIn userData={userData} />} />
+        <Route element={<Home />}>
+          {/* <Route path="/"  element={<Overview userData={userData.communities}/>}/> */}
+          <Route path="home" element={<Overview userData={userData}/>} />
           <Route path="join" element={<Communities />} />
-          <Route path="comp" element={<ComPartner missions={allData.communities.partner[0]}/>} />
-          <Route path="coma" element={<ComManage missions={allData.communities.manag[0]}/>} />
+          <Route path="comp" element={<ComPartner userData={userData.communities.partner[0]}/>} />
+          <Route path="coma" element={<ComManage userData={userData.communities.manag[0]}/>} />
           <Route path="manage" element={<TaskList />} />
         </Route>
-        <Route path="/login" element={<LogIn />} />
-        <Route />
       </Routes>
       <Box fontSize="xl">
         <Grid minH="100vh" p={3}>
