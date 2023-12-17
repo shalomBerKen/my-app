@@ -12,7 +12,9 @@ import {
     ButtonGroup, 
     Button
   } from '@chakra-ui/react';
-  import {useState} from 'react'
+  import {useState, } from 'react'
+  import {useParams} from 'react-router'
+import ErrorPage from './404';
   // const tasks = [
   //   {
   //     heder: 'Summary',
@@ -35,10 +37,14 @@ import {
   // ];
   
   export default function ComPartner(props) {
-    const comName = props.userData.comName;
-    const tasks = props.userData.tasks;
-     
-    const [data, setData] = useState(tasks.map((task)=>({...task})));
+    const { id } = useParams();
+    const comName = props?.userData[id]?.comName;
+    const tasks = props?.userData[id]?.tasks;
+    
+    const [data, setData] = useState(tasks);
+    if (!props.userData[id]){
+      return <ErrorPage/>
+    }
     return (
       <>
         <Container maxW="container.md">

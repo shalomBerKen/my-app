@@ -7,7 +7,7 @@ import DrawerBar from '../components/Drawer';
 export function Home(props) {
   return (
     <>
-    <DrawerBar/>
+    <DrawerBar userData={props.userData}/>
     <Outlet/>
       {/* <Container maxW="container.xl">
         <Communities/> */}

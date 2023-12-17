@@ -17,7 +17,7 @@ import SideMenu from './SideMenu';
 import { Home } from '../pages/home';
 import { Link, Outlet } from 'react-router-dom';
 
-export default function DrawerBar() {
+export default function DrawerBar(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
@@ -42,18 +42,11 @@ export default function DrawerBar() {
             </Button>
             </Link>
           </DrawerHeader>
-
           <DrawerBody>
-            {/* <Input placeholder='Type here...' /> */}
-            <SideMenu />
-          </DrawerBody>
 
-          {/* <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter> */}
+            <SideMenu userData={props.userData}/>
+
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
