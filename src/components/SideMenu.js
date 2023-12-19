@@ -7,8 +7,8 @@ import {
   Box,
   Wrap,
 } from '@chakra-ui/react';
-import { Button, ButtonGroup, Stack } from '@chakra-ui/react';
-import { EditIcon, CheckIcon } from '@chakra-ui/icons';
+import { Button, Stack } from '@chakra-ui/react';
+// import { EditIcon, CheckIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 
 export default function SideMenu(props) {
@@ -30,7 +30,7 @@ export default function SideMenu(props) {
               <Wrap>
                 {manag.map((com, index) => {
                   return (
-                    <Link to={`coma/${index}`}>
+                    <Link to={`coma/${index}`} key={index}>
                       <Button colorScheme="teal" variant="ghost">
                         {com.comName}
                       </Button>
@@ -66,7 +66,7 @@ export default function SideMenu(props) {
               <Wrap>
               {partner.map((com, index) => {
                   return (
-                    <Link to={`comp/${index}`}>
+                    <Link to={`comp/${index}`} key={index}>
                       <Button colorScheme="teal" variant="ghost">
                         {com.comName}
                       </Button>

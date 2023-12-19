@@ -1,21 +1,24 @@
 import {
   Drawer,
   DrawerBody,
-  DrawerFooter,
+  // DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Container,
+  // Container,
 } from '@chakra-ui/react';
 
 import React from 'react';
 //   import useDisclosure from '@chakra-ui/react'
-import { Button, Input, useDisclosure } from '@chakra-ui/react';
+import { 
+  Button,
+  // Input, 
+  useDisclosure } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import SideMenu from './SideMenu';
-import { Home } from '../pages/home';
-import { Link, Outlet } from 'react-router-dom';
+// import { Home } from '../pages/home';
+import { Link, } from 'react-router-dom';
 
 export default function DrawerBar(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();

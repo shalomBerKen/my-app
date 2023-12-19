@@ -2,14 +2,14 @@ import {
     FormControl,
     FormLabel,
     FormErrorMessage,
-    FormHelperText,
+    // FormHelperText,
     Input,
     Button,
     Container,
     Heading,
   } from '@chakra-ui/react'
   import { Field, Form, Formik} from 'formik'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function LogIn (props) {
   const {userName , password} = props.userData

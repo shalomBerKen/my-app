@@ -8,7 +8,7 @@ import {
   Box,
   Text,
   Container,
-  Checkbox,
+  // Checkbox,
   ButtonGroup,
   Button,
   Menu,
@@ -22,7 +22,7 @@ import {
   Input,
   FormHelperText,
 } from '@chakra-ui/react';
-import { ChevronDownIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
+import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import ErrorPage from './404';

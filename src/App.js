@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import {
   ChakraProvider,
   Box,
-  Text,
-  Link,
-  VStack,
-  Code,
+  // Text,
+  // Link,
+  // VStack,
+  // Code,
   Grid,
   theme,
   Container,
@@ -14,10 +14,10 @@ import {
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 // import { Logo } from './Logo';
 import { Routes, Route } from 'react-router-dom';
-import { TaskList } from './components/TaskList';
-import { Communities } from './pages/communities';
+// import { TaskList } from './components/TaskList';
+// import { Communities } from './pages/communities';
 import { Home } from './pages/home';
-import LogIn from './pages/login';
+// import LogIn from './pages/login';
 import ComPartner from './pages/ComPartner';
 import ComManage from './pages/ComManage';
 import Overview from './pages/Overview';
@@ -105,8 +105,8 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Routes>
-        <Route path="/" element={<LogIn userData={userData} />} />
-        <Route element={<Home userData={userData} />}>
+        {/* <Route path="/" element={<LogIn userData={userData} />} /> */}
+        <Route  path="/" element={<Home userData={userData} />}>
           {/* <Route path="/"  element={<Overview userData={userData.communities}/>}/> */}
           <Route path="home" element={<Overview userData={userData}/>} />
           <Route path="new" element={<CreateCom userData={userData} setUserData={setUserData}/>} />

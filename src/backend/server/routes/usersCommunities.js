@@ -6,6 +6,8 @@ const usersCommunitiesController = require('../controllers/usersCommunitiesContr
 
 router.get('/', usersCommunitiesController.getAllUsersCommunities);
 router.get('/:id', usersCommunitiesController.getUserCommunities);
+router.get('/:id/manager-communities', usersCommunitiesController.getUserManagerCommunities);
+router.get('/:id/participant-communities', usersCommunitiesController.getUserParticipantCommunities);
 
 router.put('/:id', usersCommunitiesController.updateUserCommunity);
 
