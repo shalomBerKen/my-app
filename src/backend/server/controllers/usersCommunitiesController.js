@@ -27,6 +27,20 @@ exports.getUserCommunities = async (req, res) => {
   }
 };
 
+exports.isUserCommunityAdmin = async (userId, communityId) => {
+  try {
+    const [rows, fields] = await db.query(
+      'SELECT * FROM users_communities WHERE id_user = ? AND id_community = ? AND is_manager = 1',
+      [userId, communityId]
+    );
+
+    return rows.length > 0;
+  } catch (err) {
+    console.error('Error executing MySQL query: ', err);
+    throw err; // Handle the error appropriately in your route/controller
+  }
+};
+
 exports.getUserManagerCommunities = async (req, res) => {
   const userId = req.params.id;
 

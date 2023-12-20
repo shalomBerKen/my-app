@@ -18,12 +18,14 @@ const usersRoutes = require('./routes/users');
 const taskUsersRoutes = require('./routes/taskUsers');
 const communitiesRoutes = require('./routes/communities');
 const usersCommunitiesRoutes = require('./routes/usersCommunities');
+const communitiesTasksRoutes = require('./routes/communitiesTasks');
 
 app.use('/tasks', tasksRoutes);
 app.use('/users', usersRoutes);
 app.use('/taskUsers', taskUsersRoutes);
 app.use('/communities', communitiesRoutes);
 app.use('/usersCommunities', usersCommunitiesRoutes);
+app.use('/communitiesTasks', communitiesTasksRoutes);
 
 
 app.use('*', (req, res)=>{res.send("Hello!")})

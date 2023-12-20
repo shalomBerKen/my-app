@@ -21,6 +21,12 @@ CREATE TABLE `task_users`(
     PRIMARY KEY `task_users_user_id_primary`(`user_id`, `task_id`)
 );
 
+CREATE TABLE `communities_tasks`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id_community` BIGINT NOT NULL,
+    `id_task` BIGINT NOT NULL
+);
+
 CREATE TABLE `communities`(
     `id_community` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `community_name` VARCHAR(255) NOT NULL,
