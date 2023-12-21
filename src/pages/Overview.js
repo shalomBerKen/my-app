@@ -1,7 +1,7 @@
 import {SimpleGrid,Card,CardHeader,Heading, CardBody, Text, CardFooter, Button, Box} from '@chakra-ui/react';
 import { Link,Outlet } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-
+import { fetchUserMnagCom, fetchUserPartCom } from '../api';
 
 export default function Overview(props){
 
@@ -12,44 +12,31 @@ export default function Overview(props){
   const userId = 1; // Replace with the actual user ID you want to fetch
 
   useEffect(() => {
-    const fetchUserMnagCom = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/usersCommunities/${userId}/manager-communities`);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-    
-        const userData = await response.json();
+        const userData = await fetchUserMnagCom(userId);
         setUserMnagCom(userData);
       } catch (error) {
-        console.error('Error fetching user data:', error.message);
+        // Handle the error, if needed
       }
     };
-    
 
-    fetchUserMnagCom();
+    fetchUserData();
   }, [userId]);
 
   useEffect(() => {
-    const fetchUserPartCom = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/usersCommunities/${userId}/participant-communities`);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-    
-        const userData = await response.json();
+        const userData = await fetchUserPartCom(userId);
         setUserPartCom(userData);
       } catch (error) {
-        console.error('Error fetching user data:', error.message);
+        // Handle the error, if needed
       }
     };
-    
 
-    fetchUserPartCom();
+    fetchUserData();
   }, [userId]);
+
 
   //// to here
   const userName = props.userData.userName
