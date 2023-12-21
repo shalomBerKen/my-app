@@ -5,8 +5,6 @@ import { fetchUserMnagCom, fetchUserPartCom } from '../api';
 
 export default function Overview(props){
 
-  //// from here
-
   const [userMnagCom, setUserMnagCom] = useState();
   const [userPartCom, setUserPartCom] = useState();
   const userId = 1; // Replace with the actual user ID you want to fetch
@@ -37,8 +35,6 @@ export default function Overview(props){
     fetchUserData();
   }, [userId]);
 
-
-  //// to here
   const userName = props.userData.userName
   const {partner} = props.userData.communities;
   const { manag} = props.userData.communities;
