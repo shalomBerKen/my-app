@@ -31,6 +31,7 @@ const ComManage = (props) => {
       try {
         const tasksData = await fetchAdminTasks(userId, communityId);
         setData(tasksData);
+        console.log(tasksData);
       } catch (error) {
         // Handle error, e.g., show an error message to the user
         console.error('Error fetching admin tasks:', error.message);
@@ -43,10 +44,10 @@ const ComManage = (props) => {
   if (error) {
     return <ErrorPage />;
   }
-  if (!data || data.length === 0) {
-    // Loading state or display a message when there is no data
-    return <div>Loading...</div>;
-  }
+  // if (!data || data.length === 0) {
+  //   // Loading state or display a message when there is no data
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <>

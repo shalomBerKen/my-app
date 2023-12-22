@@ -6,7 +6,7 @@ import TaskComponent from './TaskComponent';
 const TaskListComponent = ({ data, handleTaskToggle }) => {
   return (
     <Stack divider={<StackDivider />} spacing="4">
-      {data.map((task, index) => (
+      {data?.map((task, index) => (
         <TaskComponent
           key={index}
           task={task}
