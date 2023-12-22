@@ -40,9 +40,10 @@ import {fetchParticipantTasks} from "../api"
         try {
           const tasksData = await fetchParticipantTasks(userId, communityId);
           setData(tasksData);
+          setError()
           console.log(tasksData);
         } catch (error) {
-          // Handle error, e.g., show an error message to the user
+          setError(error.message)
           console.error('Error fetching admin tasks:', error.message);
         }
       };
@@ -51,9 +52,9 @@ import {fetchParticipantTasks} from "../api"
     }, [userId, communityId]);
 
 
-    // if (!props.userData[id]){
-    //   return <ErrorPage/>
-    // }
+    if (error){
+      return <ErrorPage/>
+    }
     return (
       <>
         <Container maxW="container.md">
