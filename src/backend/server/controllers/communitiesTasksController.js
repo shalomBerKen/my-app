@@ -53,7 +53,18 @@ exports.getTasksForCommunityParticipant = async (req, res) => {
 
     if (participantResult.length > 0 && participantResult[0].is_manager === 0) {
       // If the user is a participant, get all tasks for the community
-      const [tasksResult] = await db.query('SELECT tasks.* FROM tasks JOIN communities_tasks ON tasks.id_task = communities_tasks.id_task WHERE communities_tasks.id_community = ?', [communityId]);
+      const tasksQuery = `
+        SELECT 
+          tasks.*,
+          task_users.received_approv IS NOT NULL AS has_approval,
+          CASE WHEN task_users.received_approv IS NOT NULL THEN 1 ELSE 0 END AS has_connection
+        FROM tasks
+        JOIN communities_tasks ON tasks.id_task = communities_tasks.id_task
+        LEFT JOIN task_users ON tasks.id_task = task_users.task_id AND task_users.user_id = ?
+        WHERE communities_tasks.id_community = ?
+      `;
+      const [tasksResult] = await db.query(tasksQuery, [userId, communityId]);
+
       res.json(tasksResult);
     } else {
       res.status(403).send('User is not a participant in this community');
@@ -63,6 +74,9 @@ exports.getTasksForCommunityParticipant = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
+
+
 
 exports.addCommunityTask = async (req, res) => {
     const { id_community, id_task } = req.body;

@@ -12,46 +12,57 @@ import {
     ButtonGroup, 
     Button
   } from '@chakra-ui/react';
-  import {useState, } from 'react'
+  import {useState, useEffect} from 'react'
   import {useParams} from 'react-router'
 import ErrorPage from './404';
-  // const tasks = [
-  //   {
-  //     heder: 'Summary',
-  //     text: 'View a summary of all your clients over the last month.',
-  //     done: true,
-  //     disabled: false,
-  //   },
-  //   {
-  //     heder: 'Overview',
-  //     text: 'Check out the overview of your clients.',
-  //     done: true,
-  //     disabled: true,
-  //   },
-  //   {
-  //     heder: 'Analysis',
-  //     text: 'See a detailed analysis of all your business clients.',
-  //     done: false,
-  //     disabled: false,
-  //   },
-  // ];
+import {fetchParticipantTasks} from "../api"
   
   export default function ComPartner(props) {
-    const { id } = useParams();
-    const comName = props?.userData[id]?.comName;
-    const tasks = props?.userData[id]?.tasks;
     
-    const [data, setData] = useState(tasks);
-    if (!props.userData[id]){
-      return <ErrorPage/>
-    }
+    const { id } = useParams();
+    // const comName = props?.userData[id]?.comName;
+    // const tasks = props?.userData[id]?.tasks;
+    
+    // const [data, setData] = useState(tasks);
+    const userId = 1; // for just testing
+
+    const communityId = id;
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(false);
+    const handleTaskToggle = (index) => {
+      const updatedTasks = [...data];
+      updatedTasks[index].has_connection = !updatedTasks[index].has_connection;
+      setData(updatedTasks);
+    };
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const tasksData = await fetchParticipantTasks(userId, communityId);
+          setData(tasksData);
+          console.log(tasksData);
+        } catch (error) {
+          // Handle error, e.g., show an error message to the user
+          console.error('Error fetching admin tasks:', error.message);
+        }
+      };
+  
+      fetchData();
+    }, [userId, communityId]);
+
+
+    // if (!props.userData[id]){
+    //   return <ErrorPage/>
+    // }
     return (
       <>
         <Container maxW="container.md">
 
           <Card>
             <CardHeader>
-              <Heading size="md" textAlign={'center'}>{comName}</Heading>
+              <Heading size="md" textAlign={'center'}>
+                {/* {comName} */}
+                </Heading>
             </CardHeader>
   
             <CardBody>
@@ -65,17 +76,17 @@ import ErrorPage from './404';
                       alignItems={'center'}
                     >
                       <Heading size="xs" textTransform="uppercase">
-                        {task.heder}
+                        {task.task_name}
                       </Heading>
-                      <Text fontSize="sm">{task.text}</Text>
+                      <Text fontSize="sm">{task.task_details}</Text>
                       <Checkbox
                         onChange={() => {
-                            tasks[index].done = !tasks[index].done
-                            setData(tasks.map((task)=>({...task})))
+                            data[index].has_connection = !data[index].has_connection
+                            setData(data.map((task)=>({...task})))
                           }}
                         colorScheme="green"
-                        defaultChecked={task.done}
-                        isDisabled={task.disabled}
+                        defaultChecked={task.is_done? task.has_connection && task.has_approval : task.has_connection}
+                        isDisabled={task.is_done}
                       >
                         I want it
                       </Checkbox>
