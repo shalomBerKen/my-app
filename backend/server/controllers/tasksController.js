@@ -48,44 +48,45 @@ exports.getTaskUsers = async (req, res) => {
 
 
 exports.createTask = async (req, res) => {
-  const { task_name, task_details, task_date, is_done, user_id, received_approv } = req.body;
+  const { community_id, task_name, task_details, task_date, is_done } = req.body;
+
+  let connection;
 
   try {
+    // Get a connection from the pool
+    connection = await db.getConnection();
+
     // Begin a transaction
-    await db.beginTransaction();
+    await connection.beginTransaction();
 
-    // Step 1: Insert into tasks table
-    const [taskResult] = await db.query(
-      'INSERT INTO tasks (task_name, task_details, task_date, is_done) VALUES (?, ?, ?, ?)',
-      [task_name, task_details, task_date, is_done]
-    );
-
-    const taskId = taskResult.insertId;
-
-    // Step 2: Insert into task_users table
-    const [taskUserResult] = await db.query(
-      'INSERT INTO task_users (user_id, task_id, received_approv) VALUES (?, ?, ?)',
-      [user_id, taskId, received_approv]
+    const [taskResult] = await connection.query(
+      'INSERT INTO tasks (community_id, task_name, task_details, task_date, is_done) VALUES (?, ?, ?, ?, ?)',
+      [community_id, task_name, task_details, task_date, is_done]
     );
 
     // Commit the transaction if both steps are successful
-    await db.commit();
+    await connection.commit();
 
     const insertedTaskId = taskResult.insertId;
-    const insertedTaskUserId = taskUserResult.insertId;
 
     res.status(201).json({
       task: { id: insertedTaskId, task_name, task_details, task_date, is_done },
-      task_user: { id: insertedTaskUserId, user_id, task_id: taskId, received_approv },
     });
   } catch (err) {
     // If an error occurs, roll back the transaction
-    await db.rollback();
-
     console.error('Error executing MySQL query: ', err);
+    if (connection) {
+      await connection.rollback();
+    }
     res.status(500).send('Internal Server Error');
+  } finally {
+    // Release the connection back to the pool
+    if (connection) {
+      connection.release();
+    }
   }
 };
+
 
 exports.updateTask = async (req, res) => {
   const taskId = req.params.id;

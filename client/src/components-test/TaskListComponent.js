@@ -14,10 +14,10 @@ const TaskListComponent = ({ data, handleTaskToggle }) => {
           handleTaskToggle={handleTaskToggle}
         />
       ))}
-      <ButtonGroup variant="outline" spacing="6" ml={6}>
+      {/* <ButtonGroup variant="outline" spacing="6" ml={6}>
         <Button colorScheme="blue">Save</Button>
         <Button>Cancel</Button>
-      </ButtonGroup>
+      </ButtonGroup> */}
     </Stack>
   );
 };

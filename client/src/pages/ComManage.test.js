@@ -30,7 +30,7 @@ const ComManage = (props) => {
         const tasksData = await fetchAdminTasks(userId, communityId);
         setData(tasksData);
         setError()
-        console.log(tasksData);
+        // console.log(tasksData);
       } catch (error) {
         setError(error.message)
 
