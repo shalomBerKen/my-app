@@ -24,6 +24,8 @@ import ComManage from './pages/ComManage.test';
 import Overview from './pages/Overview';
 import CreateCom from './pages/CreateCom';
 import ConnectCom from './pages/ConnectCom';
+import CreateTaskFormComponent from './components-test/CreateTaskFormComponent';
+import { TasksManager } from './components-test/TasksManager';
 
 
 let userData1 = {
@@ -105,6 +107,12 @@ function App() {
   const [userData , setUserData] = useState({...userData1});
   return (
     <ChakraProvider theme={theme}>
+            <Box fontSize="xl" position={'sticky'} float={'right'}>
+        <Grid p={3}>
+          <Container maxW="container.xl">{/* <Tablet /> */}</Container>
+          <ColorModeSwitcher justifySelf="flex-end" />
+        </Grid>
+      </Box>
       <Routes>
         {/* <Route path="/" element={<LogIn userData={userData} />} /> */}
         <Route  path="/" element={<Home userData={userData} />}>
@@ -114,32 +122,14 @@ function App() {
           <Route path="connect" element={<ConnectCom userData={userData} setUserData={setUserData}/>} />
           {/* <Route path="join" element={<Communities />} /> */}
           <Route path="comp/:id" element={<ComPartner userData={userData.communities.partner}/>} />
-          <Route path="coma/:id" element={<ComManage userData={userData.communities.manag}/>} />
+          <Route path="coma/:id" element={<ComManage userData={userData.communities.manag}/>} >
+            <Route path='/coma/:id/' element={<TasksManager/>}/>            
+            <Route path='new-task' element={<CreateTaskFormComponent/>}/>
+          </Route>
           {/* <Route path="manage" element={<TaskList />} /> */}
         </Route>
       </Routes>
-      <Box fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <Container maxW="container.xl">{/* <Tablet /> */}</Container>
-          {/* <Home/> */}
-          {/* <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack> */}
-          <ColorModeSwitcher justifySelf="flex-end" />
-        </Grid>
-      </Box>
+
     </ChakraProvider>
   );
 }

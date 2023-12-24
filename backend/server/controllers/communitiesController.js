@@ -29,29 +29,34 @@ exports.getCommunityById = async (req, res) => {
   }
 };
 
+
 exports.createCommunity = async (req, res) => {
   const { community_name, community_details, user_id, is_manager } = req.body;
+  let connection; // Initialize the connection variable
 
   try {
+    // Get a connection from the pool
+    connection = await db.getConnection();
+
     // Begin a transaction
-    await db.beginTransaction();
+    await connection.beginTransaction();
 
     // Step 1: Insert into communities table
-    const [communityResult] = await db.query('INSERT INTO communities (community_name, community_details) VALUES (?, ?)', [
-      community_name,
-      community_details,
-    ]);
+    const [communityResult] = await connection.query(
+      'INSERT INTO communities (community_name, community_details) VALUES (?, ?)',
+      [community_name, community_details]
+    );
 
     const communityId = communityResult.insertId;
 
     // Step 2: Insert into users_communities table
-    const [userCommunityResult] = await db.query(
+    const [userCommunityResult] = await connection.query(
       'INSERT INTO users_communities (user_id, community_id, is_manager) VALUES (?, ?, ?)',
       [user_id, communityId, is_manager]
     );
 
     // Commit the transaction if both steps are successful
-    await db.commit();
+    await connection.commit();
 
     const insertedCommunityId = communityResult.insertId;
     const insertedUserCommunityId = userCommunityResult.insertId;
@@ -62,12 +67,21 @@ exports.createCommunity = async (req, res) => {
     });
   } catch (err) {
     // If an error occurs, roll back the transaction
-    await db.rollback();
+    if (connection) {
+      await connection.rollback();
+    }
 
     console.error('Error executing MySQL query: ', err);
     res.status(500).send('Internal Server Error');
+  } finally {
+    // Release the connection back to the pool
+    if (connection) {
+      connection.release();
+    }
   }
 };
+
+
 
 exports.updateCommunity = async (req, res) => {
   const communityId = req.params.id;
