@@ -11,11 +11,12 @@ exports.getAllCommunities = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
 exports.getCommunityById = async (req, res) => {
   const communityId = req.params.id;
 
   try {
-    const [rows, fields] = await db.query('SELECT * FROM communities WHERE id_community = ?', [communityId]);
+    const [rows, fields] = await db.query('SELECT * FROM communities WHERE community_id = ?', [communityId]);
 
     if (rows.length === 0) {
       res.status(404).json({ message: 'Community not found' });
@@ -45,7 +46,7 @@ exports.createCommunity = async (req, res) => {
 
     // Step 2: Insert into users_communities table
     const [userCommunityResult] = await db.query(
-      'INSERT INTO users_communities (id_user, id_community, is_manager) VALUES (?, ?, ?)',
+      'INSERT INTO users_communities (user_id, community_id, is_manager) VALUES (?, ?, ?)',
       [user_id, communityId, is_manager]
     );
 
@@ -57,7 +58,7 @@ exports.createCommunity = async (req, res) => {
 
     res.status(201).json({
       community: { id: insertedCommunityId, community_name, community_details },
-      user_community: { id: insertedUserCommunityId, id_user: user_id, id_community: communityId, is_manager },
+      user_community: { id: insertedUserCommunityId, user_id, community_id: communityId, is_manager },
     });
   } catch (err) {
     // If an error occurs, roll back the transaction
@@ -74,7 +75,7 @@ exports.updateCommunity = async (req, res) => {
 
   try {
     const [result] = await db.query(
-      'UPDATE communities SET community_name = ?, community_details = ? WHERE id_community = ?',
+      'UPDATE communities SET community_name = ?, community_details = ? WHERE community_id = ?',
       [community_name, community_details, communityId]
     );
 

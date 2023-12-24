@@ -11,12 +11,13 @@ exports.getAllUsersCommunities = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
 exports.getUserCommunities = async (req, res) => {
   const userId = req.params.id;
 
   try {
     const [rows, fields] = await db.query(
-      'SELECT communities.* FROM communities JOIN users_communities ON communities.id_community = users_communities.id_community WHERE users_communities.id_user = ?',
+      'SELECT communities.* FROM communities JOIN users_communities ON communities.community_id = users_communities.community_id WHERE users_communities.user_id = ?',
       [userId]
     );
 
@@ -30,7 +31,7 @@ exports.getUserCommunities = async (req, res) => {
 exports.isUserCommunityAdmin = async (userId, communityId) => {
   try {
     const [rows, fields] = await db.query(
-      'SELECT * FROM users_communities WHERE id_user = ? AND id_community = ? AND is_manager = 1',
+      'SELECT * FROM users_communities WHERE user_id = ? AND community_id = ? AND is_manager = 1',
       [userId, communityId]
     );
 
@@ -46,7 +47,7 @@ exports.getUserManagerCommunities = async (req, res) => {
 
   try {
     const [rows, fields] = await db.query(
-      'SELECT communities.* FROM communities JOIN users_communities ON communities.id_community = users_communities.id_community WHERE users_communities.id_user = ? AND users_communities.is_manager = 1',
+      'SELECT communities.* FROM communities JOIN users_communities ON communities.community_id = users_communities.community_id WHERE users_communities.user_id = ? AND users_communities.is_manager = 1',
       [userId]
     );
 
@@ -62,7 +63,7 @@ exports.getUserParticipantCommunities = async (req, res) => {
 
   try {
     const [rows, fields] = await db.query(
-      'SELECT communities.* FROM communities JOIN users_communities ON communities.id_community = users_communities.id_community WHERE users_communities.id_user = ? AND users_communities.is_manager = 0',
+      'SELECT communities.* FROM communities JOIN users_communities ON communities.community_id = users_communities.community_id WHERE users_communities.user_id = ? AND users_communities.is_manager = 0',
       [userId]
     );
 

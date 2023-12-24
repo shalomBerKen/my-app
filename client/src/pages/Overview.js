@@ -67,7 +67,7 @@ export default function Overview(props){
             </Text>
           </CardBody>
           <CardFooter>
-          <Link to={`/coma/${com.id_community}`}>
+          <Link to={`/coma/${com.community_id}`}>
             <Button>View here</Button>
             </Link>
           </CardFooter>

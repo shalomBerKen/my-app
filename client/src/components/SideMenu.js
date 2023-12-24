@@ -62,7 +62,7 @@ export default function SideMenu(props) {
               <Wrap>
                 {userMnagCom?.map((com, index) => {
                   return (
-                    <Link to={`coma/${com.id_community}`} key={index}>
+                    <Link to={`coma/${com.community_id}`} key={index}>
                       <Button colorScheme="teal" variant="ghost">
                         {com.community_name}
                       </Button>

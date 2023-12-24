@@ -46,62 +46,7 @@ exports.getTaskUsers = async (req, res) => {
   }
 };
 
-// exports.getTasksByAdministeredCommunity = async (req, res) => {
-//   const userId = req.params.userId;
-//   const communityId = req.params.communityId;
 
-//   try {
-//     // Check if the user is an administrator of the community
-//     const isAdmin = await usersCommunitiesController.isUserCommunityAdmin(userId, communityId);
-
-//     if (!isAdmin) {
-//       res.status(403).json({ message: 'User is not an administrator of the community' });
-//       return;
-//     }
-
-//     // Fetch tasks for the administered community (similar to getTasksByParticipatingUser)
-//     const [rows, fields] = await db.query(
-//       'SELECT tasks.* FROM tasks ' +
-//       'JOIN task_users ON tasks.id_task = task_users.task_id ' +
-//       'JOIN communities ON tasks.id_task = communities.id_community ' +
-//       'WHERE task_users.user_id = ? AND communities.id_community = ?',
-//       [userId, communityId]
-//     );
-
-//     res.json(rows);
-//   } catch (err) {
-//     console.error('Error executing MySQL query: ', err);
-//     res.status(500).send('Internal Server Error');
-//   }
-// };
-
-
-// exports.getTasksByParticipatingUser = async (req, res) => {
-//   const userId = req.params.userId;
-//   const communityId = req.params.communityId;
-
-//   try {
-//     // Check if the user is not an administrator of the community
-//     const isNotAdmin = await usersCommunitiesController.isUserCommunityAdmin(userId, communityId);
-
-//     if (isNotAdmin) {
-//       const [rows, fields] = await db.query(
-//         'SELECT tasks.* FROM tasks ' +
-//         'JOIN task_users ON tasks.id_task = task_users.task_id ' +
-//         'JOIN communities ON tasks.id_task = communities.id_community ' +
-//         'WHERE task_users.user_id = ? AND communities.id_community = ?',
-//         [userId, communityId]
-//       );
-
-//       res.json(rows);
-//     } else {
-//       res.status(403).json({ message: 'User is an administrator of the community' });
-//     }
-//   } catch (err) {
-//     console.error('Error executing MySQL query: ', err);
-//     res.status(500).send('Internal Server Error');
-//   }
-// };
 exports.createTask = async (req, res) => {
   const { task_name, task_details, task_date, is_done, user_id, received_approv } = req.body;
 
