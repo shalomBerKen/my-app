@@ -40,16 +40,19 @@ exports.getUsersByTaskId = async (req, res) => {
 };
 
 exports.updateTaskUser = async (req, res) => {
-  const recordId = req.params.id;
+  const taskId = req.params.taskId;
+  const userId = req.params.userId;
   const { received_approv } = req.body;
+  console.log(received_approv)
 
   try {
-    const [result] = await db.query('UPDATE task_users SET received_approv = ? WHERE id = ?', [received_approv, recordId]);
+    const [result] = await db.query('UPDATE `task_users` SET `received_approv` = ? WHERE (`task_id` = ?) and (`user_id` = ?)',[received_approv, taskId, userId]);
+    ;
 
     if (result.affectedRows === 0) {
       res.status(404).json({ message: 'Task User record not found' });
     } else {
-      res.json({ id: recordId, received_approv });
+      res.json({ id: userId, received_approv });
     }
   } catch (err) {
     console.error('Error executing MySQL query: ', err);

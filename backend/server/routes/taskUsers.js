@@ -8,6 +8,6 @@ router.get('/', taskUsersController.getAllTaskUsers);
 router.get('/users/:id', taskUsersController.getTaskUsersByUserId);
 router.get('/tasks/:id', taskUsersController.getUsersByTaskId);
 
-router.put('/:id', taskUsersController.updateTaskUser);
+router.put('/:taskId/:userId', taskUsersController.updateTaskUser);
 
 module.exports = router;

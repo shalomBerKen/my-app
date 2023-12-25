@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Heading, Text, Container,Card ,Menu, MenuButton, Button ,MenuList,MenuOptionGroup,MenuItem, Checkbox} from '@chakra-ui/react';
+import { Box, Heading, Text, Container,Card , Checkbox} from '@chakra-ui/react';
 import {
   Accordion,
   AccordionItem,
@@ -30,6 +30,8 @@ const TaskDetails = (props) => {
 
     fetchData();
   }, [userId, communityId, taskId]);
+  const approvedVolunteers = taskData ? taskData.filter((user) => user.received_approv === 1) : [];
+  const waitingListVolunteers = taskData ? taskData.filter((user) => user.received_approv === 0) : [];
 
   if (!taskData) {
     return <div>Loading...</div>;
@@ -58,8 +60,8 @@ const TaskDetails = (props) => {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-          {taskData.length > 0 ? (
-              taskData.map((user, userIndex) => (<>
+          {approvedVolunteers.length > 0 ? (
+              approvedVolunteers.map((user, userIndex) => (<>
                 
                   <Heading display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
                     {/* <MenuItemOption> */}
@@ -68,7 +70,7 @@ const TaskDetails = (props) => {
                     key={userIndex}
                     placement="left"
                     value={user.user_name}
-                    defaultChecked={user.received_approv === '1'}
+                    defaultChecked={true}
                     isDisabled={user.is_done}
                     ></Checkbox>
                     {/* </MenuItemOption> */}
@@ -76,7 +78,7 @@ const TaskDetails = (props) => {
                   </>
                 ))
             ) : (
-              <Heading>There are still no Approved volunteers</Heading>
+              <Heading size={'s'}>There are still no Approved volunteers</Heading>
             )}
           </AccordionPanel>
         </AccordionItem>
@@ -91,8 +93,8 @@ const TaskDetails = (props) => {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-          {taskData.length > 0 ? (
-              taskData.map((user, userIndex) => (<>
+          {waitingListVolunteers.length > 0 ? (
+              waitingListVolunteers.map((user, userIndex) => (<>
                 
                   <Heading display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
                     {/* <MenuItemOption> */}
@@ -101,7 +103,7 @@ const TaskDetails = (props) => {
                     key={userIndex}
                     placement="left"
                     value={user.user_name}
-                    defaultChecked={user.received_approv === '1'}
+                    defaultChecked={false}
                     isDisabled={user.is_done}
                     ></Checkbox>
                     {/* </MenuItemOption> */}
@@ -109,38 +111,11 @@ const TaskDetails = (props) => {
                   </>
                 ))
             ) : (
-              <Heading>There are still no Approved volunteers</Heading>
+              <Heading size={'s'}>There is no waiting list yet</Heading>
             )}
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-      <Menu closeOnSelect={false}>
-        <MenuButton as={Button} colorScheme="blue" width={40} m={6}>
-        Waiting List
-        </MenuButton>
-        <MenuList minWidth="240px">
-          <MenuOptionGroup title="volunteers" type="checkbox">
-            {taskData.length > 0 ? (
-              taskData.map((user, userIndex) => (
-                  <MenuOptionGroup display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
-                    {/* <MenuItemOption> */}
-                    {user.user_name}
-                    <Checkbox ml={3}
-                    key={userIndex}
-                    placement="left"
-                    value={user.user_name}
-                    defaultChecked={user.received_approv !== '1'}
-                    isDisabled={user.is_done}
-                    >{user.user_name}</Checkbox>
-                    {/* </MenuItemOption> */}
-                  </MenuOptionGroup>
-                ))
-            ) : (
-              <MenuItem>There are still no one waiting</MenuItem>
-            )}
-          </MenuOptionGroup>
-        </MenuList>
-      </Menu>
       </Card>
     </Box>
     
