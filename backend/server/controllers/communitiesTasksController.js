@@ -25,11 +25,20 @@ exports.getTasksForCommunityAdmin = async (req, res) => {
           WHERE tasks.community_id = ?
           GROUP BY tasks.task_id
         `, [communityId]);
+        
+        // Step 4: Retrieve Tasks Names
+        const [tasksNames] = await db.query(`
+        SELECT * FROM tasks
+        join communities 
+        on tasks.community_id = communities.community_id
+        where tasks.community_id = ?;
+        `, [communityId]);
 
         // Combine community information with tasks
         const result = {
           community: communityResult[0],
           tasks: tasksResult,
+          names: tasksNames
         };
 
         res.json(result);

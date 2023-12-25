@@ -14,21 +14,64 @@ exports.getAllTasks = async (req, res) => {
 };
 
 exports.getTaskById = async (req, res) => {
-  const taskId = req.params.id;
+  const communityId = req.params.communityId; // Assuming you have communityId in the request params
+  const taskId = req.params.taskId; // Assuming you have taskId in the request params
 
   try {
-    const [rows, fields] = await db.query('SELECT * FROM tasks WHERE id_task = ?', [taskId]);
+    const [rows, fields] = await db.query(
+      'SELECT tasks.*, users.user_id, users.user_name, task_users.received_approv FROM tasks ' +
+      'JOIN communities ON tasks.community_id = communities.community_id ' +
+      'LEFT JOIN task_users ON tasks.task_id = task_users.task_id ' +
+      'LEFT JOIN users ON task_users.user_id = users.user_id ' +
+      'WHERE tasks.task_id = ?',
+      [taskId, communityId]
+    );
 
     if (rows.length === 0) {
       res.status(404).json({ message: 'Task not found' });
     } else {
-      res.json(rows[0]);
+      // Assuming you want to return an array of results even if there is only one row
+      res.json(rows);
     }
   } catch (err) {
     console.error('Error executing MySQL query: ', err);
     res.status(500).send('Internal Server Error');
   }
 };
+
+exports.getTaskByIdForAdmin = async (req, res) => {
+  const userId = req.params.userId;
+  const communityId = req.params.communityId; // Assuming you have communityId in the request params
+  const taskId = req.params.taskId; // Assuming you have taskId in the request params
+
+  try {
+    const [managerResult] = await db.query('SELECT is_manager FROM users_communities WHERE user_id = ? AND community_id = ?', [userId, communityId]);
+    if (managerResult.length > 0 && managerResult[0].is_manager === 1) {
+
+      const [rows, fields] = await db.query(
+        'SELECT tasks.*, users.user_id, users.user_name, task_users.received_approv FROM tasks ' +
+        'JOIN communities ON tasks.community_id = communities.community_id ' +
+        'LEFT JOIN task_users ON tasks.task_id = task_users.task_id ' +
+        'LEFT JOIN users ON task_users.user_id = users.user_id ' +
+        'WHERE tasks.task_id = ?',
+        [taskId]
+      );
+
+      if (rows.length === 0) {
+        res.status(404).json({ message: 'Task not found' });
+      } else {
+        // Assuming you want to return an array of results even if there is only one row
+        res.json(rows);
+      }
+    }else {
+      res.status(403).send('User is not an administrator of this community');
+    }
+  } catch (err) {
+    console.error('Error executing MySQL query: ', err);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 
 exports.getTaskUsers = async (req, res) => {
   const taskId = req.params.id;
