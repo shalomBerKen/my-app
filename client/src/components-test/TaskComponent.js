@@ -14,6 +14,7 @@ import {
   Checkbox
 } from '@chakra-ui/react';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
+import {Link} from "react-router-dom"
 
 const TaskComponent = ({ task, index, handleTaskToggle }) => {
   return (
@@ -60,6 +61,9 @@ const TaskComponent = ({ task, index, handleTaskToggle }) => {
         <Text fontSize="sm">{task.task_details}</Text>
 
         <Text fontSize="sm">{task.task_date.substring(0, 10)}</Text>
+        <Link to={`${task.task_id}`} state={task }>Details</Link>
+
+      
       </Box>
       <Button
         colorScheme={task.is_done ? 'red' : 'teal'}

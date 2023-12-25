@@ -26,6 +26,7 @@ import CreateCom from './pages/CreateCom';
 import ConnectCom from './pages/ConnectCom';
 import CreateTaskFormComponent from './components-test/CreateTaskFormComponent';
 import { TasksManager } from './components-test/TasksManager';
+import TaskDetails from './components-test/TaskDetails'
 
 
 let userData1 = {
@@ -37,7 +38,7 @@ let userData1 = {
       {
         comId: 1,
         comName: 'Friends in the neighborhood',
-        description : 'View a summary of all your customers over the last month.',
+        description: 'View a summary of all your customers over the last month.',
         tasks: [
           {
             heder: 'Summary',
@@ -77,7 +78,7 @@ let userData1 = {
       {
         comId: 2,
         comName: 'The workers from our building',
-        description : 'View a summary of all your customers over the last month.',
+        description: 'View a summary of all your customers over the last month.',
         tasks: [
           {
             heder: 'Summary',
@@ -104,28 +105,31 @@ let userData1 = {
 };
 
 function App() {
-  const [userData , setUserData] = useState({...userData1});
+  const [userData, setUserData] = useState({ ...userData1 });
   return (
     <ChakraProvider theme={theme}>
-            <Box fontSize="xl" position={'sticky'} float={'right'}>
+      <Box fontSize="xl" position={'sticky'} float={'right'}>
         <Grid p={3}>
           <Container maxW="container.xl">{/* <Tablet /> */}</Container>
           <ColorModeSwitcher justifySelf="flex-end" />
         </Grid>
       </Box>
-      
+
       <Routes>
         {/* <Route path="/" element={<LogIn userData={userData} />} /> */}
-        <Route  path="/" element={<Home userData={userData} />}>
+        <Route path="/" element={<Home userData={userData} />}>
           {/* <Route path="/"  element={<Overview userData={userData.communities}/>}/> */}
-          <Route path="home" element={<Overview userData={userData}/>} />
-          <Route path="new" element={<CreateCom userData={userData} setUserData={setUserData}/>} />
-          <Route path="connect" element={<ConnectCom userData={userData} setUserData={setUserData}/>} />
+          <Route path="home" element={<Overview userData={userData} />} />
+          <Route path="new" element={<CreateCom userData={userData} setUserData={setUserData} />} />
+          <Route path="connect" element={<ConnectCom userData={userData} setUserData={setUserData} />} />
           {/* <Route path="join" element={<Communities />} /> */}
-          <Route path="comp/:id" element={<ComPartner userData={userData.communities.partner}/>} />
-          <Route path="coma/:id" element={<ComManage userData={userData.communities.manag}/>} >
-            <Route path='/coma/:id/' element={<TasksManager/>}/>            
-            <Route path='new-task' element={<CreateTaskFormComponent/>}/>
+          <Route path="comp/:id" element={<ComPartner userData={userData.communities.partner} />} />
+          <Route path="coma/:id" element={<ComManage userData={userData.communities.manag} />} >
+            <Route path='/coma/:id/' element={<TasksManager />} />
+            {/* here I wont    */}
+            <Route path='/coma/:id/:taskId' element={<TaskDetails />} />
+            {/* here I wont  ^  */}
+            <Route path='new-task' element={<CreateTaskFormComponent />} />
           </Route>
           {/* <Route path="manage" element={<TaskList />} /> */}
         </Route>
