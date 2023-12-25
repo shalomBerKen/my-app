@@ -12,7 +12,7 @@ export default function ConnectCom(){
         <FormHelperText>
         Copy the community code you received here.
         </FormHelperText>
-        <Button colorScheme='blue' mt={12} type='submit' onSubmit={(e)=>{e.preventDefault() }}>create</Button>
+        <Button colorScheme='blue' mt={12} type='submit' onSubmit={(e)=>{e.preventDefault() }}>connect</Button>
         </FormControl>
     )
 }

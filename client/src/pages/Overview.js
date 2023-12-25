@@ -1,7 +1,8 @@
 import {SimpleGrid,Card,CardHeader,Heading, CardBody, Text, CardFooter, Button, Box} from '@chakra-ui/react';
 import { Link,Outlet } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { fetchUserMnagCom, fetchUserPartCom } from '../api';
+import {UserContext} from '../App'
 
 export default function Overview(props){
 
@@ -39,11 +40,14 @@ export default function Overview(props){
   const {partner} = props.userData.communities;
   const { manag} = props.userData.communities;
 
+  const user = useContext(UserContext);
+
     return(
         <>
         <Outlet />
         <Heading textAlign={'center'}>
             {userName}
+            {/* {user} */}
         </Heading>
       <Heading textAlign={'center'}size='md' m={12}>
             The communities I manage
