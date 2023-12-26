@@ -80,23 +80,7 @@ export default function Overview(props){
       ) : (
         <p>Loading user data...</p>
       )}
-    
-        {manag.map((com, index)=>{return (
-        <Card key={index}>
-          <CardHeader>
-            <Heading size="md">{com.comName}</Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>
-              {com.description}
-            </Text>
-          </CardBody>
-          <CardFooter>
-          <Link to={`/coma/${index}`}>
-            <Button>View here</Button>
-            </Link>
-          </CardFooter>
-        </Card>)})}
+
       </SimpleGrid>
       <Box alignItems={'center'}w={'xl'} m={'auto'} mt={13} >
         <Link to={'/new'}>
@@ -123,7 +107,7 @@ export default function Overview(props){
             </Text>
           </CardBody>
           <CardFooter>
-          <Link to={`/coma/${index}`}>
+          <Link to={`/comp/${com.community_id}`}>
             <Button>View here</Button>
             </Link>
           </CardFooter>
@@ -132,21 +116,7 @@ export default function Overview(props){
       ) : (
         <p>Loading user data...</p>
       )}
-        {partner.map((com, index)=>{return <Card key={index}>
-          <CardHeader>
-            <Heading size="md">{com.comName}</Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>
-            {com.description}
-            </Text>
-          </CardBody>
-          <CardFooter>
-            <Link to={`/comp/${index}`}>
-            <Button>View here</Button>
-            </Link>
-          </CardFooter>
-        </Card>})}
+
       </SimpleGrid>
       <Box alignItems={'center'}w={'xl'} m={'auto'} mt={13} >
         <Link to={'/connect'}>

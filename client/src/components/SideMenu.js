@@ -108,7 +108,7 @@ export default function SideMenu(props) {
                 })}
                 {userPartCom?.map((com, index) => {
                   return (
-                    <Link to={`comp/${com.id_community}`} key={index}>
+                    <Link to={`comp/${com.community_id}`} key={index}>
                       <Button colorScheme="teal" variant="ghost">
                         {com.community_name}
                       </Button>

@@ -63,6 +63,8 @@ exports.getTasksForCommunityParticipant = async (req, res) => {
     const [participantResult] = await db.query('SELECT is_manager FROM users_communities WHERE user_id = ? AND community_id = ?', [userId, communityId]);
 
     if (participantResult.length > 0 && participantResult[0].is_manager === 0) {
+      const [communityResult] = await db.query('SELECT * FROM communities WHERE community_id = ?', [communityId]);
+
       const tasksQuery = `
         SELECT 
           tasks.*,
@@ -73,8 +75,12 @@ exports.getTasksForCommunityParticipant = async (req, res) => {
         WHERE tasks.community_id = ?
       `;
       const [tasksResult] = await db.query(tasksQuery, [userId, communityId]);
+      const result = {
+        community: communityResult[0],
+        tasks: tasksResult,
+      };
 
-      res.json(tasksResult);
+      res.json(result);
     } else {
       res.status(403).send('User is not a participant in this community');
     }

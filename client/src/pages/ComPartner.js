@@ -28,10 +28,10 @@ import {fetchParticipantTasks} from "../api"
 
     const communityId = id;
     const [data, setData] = useState([]);
-    const [error, setError] = useState(false);
+    // const [error, setError] = useState(false);
     const handleTaskToggle = (index) => {
       const updatedTasks = [...data];
-      updatedTasks[index].has_connection = !updatedTasks[index].has_connection;
+      updatedTasks.tasks[index].has_connection = !updatedTasks.tasks[index].has_connection;
       setData(updatedTasks);
     };
   
@@ -40,10 +40,10 @@ import {fetchParticipantTasks} from "../api"
         try {
           const tasksData = await fetchParticipantTasks(userId, communityId);
           setData(tasksData);
-          setError()
+          // setError()
           console.log(tasksData);
         } catch (error) {
-          setError(error.message)
+          // setError(error.message)
           console.error('Error fetching admin tasks:', error.message);
         }
       };
@@ -52,29 +52,34 @@ import {fetchParticipantTasks} from "../api"
     }, [userId, communityId]);
 
 
-    if (error){
-      return <ErrorPage/>
-    }
+    // if (error){
+    //   return <ErrorPage/>
+    // }
     return (
       <>
         <Container maxW="container.md">
 
           <Card>
             <CardHeader>
-              <Heading size="md" textAlign={'center'}>
-                {/* {comName} */}
-                </Heading>
+            <Heading size="md" textAlign={'center'} pb={12}>
+          {data?.community?.community_name}
+        </Heading>
+
+        <Heading size="s" textAlign={'center'} pb={12}>
+          {data?.community?.community_details}
+        </Heading>
             </CardHeader>
   
             <CardBody>
               <Stack divider={<StackDivider />} spacing="4">
-                {data.map((task, index) => {
+                {data.tasks ? data.tasks.map((task, index) => {
                   return (
                     <Box
                       p={'auto'}
-                      display={'flex'}
-                      justifyContent={'space-between'}
+                      // display={'flex'}
+                      justifyContent={'center'}
                       alignItems={'center'}
+                      textAlign={'center'}
                     >
                       <Heading size="xs" textTransform="uppercase">
                         {task.task_name}
@@ -82,22 +87,22 @@ import {fetchParticipantTasks} from "../api"
                       <Text fontSize="sm">{task.task_details}</Text>
                       <Checkbox
                         onChange={() => {
-                            data[index].has_connection = !data[index].has_connection
-                            setData(data.map((task)=>({...task})))
+                            data.tasks[index].has_connection = !data.tasks[index].has_connection
+                            // setData(data.tasks.map((task)=>({...task})))
                           }}
                         colorScheme="green"
-                        defaultChecked={task.is_done? task.has_connection && task.has_approval : task.has_connection}
-                        isDisabled={task.is_done}
+                        defaultChecked={task.is_done  === 1 ? (task.has_connection  === 1 && task.has_approval  === 1) : task.has_connection  === 1}
+                        isDisabled={task.is_done === 1}
                       >
                         I want it
                       </Checkbox>
                     </Box>
                   );
-                })}
-                <ButtonGroup variant="outline" spacing="6"ml={6}>
+                }) : <><Heading size={'s'}color={'gray'}>There are still no tasks in this community</Heading></>}
+                {/* <ButtonGroup variant="outline" spacing="6"ml={6}>
                   <Button colorScheme="blue">Save</Button>
                   <Button>Cancel</Button>
-                </ButtonGroup>
+                </ButtonGroup> */}
               </Stack>
             </CardBody>
           </Card>
