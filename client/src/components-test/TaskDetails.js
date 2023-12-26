@@ -11,25 +11,50 @@ import {
 
 const TaskDetails = (props) => {
   const userId = 1; // for just testing
+  
 
   const { id, taskId } = useParams();
   const communityId = id
   const [taskData, setTaskData] = useState(null);
 
+  
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/tasks/admin-one-task/${userId}/${communityId}/${taskId}`);
+      const data = await response.json();
+      setTaskData(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  
   useEffect(() => {
     // Fetch data from the server and update the state
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/tasks/admin-one-task/${userId}/${communityId}/${taskId}`);
-        const data = await response.json();
-        setTaskData(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
 
     fetchData();
-  }, [userId, communityId, taskId]);
+  }, [userId, communityId, taskId ]);
+
+  const handleCheckboxChange = async (taskId, userId, receivedApprov) => {
+    try {
+      const response = await fetch(`http://localhost:5000/taskusers/${taskId}/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ received_approv: receivedApprov ? 1 : 0 }),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to update data on the server');
+      }
+
+      // Refetch data after updating
+      fetchData();
+    } catch (error) {
+      console.error('Error updating data:', error);
+    }
+  };
+
   const approvedVolunteers = taskData ? taskData.filter((user) => user.received_approv === 1) : [];
   const waitingListVolunteers = taskData ? taskData.filter((user) => user.received_approv === 0) : [];
 
@@ -63,22 +88,23 @@ const TaskDetails = (props) => {
           {approvedVolunteers.length > 0 ? (
               approvedVolunteers.map((user, userIndex) => (<>
                 
-                  <Heading display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
+                  <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
                     {/* <MenuItemOption> */}
                     {user.user_name}
                     <Checkbox ml={3}
-                    key={userIndex}
+                    key={user.user_id}
                     placement="left"
-                    value={user.user_name}
+                    value={true}
                     defaultChecked={true}
                     isDisabled={user.is_done}
+                    onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
                     ></Checkbox>
                     {/* </MenuItemOption> */}
                   </Heading>
                   </>
                 ))
             ) : (
-              <Heading size={'s'}>There are still no Approved volunteers</Heading>
+              <Heading size={'s'}color={'gray'}>There are still no Approved volunteers</Heading>
             )}
           </AccordionPanel>
         </AccordionItem>
@@ -96,22 +122,23 @@ const TaskDetails = (props) => {
           {waitingListVolunteers.length > 0 ? (
               waitingListVolunteers.map((user, userIndex) => (<>
                 
-                  <Heading display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
+                  <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
                     {/* <MenuItemOption> */}
                     {user.user_name}
                     <Checkbox ml={3}
-                    key={userIndex}
+                    key={user.user_id}
                     placement="left"
-                    value={user.user_name}
+                    value={false}
                     defaultChecked={false}
                     isDisabled={user.is_done}
+                    onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
                     ></Checkbox>
                     {/* </MenuItemOption> */}
                   </Heading>
                   </>
                 ))
             ) : (
-              <Heading size={'s'}>There is no waiting list yet</Heading>
+              <Heading size={'s'} color={'gray'}>There is no waiting list yet</Heading>
             )}
           </AccordionPanel>
         </AccordionItem>

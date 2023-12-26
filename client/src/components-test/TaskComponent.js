@@ -7,7 +7,6 @@ import {
   MenuList,
   MenuItem,
   MenuOptionGroup,
-  MenuItemOption,
   Button,
   Heading,
   Text,
