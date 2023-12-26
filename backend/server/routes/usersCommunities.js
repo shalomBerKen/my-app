@@ -10,5 +10,6 @@ router.get('/:id/manager-communities', usersCommunitiesController.getUserManager
 router.get('/:id/participant-communities', usersCommunitiesController.getUserParticipantCommunities);
 
 router.put('/:id', usersCommunitiesController.updateUserCommunity);
+router.post('/participants', usersCommunitiesController.createCommunityParticipant);
 
 module.exports = router;

@@ -91,3 +91,25 @@ exports.updateUserCommunity = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
+exports.createCommunityParticipant = async (req, res) => {
+  const { user_id, community_id } = req.body;
+
+  if (!user_id || !community_id) {
+    return res.status(400).json({ message: 'user_id and community_id are required' });
+  }
+
+  try {
+    const [result] = await db.query('INSERT INTO users_communities (user_id, community_id, is_manager) VALUES (?, ?, 0)', [user_id, community_id]);
+
+    // Check if the insertion was successful
+    if (result.affectedRows === 1) {
+      res.status(201).json({ message: 'Community participant created successfully' });
+    } else {
+      res.status(500).json({ message: 'Failed to create community participant' });
+    }
+  } catch (err) {
+    console.error('Error executing MySQL query: ', err);
+    res.status(500).send('Internal Server Error');
+  }
+};

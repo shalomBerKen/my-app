@@ -8,6 +8,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react'
+import ErrorPage from "../pages/404"
 
 const TaskDetails = (props) => {
   const userId = 1; // for just testing
@@ -16,6 +17,8 @@ const TaskDetails = (props) => {
   const { id, taskId } = useParams();
   const communityId = id
   const [taskData, setTaskData] = useState(null);
+  const [error, setError] = useState(false);
+
 
   
   const fetchData = async () => {
@@ -23,7 +26,9 @@ const TaskDetails = (props) => {
       const response = await fetch(`http://localhost:5000/tasks/admin-one-task/${userId}/${communityId}/${taskId}`);
       const data = await response.json();
       setTaskData(data);
+      setError(false)
     } catch (error) {
+      setError(true)
       console.error('Error fetching data:', error);
     }
   };
@@ -55,12 +60,12 @@ const TaskDetails = (props) => {
     }
   };
 
-  const approvedVolunteers = taskData ? taskData.filter((user) => user.received_approv === 1) : [];
-  const waitingListVolunteers = taskData ? taskData.filter((user) => user.received_approv === 0) : [];
-
   if (!taskData) {
     return <div>Loading...</div>;
   }
+  const approvedVolunteers = taskData[0] ? taskData.filter((user) => user.received_approv === 1) : [];
+  const waitingListVolunteers = taskData[0] ? taskData.filter((user) => user?.received_approv === 0) : [];
+
 
   // Rest of the component rendering logic using taskData
   return (

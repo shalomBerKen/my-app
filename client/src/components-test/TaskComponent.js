@@ -13,9 +13,10 @@ import {
   Checkbox
 } from '@chakra-ui/react';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 const TaskComponent = ({ task, index, handleTaskToggle }) => {
+  const navigat = useNavigate();
   return (
     <Box
       key={index}
@@ -24,11 +25,11 @@ const TaskComponent = ({ task, index, handleTaskToggle }) => {
       justifyContent={'space-between'}
       alignItems={'center'}
     >
-      <Menu closeOnSelect={false}>
-        <MenuButton as={Button} colorScheme="blue">
-          waiting
-        </MenuButton>
-        <MenuList minWidth="240px">
+      {/* <Menu closeOnSelect={false}> */}
+        <Button colorScheme="blue" onClick={()=>navigat(`${task.task_id}`)}>
+          details
+        </Button>
+        {/* <MenuList minWidth="240px">
           <MenuOptionGroup title="volunteers" type="checkbox">
             {task.related_users.length > 0 ? (
               task.related_users
@@ -36,23 +37,23 @@ const TaskComponent = ({ task, index, handleTaskToggle }) => {
                 .map((user, userIndex) => (
                   <MenuOptionGroup display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user} type='checkbox'>
                     {/* <MenuItemOption> */}
-                    {user}
+                    {/* {user}
                     <Checkbox ml={3}
                     key={userIndex}
                     placement="left"
                     value={user}
                     defaultChecked={task.received_approv.split(',')[userIndex] !== '1'}
                     isDisabled={task.is_done}
-                    >{user}</Checkbox>
+                    >{user}</Checkbox> */}
                     {/* </MenuItemOption> */}
-                  </MenuOptionGroup>
+                  {/* </MenuOptionGroup>
                 ))
             ) : (
               <MenuItem>There are still no one waiting</MenuItem>
             )}
-          </MenuOptionGroup>
-        </MenuList>
-      </Menu>
+          </MenuOptionGroup> */}
+        {/* </MenuList> */}
+      {/* </Menu> */}
       <Box textAlign={'center'}>
         <Heading size="xs" textTransform="uppercase">
           {task.task_name}
@@ -60,7 +61,6 @@ const TaskComponent = ({ task, index, handleTaskToggle }) => {
         <Text fontSize="sm">{task.task_details}</Text>
 
         <Text fontSize="sm">{task.task_date.substring(0, 10)}</Text>
-        <Link to={`${task.task_id}`} state={task }>Details</Link>
 
       
       </Box>
