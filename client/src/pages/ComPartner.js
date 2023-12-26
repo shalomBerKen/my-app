@@ -72,7 +72,7 @@ import {fetchParticipantTasks} from "../api"
   
             <CardBody>
               <Stack divider={<StackDivider />} spacing="4">
-                {data.tasks ? data.tasks.map((task, index) => {
+                {data?.tasks?.[0] ? data.tasks.map((task, index) => {
                   return (
                     <Box
                       p={'auto'}

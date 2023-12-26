@@ -69,7 +69,7 @@ export default function SideMenu(props) {
                     </Link>
                   );
                 })}
-                {manag.map((com, index) => {
+                {/* {manag.map((com, index) => {
                   return (
                     <Link to={`coma/${index}`} key={index}>
                       <Button colorScheme="teal" variant="ghost">
@@ -77,7 +77,7 @@ export default function SideMenu(props) {
                       </Button>
                     </Link>
                   );
-                })}
+                })} */}
                 <br />
 
               </Wrap>
@@ -97,7 +97,7 @@ export default function SideMenu(props) {
           <AccordionPanel pb={4}>
             <Stack direction="row" spacing={4} align="left">
               <Wrap>
-              {partner.map((com, index) => {
+              {/* {partner.map((com, index) => {
                   return (
                     <Link to={`comp/${index}`} key={index}>
                       <Button colorScheme="teal" variant="ghost">
@@ -105,7 +105,7 @@ export default function SideMenu(props) {
                       </Button>
                     </Link>
                   );
-                })}
+                })} */}
                 {userPartCom?.map((com, index) => {
                   return (
                     <Link to={`comp/${com.community_id}`} key={index}>
