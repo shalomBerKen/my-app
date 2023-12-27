@@ -1,4 +1,4 @@
-import React, { useState, createContext} from 'react';
+import React, { useState } from 'react';
 import {
   ChakraProvider,
   Box,
@@ -26,9 +26,8 @@ import CreateCom from './pages/CreateCom';
 import ConnectCom from './pages/ConnectCom';
 import CreateTaskFormComponent from './components-test/CreateTaskFormComponent';
 import { TasksManager } from './components-test/TasksManager';
-import TaskDetails from './components-test/TaskDetails'
-
-export const UserContext = createContext();
+import TaskDetails from './components-test/TaskDetails';
+// import  {UserProvider}  from '';
 
 let userData1 = {
   userId: 2,
@@ -106,17 +105,17 @@ let userData1 = {
 };
 
 function App() {
-  const [user, setUser] = useState("Jesse Hall");
+  // const [user, setUser] = useState("Jesse Hall");
   const [userData, setUserData] = useState({ ...userData1 });
   return (
     <ChakraProvider theme={theme}>
+      {/* <UserProvider> */}
       <Box fontSize="xl" position={'sticky'} float={'right'}>
         <Grid p={3}>
           <Container maxW="container.xl">{/* <Tablet /> */}</Container>
           <ColorModeSwitcher justifySelf="flex-end" />
         </Grid>
       </Box>
-      <UserContext.Provider value={user}>
         <Routes>
           {/* <Route path="/" element={<LogIn userData={userData} />} /> */}
           <Route path="/" element={<Home userData={userData} />}>
@@ -136,7 +135,7 @@ function App() {
             {/* <Route path="manage" element={<TaskList />} /> */}
           </Route>
         </Routes>
-      </UserContext.Provider>
+      {/* </UserProvider> */}
     </ChakraProvider>
   );
 }

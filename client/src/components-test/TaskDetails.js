@@ -8,7 +8,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react'
-import ErrorPage from "../pages/404"
+// import ErrorPage from "../pages/404"
 
 const TaskDetails = (props) => {
   const userId = 1; // for just testing

@@ -9,14 +9,15 @@ import {
     Text,
     Container,
     Checkbox,
-    ButtonGroup, 
-    Button
+    // ButtonGroup, 
+    // Button
   } from '@chakra-ui/react';
   import {useState, useEffect} from 'react'
   import {useParams} from 'react-router'
-import ErrorPage from './404';
+// import ErrorPage from './404';
 import {fetchParticipantTasks} from "../api"
-  
+import axios from 'axios';
+
   export default function ComPartner(props) {
     
     const { id } = useParams();
@@ -29,10 +30,24 @@ import {fetchParticipantTasks} from "../api"
     const communityId = id;
     const [data, setData] = useState([]);
     // const [error, setError] = useState(false);
-    const handleTaskToggle = (index) => {
-      const updatedTasks = [...data];
-      updatedTasks.tasks[index].has_connection = !updatedTasks.tasks[index].has_connection;
-      setData(updatedTasks);
+    // const handleTaskToggle = (index) => {
+    //   const updatedTasks = [...data];
+    //   updatedTasks.tasks[index].has_connection = !updatedTasks.tasks[index].has_connection;
+    //   setData(updatedTasks);
+    // };
+    const handleCheckboxChange = async (taskId) => {
+      try {
+        const response = await axios.post(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
+        const updatedTasks = data.tasks.map((task) => {
+          if (task.task_id === taskId) {
+            task.has_connection = !task.has_connection;
+          }
+          return task;
+        });
+        setData({ ...data, tasks: updatedTasks });
+      } catch (error) {
+        console.error('Error updating task user:', error.message);
+      }
     };
   
     useEffect(() => {
@@ -86,12 +101,9 @@ import {fetchParticipantTasks} from "../api"
                       </Heading>
                       <Text fontSize="sm">{task.task_details}</Text>
                       <Checkbox
-                        onChange={() => {
-                            data.tasks[index].has_connection = !data.tasks[index].has_connection
-                            // setData(data.tasks.map((task)=>({...task})))
-                          }}
+                        onChange={() => handleCheckboxChange(task.task_id)}
                         colorScheme="green"
-                        defaultChecked={task.is_done  === 1 ? (task.has_connection  === 1 && task.has_approval  === 1) : task.has_connection  === 1}
+                        defaultChecked={task.is_done === 1 ? (task.has_connection === 1 && task.has_approval === 1) : task.has_connection === 1}
                         isDisabled={task.is_done === 1}
                       >
                         I want it

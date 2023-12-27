@@ -60,3 +60,16 @@ exports.updateTaskUser = async (req, res) => {
   }
 };
 
+exports.addTaskUser = async (req, res) => {
+  const userId = req.params.userId;
+  const taskId = req.params.taskId;
+
+  try {
+    const [result] = await db.query('INSERT INTO `task_users` (`user_id`, `task_id`, `received_approv`) VALUES (?, ?, 0)', [userId, taskId]);
+
+    res.json({ id: result.insertId, received_approv: 0 });
+  } catch (err) {
+    console.error('Error executing MySQL query: ', err);
+    res.status(500).send('Internal Server Error');
+  }
+};

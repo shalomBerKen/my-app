@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from 'react';
+import React, { useState  } from 'react';
 import { useParams, useNavigate } from 'react-router';
 
 import axios from 'axios';
@@ -14,7 +14,7 @@ const CreateTaskFormComponent = () => {
 
 
   const navigat = useNavigate();
-  const userId = 1; // for just testing
+  // const userId = 1; // for just testing
   const { id } = useParams();
   const [formData, setFormData] = useState({
     community_id: id,

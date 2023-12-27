@@ -1,14 +1,18 @@
 import {SimpleGrid,Card,CardHeader,Heading, CardBody, Text, CardFooter, Button, Box} from '@chakra-ui/react';
 import { Link,Outlet } from 'react-router-dom';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { fetchUserMnagCom, fetchUserPartCom } from '../api';
-import {UserContext} from '../App'
+// import {UserContext} from '../App'
+// import  {useUser}  from '..context/UserContext';
+
 
 export default function Overview(props){
 
   const [userMnagCom, setUserMnagCom] = useState();
   const [userPartCom, setUserPartCom] = useState();
   const userId = 1; // Replace with the actual user ID you want to fetch
+  // const { userId, setUserId } = useUser();
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -37,10 +41,10 @@ export default function Overview(props){
   }, [userId]);
 
   const userName = props.userData.userName
-  const {partner} = props.userData.communities;
-  const { manag} = props.userData.communities;
+  // const {partner} = props.userData.communities;
+  // const { manag} = props.userData.communities;
 
-  const user = useContext(UserContext);
+  // const user = useContext(UserContext);
 
     return(
         <>

@@ -2,18 +2,18 @@
 import React from 'react';
 import {
   Box,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuOptionGroup,
+  // Menu,
+  // MenuButton,
+  // MenuList,
+  // MenuItem,
+  // MenuOptionGroup,
   Button,
   Heading,
   Text,
-  Checkbox
+  // Checkbox
 } from '@chakra-ui/react';
-import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
-import {Link, useNavigate} from "react-router-dom"
+// import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
+import { useNavigate} from "react-router-dom"
 
 const TaskComponent = ({ task, index, handleTaskToggle }) => {
   const navigat = useNavigate();

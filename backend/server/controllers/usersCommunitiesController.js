@@ -100,13 +100,21 @@ exports.createCommunityParticipant = async (req, res) => {
   }
 
   try {
-    const [result] = await db.query('INSERT INTO users_communities (user_id, community_id, is_manager) VALUES (?, ?, 0)', [user_id, community_id]);
+    // Check if the community with the given community_id exists
+    const communityExists = await db.query('SELECT * FROM communities WHERE community_id = ?', [community_id]);
 
-    // Check if the insertion was successful
-    if (result.affectedRows === 1) {
-      res.status(201).json({ message: 'Community participant created successfully' });
+    if (communityExists[0].length === 0) {
+      return res.status(404).json({ message: 'Community not found' });
     } else {
-      res.status(500).json({ message: 'Failed to create community participant' });
+      // If the community exists, proceed with creating the connection
+      const [result] = await db.query('INSERT INTO users_communities (user_id, community_id, is_manager) VALUES (?, ?, 0)', [user_id, community_id]);
+
+      // Check if the insertion was successful
+      if (result.affectedRows === 1) {
+        res.status(201).json({ message: 'Community participant created successfully' });
+      } else {
+        res.status(500).json({ message: 'Failed to create community participant' });
+      }
     }
   } catch (err) {
     console.error('Error executing MySQL query: ', err);

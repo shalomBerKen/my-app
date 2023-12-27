@@ -12,11 +12,13 @@ import { Link } from 'react-router-dom';
 import { useState , useEffect} from 'react';
 import { fetchUserMnagCom, fetchUserPartCom } from '../api';
 
+
 export default function SideMenu(props) {
-  const { partner, manag } = props.userData.communities;
+  // const { partner, manag } = props.userData.communities;
 
   const [userMnagCom, setUserMnagCom] = useState();
   const [userPartCom, setUserPartCom] = useState();
+  // const { userId, setUserId } = useUser();
   const userId = 1; // Replace with the actual user ID you want to fetch
 
   useEffect(() => {
@@ -69,15 +71,6 @@ export default function SideMenu(props) {
                     </Link>
                   );
                 })}
-                {/* {manag.map((com, index) => {
-                  return (
-                    <Link to={`coma/${index}`} key={index}>
-                      <Button colorScheme="teal" variant="ghost">
-                        {com.comName}
-                      </Button>
-                    </Link>
-                  );
-                })} */}
                 <br />
 
               </Wrap>
@@ -97,15 +90,6 @@ export default function SideMenu(props) {
           <AccordionPanel pb={4}>
             <Stack direction="row" spacing={4} align="left">
               <Wrap>
-              {/* {partner.map((com, index) => {
-                  return (
-                    <Link to={`comp/${index}`} key={index}>
-                      <Button colorScheme="teal" variant="ghost">
-                        {com.comName}
-                      </Button>
-                    </Link>
-                  );
-                })} */}
                 {userPartCom?.map((com, index) => {
                   return (
                     <Link to={`comp/${com.community_id}`} key={index}>

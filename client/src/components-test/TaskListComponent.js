@@ -1,6 +1,6 @@
 // TaskListComponent.js
 import React from 'react';
-import { StackDivider, Stack, ButtonGroup, Button } from '@chakra-ui/react';
+import { StackDivider, Stack,} from '@chakra-ui/react';
 import TaskComponent from './TaskComponent';
 
 const TaskListComponent = ({ data, handleTaskToggle }) => {
