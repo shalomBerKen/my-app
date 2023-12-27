@@ -24,37 +24,11 @@ const TaskComponent = ({ task, index, handleTaskToggle }) => {
       display={'flex'}
       justifyContent={'space-between'}
       alignItems={'center'}
+      size={'xs'}
     >
-      {/* <Menu closeOnSelect={false}> */}
-        <Button colorScheme="blue" onClick={()=>navigat(`${task.task_id}`)}>
-          details
-        </Button>
-        {/* <MenuList minWidth="240px">
-          <MenuOptionGroup title="volunteers" type="checkbox">
-            {task.related_users.length > 0 ? (
-              task.related_users
-                .split(',')
-                .map((user, userIndex) => (
-                  <MenuOptionGroup display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user} type='checkbox'>
-                    {/* <MenuItemOption> */}
-                    {/* {user}
-                    <Checkbox ml={3}
-                    key={userIndex}
-                    placement="left"
-                    value={user}
-                    defaultChecked={task.received_approv.split(',')[userIndex] !== '1'}
-                    isDisabled={task.is_done}
-                    >{user}</Checkbox> */}
-                    {/* </MenuItemOption> */}
-                  {/* </MenuOptionGroup>
-                ))
-            ) : (
-              <MenuItem>There are still no one waiting</MenuItem>
-            )}
-          </MenuOptionGroup> */}
-        {/* </MenuList> */}
-      {/* </Menu> */}
-      <Box textAlign={'center'}>
+      <Box 
+      // textAlign={'center'}
+      >
         <Heading size="xs" textTransform="uppercase">
           {task.task_name}
         </Heading>
@@ -64,13 +38,8 @@ const TaskComponent = ({ task, index, handleTaskToggle }) => {
 
       
       </Box>
-      <Button
-        colorScheme={task.is_done ? 'red' : 'teal'}
-        variant="outline"
-        w={6}
-        onClick={() => handleTaskToggle(index)}
-      >
-        {task.is_done ? <LockIcon /> : <UnlockIcon />}
+      <Button colorScheme="blue" onClick={()=>navigat(`${task.task_id}`)}>
+        details
       </Button>
     </Box>
   );
