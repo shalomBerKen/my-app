@@ -32,6 +32,13 @@ const CreateTaskFormComponent = () => {
     });
   };
 
+  const setingFormData = (formattedDateTime) =>{
+    setFormData({
+      ...formData,
+      task_date: formattedDateTime,
+    });
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,11 +59,12 @@ const CreateTaskFormComponent = () => {
     
       // Step 4: Set the State
       console.log(formattedDateTime);
-      setFormData({
+       setFormData({
         ...formData,
         task_date: formattedDateTime,
       });
-      const response = await axios.post('http://localhost:5000/tasks/', formData);
+console.log(formData);
+      const response = await axios.post('http://localhost:5000/tasks/', {...formData, task_date: formattedDateTime,});
       console.log('Task created successfully:', response.data);
       navigat(`..`)
       // Optionally, reset the form or navigate to another page

@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 // import ErrorPage from "../pages/404"
 
-const TaskDetails = (props) => {
+const TaskManageDetails = (props) => {
   const userId = 1; // for just testing
   
 
@@ -155,4 +155,4 @@ const TaskDetails = (props) => {
   );
 };
 
-export default TaskDetails;
+export default TaskManageDetails;

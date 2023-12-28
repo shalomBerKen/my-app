@@ -7,7 +7,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
-import TaskListComponent from './TaskListComponent';
+import TaskListManager from './TaskListManager';
 import React, { useState, useEffect } from 'react';
 import ErrorPage from '../pages/404';
 import { fetchAdminTasks } from '../api';
@@ -63,7 +63,7 @@ export function TasksManager(params) {
           <CardHeader></CardHeader>
 
           <CardBody>
-            <TaskListComponent
+            <TaskListManager
               data={data}
               handleTaskToggle={handleTaskToggle}
             />

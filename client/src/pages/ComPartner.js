@@ -9,8 +9,6 @@ import {
     Text,
     Container,
     Checkbox,
-    // ButtonGroup, 
-    // Button
   } from '@chakra-ui/react';
   import {useState, useEffect} from 'react'
   import {useParams} from 'react-router'
@@ -21,20 +19,12 @@ import axios from 'axios';
   export default function ComPartner(props) {
     
     const { id } = useParams();
-    // const comName = props?.userData[id]?.comName;
-    // const tasks = props?.userData[id]?.tasks;
-    
-    // const [data, setData] = useState(tasks);
+
     const userId = 1; // for just testing
 
     const communityId = id;
     const [data, setData] = useState([]);
-    // const [error, setError] = useState(false);
-    // const handleTaskToggle = (index) => {
-    //   const updatedTasks = [...data];
-    //   updatedTasks.tasks[index].has_connection = !updatedTasks.tasks[index].has_connection;
-    //   setData(updatedTasks);
-    // };
+
     const handleCheckboxChange = async (taskId) => {
       try {
         const response = await axios.post(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
@@ -67,9 +57,6 @@ import axios from 'axios';
     }, [userId, communityId]);
 
 
-    // if (error){
-    //   return <ErrorPage/>
-    // }
     return (
       <>
         <Container maxW="container.md">
@@ -111,10 +98,6 @@ import axios from 'axios';
                     </Box>
                   );
                 }) : <><Heading size={'s'}color={'gray'}>There are still no tasks in this community</Heading></>}
-                {/* <ButtonGroup variant="outline" spacing="6"ml={6}>
-                  <Button colorScheme="blue">Save</Button>
-                  <Button>Cancel</Button>
-                </ButtonGroup> */}
               </Stack>
             </CardBody>
           </Card>

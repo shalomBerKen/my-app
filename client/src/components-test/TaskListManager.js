@@ -3,7 +3,7 @@ import React from 'react';
 import { StackDivider, Stack,} from '@chakra-ui/react';
 import TaskComponent from './TaskComponent';
 
-const TaskListComponent = ({ data, handleTaskToggle }) => {
+const TaskListManager = ({ data, handleTaskToggle }) => {
   return (
     <Stack divider={<StackDivider />} spacing="4">
       {data?.names?.map((task, index) => (
@@ -22,4 +22,4 @@ const TaskListComponent = ({ data, handleTaskToggle }) => {
   );
 };
 
-export default TaskListComponent;
+export default TaskListManager;
