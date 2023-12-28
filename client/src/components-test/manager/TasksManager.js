@@ -9,8 +9,8 @@ import {
 import { AddIcon } from '@chakra-ui/icons';
 import TaskListManager from './TaskListManager';
 import React, { useState, useEffect } from 'react';
-import ErrorPage from '../pages/404';
-import { fetchAdminTasks } from '../api';
+import ErrorPage from '../../pages/404';
+import { fetchAdminTasks } from '../../api';
 import { useParams, useNavigate } from 'react-router';
 
 export function TasksManager(params) {
@@ -59,7 +59,7 @@ export function TasksManager(params) {
           {data?.community?.community_details}
         </Heading>
         {/* Task List */}
-        <Card>
+        <Card mb={24}>
           <CardHeader></CardHeader>
 
           <CardBody>

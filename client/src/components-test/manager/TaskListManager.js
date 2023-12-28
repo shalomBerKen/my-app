@@ -1,13 +1,13 @@
 // TaskListComponent.js
 import React from 'react';
 import { StackDivider, Stack,} from '@chakra-ui/react';
-import TaskComponent from './TaskComponent';
+import TaskInListManage from './TaskInListManage';
 
 const TaskListManager = ({ data, handleTaskToggle }) => {
   return (
     <Stack divider={<StackDivider />} spacing="4">
       {data?.names?.map((task, index) => (
-        <TaskComponent
+        <TaskInListManage
           key={index}
           task={task}
           index={index}

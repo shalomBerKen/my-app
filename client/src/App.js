@@ -18,15 +18,15 @@ import { Routes, Route } from 'react-router-dom';
 // import { Communities } from './pages/communities';
 import { Home } from './pages/home';
 // import LogIn from './pages/login';
-import ComPartner from './pages/ComPartner';
-import ComManage from './pages/ComManage.test';
+import ComPartner from './pages/ComPartner.test';
+import ComManage from './pages/ComManage';
 // import ComManage from './ComManage.test';
 import Overview from './pages/Overview';
 import CreateCom from './pages/CreateCom';
 import ConnectCom from './pages/ConnectCom';
-import CreateTaskFormComponent from './components-test/CreateTaskFormComponent';
-import { TasksManager } from './components-test/TasksManager';
-import TaskManageDetails from './components-test/TaskManageDetails';
+import CreateTaskFormComponent from './components-test/manager/CreateTaskFormComponent';
+import { TasksManager } from './components-test/manager/TasksManager';
+import TaskManageDetails from './components-test/manager/TaskManageDetails';
 // import  {UserProvider}  from '';
 
 let userData1 = {

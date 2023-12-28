@@ -15,7 +15,7 @@ import {
 // import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { useNavigate} from "react-router-dom"
 
-const TaskComponent = ({ task, index, handleTaskToggle }) => {
+const TaskInListManage = ({ task, index, handleTaskToggle }) => {
   const navigat = useNavigate();
   return (
     <Box
@@ -45,4 +45,4 @@ const TaskComponent = ({ task, index, handleTaskToggle }) => {
   );
 };
 
-export default TaskComponent;
+export default TaskInListManage;

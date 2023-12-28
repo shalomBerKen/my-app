@@ -1,155 +1,91 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Heading,
-  StackDivider,
-  Stack,
-  Box,
-  Text,
-  Container,
-  // Checkbox,
-  ButtonGroup,
-  Button,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  MenuOptionGroup,
-  MenuItemOption,
-  FormControl,
-  FormLabel,
-  Input,
-  FormHelperText,
-} from '@chakra-ui/react';
-import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
-import { useParams } from 'react-router';
+import React, { useState, useEffect } from 'react';
+// import {
+//   Container,
+//   Heading,
+//   Card,
+//   CardHeader,
+//   CardBody,
+// } from '@chakra-ui/react';
+// import TaskListComponent from '../components-test/TaskListComponent';
+// import CreateTaskFormComponent from '../components-test/CreateTaskFormComponent';
 import ErrorPage from './404';
-export default function ComManage(props) {
+import { fetchAdminTasks } from '../api';
+import { useParams ,Outlet } from 'react-router';
+
+const ComManage = (props) => {
+    const userId = 1; // for just testing
   const { id } = useParams();
+  const communityId = id;
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
+  const handleTaskToggle = (index) => {
+    const updatedTasks = [...data];
+    updatedTasks[index].is_done = !updatedTasks[index].is_done;
+    setData(updatedTasks);
+  };
 
-  const comName = props?.userData[id]?.comName;
-  const tasks = props?.userData[id]?.tasks;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tasksData = await fetchAdminTasks(userId, communityId);
+        setData(tasksData);
+        setError()
+        // console.log(tasksData);
+      } catch (error) {
+        setError(error.message)
 
-  const [data, setData] = useState(tasks);
-  if (!props.userData[id]) {
+        // Handle error, e.g., show an error message to the user
+        console.error('Error fetching admin tasks:', error.message);
+      }
+    };
+
+    fetchData();
+  }, [userId, communityId]);
+
+  if (error) {
     return <ErrorPage />;
   }
+  // if (!data || data.length === 0) {
+  //   // Loading state or display a message when there is no data
+  //   return <div>Loading...</div>;
+  // }
+
   return (
     <>
+    <Outlet/>
+{/*     
       <Container maxW="container.md">
         <Heading size="md" textAlign={'center'} pb={12}>
-          {comName}
+          {data?.community?.community_name}
         </Heading>
-        <Card>
-          <CardHeader>
+
             <Heading size="md" textAlign={'center'} pb={12}>
-              Tasks status
+            {data?.community?.community_details}
             </Heading>
+        {/* Task List */}
+        {/* <Card>
+          <CardHeader>
           </CardHeader>
 
           <CardBody>
-            <Stack divider={<StackDivider />} spacing="4">
-              {data.map((task, index) => {
-                return (
-                  <>
-                    <Box
-                      p={'auto'}
-                      display={'flex'}
-                      justifyContent={'space-between'}
-                      alignItems={'center'}
-                    >
-                      <Menu closeOnSelect={false}>
-                        <MenuButton as={Button} colorScheme="blue">
-                          waiting
-                        </MenuButton>
-                        <MenuList minWidth="240px">
-                          <MenuOptionGroup title="volunteers" type="checkbox">
-                            {task.waiting[0] ? (
-                              task.waiting.map(user => {
-                                return (
-                                  <MenuItemOption
-                                    placement="left"
-                                    value={user.name}
-                                    isDisabled={task.disabled}
-                                  >
-                                    {user.name}
-                                  </MenuItemOption>
-                                );
-                              })
-                            ) : (
-                              <MenuItem>
-                                There are still no one waiting
-                              </MenuItem>
-                            )}
-                          </MenuOptionGroup>
-                        </MenuList>
-                      </Menu>
-                      <Box textAlign={'center'}>
-                        <Heading size="xs" textTransform="uppercase">
-                          {task.heder}
-                        </Heading>
-                        <Text fontSize="sm">{task.text}</Text>
-                      </Box>
-                      <Button
-                        colorScheme={task.disabled ? 'red' : 'teal'}
-                        variant="outline"
-                        w={6}
-                        // colorScheme='red'
-                        onClick={() => {
-                          tasks[index].disabled = !tasks[index].disabled;
-                          setData(tasks.map(task => ({ ...task })));
-                        }}
-                      >
-                        {task.disabled ? <LockIcon /> : <UnlockIcon />}
-                      </Button>
-                    </Box>
-                  </>
-                );
-              })}
-              <ButtonGroup variant="outline" spacing="6" ml={6}>
-                <Button colorScheme="blue">Save</Button>
-                <Button>Cancel</Button>
-              </ButtonGroup>
-            </Stack>
+            <TaskListComponent data={data} handleTaskToggle={handleTaskToggle} />
           </CardBody>
-        </Card>
-        <Card mt={3}>
+        </Card> */}
+
+        {/* Create Task Form */}
+        {/* <Card mt={3}>
           <CardHeader>
             <Heading size="md" textAlign={'center'} pb={12}>
               Create new task
             </Heading>
           </CardHeader>
           <CardBody>
-            <form>
-              <FormControl w={'xl'} m={'auto'} p={24} isRequired>
-                <FormLabel>Name</FormLabel>
-                <Input type="text" />
-                <FormHelperText>
-                  It is recommended to choose a short and catchy name.
-                </FormHelperText>
-                <br />
-                <FormLabel>Description</FormLabel>
-                <Input type="text" />
-                <FormHelperText>
-                  Describe the nature of your task and the goals you promote.
-                </FormHelperText>
-                <Button
-                  colorScheme="blue"
-                  mt={12}
-                  type="submit"
-                  onSubmit={e => {
-                    e.preventDefault();
-                  }}
-                >
-                  create
-                </Button>
-              </FormControl>
-            </form>
+            <CreateTaskFormComponent />
           </CardBody>
-        </Card>
-      </Container>
+        </Card> */}
+      {/* </Container> */} 
     </>
   );
-}
+};
+
+export default ComManage;
