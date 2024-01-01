@@ -6,7 +6,7 @@ import TaskInListPartner from './TaskInListPartner';
 const TaskListPartner = ({ data, handleTaskToggle }) => {
   return (
     <Stack divider={<StackDivider />} spacing="4">
-      {data?.names?.map((task, index) => (
+      {data?.tasks?.map((task, index) => (
         <TaskInListPartner
           key={index}
           task={task}
