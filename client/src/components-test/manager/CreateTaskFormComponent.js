@@ -6,10 +6,15 @@ import { FormControl, FormLabel, Input, FormHelperText, Button } from '@chakra-u
 
 
 
+
 const CreateTaskFormComponent = () => {
 
 
-  // const [currentDateTime, setCurrentDateTime] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const handleLocationSelect = (location) => {
+    setSelectedLocation(location);
+  };
 
 
 
@@ -32,12 +37,6 @@ const CreateTaskFormComponent = () => {
     });
   };
 
-  const setingFormData = (formattedDateTime) =>{
-    setFormData({
-      ...formData,
-      task_date: formattedDateTime,
-    });
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,6 +74,7 @@ console.log(formData);
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <FormControl w={'xl'} m={'auto'} p={24} isRequired>
         <FormLabel>Name</FormLabel>
@@ -98,6 +98,7 @@ console.log(formData);
         </Button>
       </FormControl>
     </form>
+    </>
   );
 };
 

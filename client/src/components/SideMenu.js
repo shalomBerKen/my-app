@@ -54,7 +54,7 @@ export default function SideMenu(props) {
           <h2>
             <AccordionButton>
               <Box as="span" flex="1" textAlign="left">
-                Communities I created
+              Communities I manage
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -82,7 +82,7 @@ export default function SideMenu(props) {
           <h2>
             <AccordionButton>
               <Box as="span" flex="1" textAlign="left">
-                Communities I volunteer
+              Communities I participate in
               </Box>
               <AccordionIcon />
             </AccordionButton>

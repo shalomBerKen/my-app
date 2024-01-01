@@ -11,6 +11,7 @@ router.get('/tasks/:id', taskUsersController.getUsersByTaskId);
 router.put('/:taskId/:userId', taskUsersController.updateTaskUser);
 
 router.post('/:taskId/:userId', taskUsersController.addTaskUser)
+router.delete('/:taskId/:userId', taskUsersController.deleteTaskUser);
 
 
 module.exports = router;

@@ -26,6 +26,8 @@ import CreateCom from './pages/CreateCom';
 import ConnectCom from './pages/ConnectCom';
 import CreateTaskFormComponent from './components-test/manager/CreateTaskFormComponent';
 import { TasksManager } from './components-test/manager/TasksManager';
+import { TasksPartner } from './components-test/partner/TasksPartner';
+import TaskPartnerDetails from './components-test/partner/TaskPartnerDetails';
 import TaskManageDetails from './components-test/manager/TaskManageDetails';
 // import  {UserProvider}  from '';
 
@@ -123,14 +125,19 @@ function App() {
             <Route path="home" element={<Overview userData={userData} />} />
             <Route path="new" element={<CreateCom userData={userData} setUserData={setUserData} />} />
             <Route path="connect" element={<ConnectCom userData={userData} setUserData={setUserData} />} />
+            
             <Route path="comp/:id" element={<ComPartner userData={userData.communities.partner} />}>
                 {/* here I wont to routes, one for all tasks and one for specific task*/}
+              <Route path='/comp/:id/' element={<TasksPartner />} />
+              <Route path='/comp/:id/:taskId' element={<TaskPartnerDetails />} />
             </Route>
+            
             <Route path="coma/:id" element={<ComManage userData={userData.communities.manag} />} >
               <Route path='/coma/:id/' element={<TasksManager />} />
               <Route path='/coma/:id/:taskId' element={<TaskManageDetails />} />
               <Route path='new-task' element={<CreateTaskFormComponent />} />
             </Route>
+          
           </Route>
         </Routes>
       {/* </UserProvider> */}

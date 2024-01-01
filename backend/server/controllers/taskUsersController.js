@@ -73,3 +73,24 @@ exports.addTaskUser = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
+
+exports.deleteTaskUser = async (req, res) => {
+  const userId = req.params.userId;
+  const taskId = req.params.taskId;
+
+  try {
+    const result = await db.query('DELETE FROM `task_users` WHERE `user_id` = ? AND `task_id` = ?', [userId, taskId]);
+    // console.log('DELETE FROM `task_users` WHERE `user_id` = ? AND `task_id` = ?', [userId, taskId]);
+    if (result.affectedRows > 0) {
+      res.json({ message: 'Task-user relationship deleted successfully' });
+    } else {
+      // console.log("delete");
+      res.status(404).json({ message: 'Task-user relationship not found' });
+    }
+  } catch (err) {
+    console.error('Error executing MySQL query: ', err);
+    res.status(500).send('Internal Server Error');
+  }
+};
+

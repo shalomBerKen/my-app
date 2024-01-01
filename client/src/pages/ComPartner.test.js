@@ -11,7 +11,7 @@ import {
     Checkbox,
   } from '@chakra-ui/react';
   import {useState, useEffect} from 'react'
-  import {useParams} from 'react-router'
+  import {useParams,Outlet} from 'react-router'
 // import ErrorPage from './404';
 import {fetchParticipantTasks} from "../api"
 import axios from 'axios';
@@ -27,19 +27,34 @@ import axios from 'axios';
 
     const handleCheckboxChange = async (taskId) => {
       try {
-        const response = await axios.post(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
-        const updatedTasks = data.tasks.map((task) => {
-          if (task.task_id === taskId) {
-            task.has_connection = !task.has_connection;
-          }
-          return task;
-        });
-        setData({ ...data, tasks: updatedTasks });
+        let response;
+    
+        if (data.tasks.find((task) => task.task_id === taskId)?.has_connection === 1) {
+          // If the checkbox is checked, delete the relationship
+          response = await axios.delete(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
+        } else {
+          // If the checkbox is unchecked, create the relationship
+          response = await axios.post(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
+        }
+    
+        if (response.status === 200) {
+          // Check the status code to ensure a successful response
+          const updatedTasks = data.tasks.map((task) => {
+            if (task.task_id === taskId) {
+              task.has_connection = !task.has_connection;
+            }
+            return task;
+          });
+    
+          setData({ ...data, tasks: updatedTasks });
+        } else {
+          console.error('Error updating task user:', response.statusText);
+        }
       } catch (error) {
         console.error('Error updating task user:', error.message);
       }
     };
-  
+    
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -77,6 +92,7 @@ import axios from 'axios';
                 {data?.tasks?.[0] ? data.tasks.map((task, index) => {
                   return (
                     <Box
+                      key={index}
                       p={'auto'}
                       // display={'flex'}
                       justifyContent={'center'}
@@ -88,7 +104,7 @@ import axios from 'axios';
                       </Heading>
                       <Text fontSize="sm">{task.task_details}</Text>
                       <Checkbox
-                        onChange={() => handleCheckboxChange(task.task_id)}
+                        onChange={() => handleCheckboxChange(task.task_id, task.has_connection)}
                         colorScheme="green"
                         defaultChecked={task.is_done === 1 ? (task.has_connection === 1 && task.has_approval === 1) : task.has_connection === 1}
                         isDisabled={task.is_done === 1}
@@ -101,6 +117,8 @@ import axios from 'axios';
               </Stack>
             </CardBody>
           </Card>
+
+          <Outlet/>
         </Container>
       </>
     );
