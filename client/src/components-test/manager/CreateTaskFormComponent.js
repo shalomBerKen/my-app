@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router';
 import axios from 'axios';
 import { FormControl, FormLabel, Input, FormHelperText, Button } from '@chakra-ui/react';
 
+import MapContainer from './map/GoogleMap'
+
 
 
 
@@ -98,6 +100,7 @@ console.log(formData);
         </Button>
       </FormControl>
     </form>
+      <MapContainer/>
     </>
   );
 };
