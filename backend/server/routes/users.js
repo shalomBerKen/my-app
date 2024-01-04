@@ -9,6 +9,7 @@ router.get('/:id', usersController.getUserById);
 router.get('/:id/tasks', usersController.getUserTasks); 
 
 router.post('/', usersController.createUser);
+router.post('/check-credentials', usersController.checkUserCredentials);
 
 router.put('/:id', usersController.updateUser);
  

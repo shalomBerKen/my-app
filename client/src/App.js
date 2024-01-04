@@ -17,7 +17,7 @@ import { Routes, Route } from 'react-router-dom';
 // import { TaskList } from './components/TaskList';
 // import { Communities } from './pages/communities';
 import { Home } from './pages/home';
-// import LogIn from './pages/login';
+import LogIn from './pages/login';
 import ComPartner from './pages/ComPartner.test';
 import ComManage from './pages/ComManage';
 // import ComManage from './ComManage.test';
@@ -119,8 +119,8 @@ function App() {
         </Grid>
       </Box>
         <Routes>
-          {/* <Route path="/" element={<LogIn userData={userData} />} /> */}
-          <Route path="/" element={<Home userData={userData} />}>
+          <Route path="/" element={<LogIn userData={userData} />} />
+          <Route  element={<Home userData={userData} />}>
             {/* <Route path="/"  element={<Overview userData={userData.communities}/>}/> */}
             <Route path="home" element={<Overview userData={userData} />} />
             <Route path="new" element={<CreateCom userData={userData} setUserData={setUserData} />} />

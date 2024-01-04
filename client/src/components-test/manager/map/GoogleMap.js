@@ -1,15 +1,14 @@
 // src/MapContainer.js
 import React, { useState } from 'react';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-// import config from './config';
 
 
 
 
 const MapContainer = () => {
   const [markerPosition, setMarkerPosition] = useState(null);
+  const [mapCenter, setMapCenter] = useState({ lat: -34.397, lng: 150.644 });
   const [response, setResponse] = useState('');
-  // const apiKey = config.googleMapsApi;
   
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -17,6 +16,7 @@ const MapContainer = () => {
 
   const onMapClick = (event) => {
     setMarkerPosition({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+    setMapCenter({ lat: event.latLng.lat(), lng: event.latLng.lng() });
     geocode({ location: event.latLng });
   };
 
@@ -40,8 +40,8 @@ const MapContainer = () => {
 
   return (
     <GoogleMap
-      mapContainerStyle={{ width: '500px', height: '500px' }}
-      center={{ lat: -34.397, lng: 150.644 }}
+      mapContainerStyle={{ width: '500px', height: '500px', margin: 'auto' }}
+      center={mapCenter}
       zoom={8}
       onClick={onMapClick}
     >

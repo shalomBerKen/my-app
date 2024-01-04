@@ -18,7 +18,7 @@ exports.getUserById = async (req, res) => {
   const userId = req.params.id;
 
   try {
-    const [rows, fields] = await db.query('SELECT * FROM users WHERE id_user = ?', [userId]);
+    const [rows, fields] = await db.query('SELECT * FROM users WHERE user_id = ?', [userId]);
 
     if (rows.length === 0) {
       res.status(404).json({ message: 'User not found' });
@@ -84,3 +84,19 @@ exports.updateUser = async (req, res) => {
 };
 
 
+exports.checkUserCredentials = async (req, res) => {
+  const { user_name, user_password } = req.body;
+
+  try {
+    const [rows, fields] = await db.query('SELECT * FROM users WHERE user_name = ? AND user_password = ?', [user_name, user_password]);
+
+    if (rows.length === 0) {
+      res.status(404).json({ message: 'User not found' });
+    } else {
+      res.send(rows[0]);
+    }
+  } catch (err) {
+    console.error('Error executing MySQL query: ', err);
+    res.status(500).send('Internal Server Error');
+  }
+};
