@@ -13,7 +13,7 @@ import { fetchAdminTasks } from '../api';
 import { useParams ,Outlet } from 'react-router';
 
 const ComManage = (props) => {
-    const userId = 1; // for just testing
+  const userId = localStorage.getItem('user_id');
   const { id } = useParams();
   const communityId = id;
   const [data, setData] = useState([]);

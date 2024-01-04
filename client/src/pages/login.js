@@ -12,19 +12,20 @@ import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
 export default function LogIn(props) {
-
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+
   function validateCredentials(values) {
     const errors = {};
-  
+
     if (!values.name) {
       errors.name = 'Name is required';
     }
-  
+
     if (!values.password) {
       errors.password = 'Password is required';
     }
-  
+
     return errors;
   }
 
@@ -33,7 +34,6 @@ export default function LogIn(props) {
       <Heading m={12}>log in</Heading>
       <Formik
         initialValues={{ name: '', password: '' }}
-
         onSubmit={async (values, actions) => {
           try {
             const response = await fetch('http://localhost:5000/users/check-credentials', {
@@ -46,26 +46,24 @@ export default function LogIn(props) {
                 user_password: values.password,
               }),
             });
-        
+
             if (response.ok) {
               // Authentication successful, get the user data from the response
               const userData = await response.json();
-        
+
               // Save user_id in local storage
               localStorage.setItem('user_id', userData.user_id);
-        
+
               // Navigate to the home page
               navigate('/home');
             } else {
               // Authentication failed, handle the error
-              // You may want to update state to show an error message
+              setErrorMessage('Incorrect name or password');
             }
           } catch (error) {
             console.error('Error authenticating user:', error);
           }
         }}
-        
-        
         validate={validateCredentials}
       >
         {(props) => (
@@ -73,7 +71,7 @@ export default function LogIn(props) {
             <Field name='name'>
               {({ field, form }) => (
                 <FormControl isInvalid={form.errors.name && form.touched.name}>
-                  <FormLabel>First name</FormLabel>
+                  <FormLabel>User name</FormLabel>
                   <Input {...field} placeholder='name' />
                   <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                 </FormControl>
@@ -90,6 +88,7 @@ export default function LogIn(props) {
                 </FormControl>
               )}
             </Field>
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <Button
               mt={4}
               colorScheme='teal'

@@ -15,7 +15,7 @@ export default function ConnectCom() {
 
     // Assuming you have user_id available (you may get it from your authentication system)
 
-    const user_id = 1; // just for example
+    const user_id = localStorage.getItem('user_id');
 
     // Validate if the input is not empty
     if (!input.trim()) {

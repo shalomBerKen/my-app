@@ -123,16 +123,16 @@ function App() {
           <Route  element={<Home userData={userData} />}>
             {/* <Route path="/"  element={<Overview userData={userData.communities}/>}/> */}
             <Route path="home" element={<Overview userData={userData} />} />
-            <Route path="new" element={<CreateCom userData={userData} setUserData={setUserData} />} />
-            <Route path="connect" element={<ConnectCom userData={userData} setUserData={setUserData} />} />
+            <Route path="new" element={<CreateCom  />} />
+            <Route path="connect" element={<ConnectCom />} />
             
-            <Route path="comp/:id" element={<ComPartner userData={userData.communities.partner} />}>
+            <Route path="comp/:id" element={<ComPartner />}>
                 {/* here I wont to routes, one for all tasks and one for specific task*/}
               <Route path='/comp/:id/' element={<TasksPartner />} />
               <Route path='/comp/:id/:taskId' element={<TaskPartnerDetails />} />
             </Route>
             
-            <Route path="coma/:id" element={<ComManage userData={userData.communities.manag} />} >
+            <Route path="coma/:id" element={<ComManage />} >
               <Route path='/coma/:id/' element={<TasksManager />} />
               <Route path='/coma/:id/:taskId' element={<TaskManageDetails />} />
               <Route path='new-task' element={<CreateTaskFormComponent />} />

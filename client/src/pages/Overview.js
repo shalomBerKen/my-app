@@ -10,7 +10,7 @@ export default function Overview(props){
 
   const [userMnagCom, setUserMnagCom] = useState();
   const [userPartCom, setUserPartCom] = useState();
-  const userId = 1; // Replace with the actual user ID you want to fetch
+  const userId = localStorage.getItem('user_id');
   // const { userId, setUserId } = useUser();
 
 

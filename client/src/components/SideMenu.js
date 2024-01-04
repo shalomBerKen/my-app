@@ -19,7 +19,7 @@ export default function SideMenu(props) {
   const [userMnagCom, setUserMnagCom] = useState();
   const [userPartCom, setUserPartCom] = useState();
   // const { userId, setUserId } = useUser();
-  const userId = 1; // Replace with the actual user ID you want to fetch
+  const userId = localStorage.getItem('user_id');
 
   useEffect(() => {
     const fetchUserData = async () => {

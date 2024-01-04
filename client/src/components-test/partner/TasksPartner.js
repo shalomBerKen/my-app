@@ -16,7 +16,7 @@ import {
   export function TasksPartner(params) {
   
       const navigate = useNavigate();
-    const userId = 1; // for just testing
+      const userId = localStorage.getItem('user_id');
     const { id } = useParams();
     const communityId = id;
     const [data, setData] = useState([]);

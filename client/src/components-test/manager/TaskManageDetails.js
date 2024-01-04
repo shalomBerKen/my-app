@@ -11,7 +11,7 @@ import {
 // import ErrorPage from "../pages/404"
 
 const TaskManageDetails = (props) => {
-  const userId = 1; // for just testing
+  const userId = localStorage.getItem('user_id');
   
 
   const { id, taskId } = useParams();

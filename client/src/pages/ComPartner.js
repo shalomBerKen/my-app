@@ -20,7 +20,7 @@ import axios from 'axios';
     
     const { id } = useParams();
 
-    const userId = 1; // for just testing
+    const userId = localStorage.getItem('user_id');
 
     const communityId = id;
     const [data, setData] = useState([]);

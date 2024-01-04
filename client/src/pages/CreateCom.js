@@ -10,7 +10,7 @@ import {
 import { useNavigate  } from 'react-router-dom';
 
 export default function CreateCom(props) {
-  const userId = 1; // for just testing
+  const userId = localStorage.getItem('user_id');
 
   const navigate  = useNavigate ();
 
