@@ -8,6 +8,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react'
+import TaskCheckbox from './TaskCheckbox';
 // import ErrorPage from "../pages/404"
 
 const TaskPartnerDetails = (props) => {
@@ -23,7 +24,7 @@ const TaskPartnerDetails = (props) => {
   
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/tasks/admin-one-task/${userId}/${communityId}/${taskId}`);
+      const response = await fetch(`http://localhost:5000/tasks/participant-one-task/${userId}/${communityId}/${taskId}`);
       const data = await response.json();
       setTaskData(data);
       setError(false)
@@ -36,29 +37,29 @@ const TaskPartnerDetails = (props) => {
   useEffect(() => {
     // Fetch data from the server and update the state
 
-    fetchData();
+    fetchData(); 
   }, [userId, communityId, taskId ]);
 
-  const handleCheckboxChange = async (taskId, userId, receivedApprov) => {
-    try {
-      const response = await fetch(`http://localhost:5000/taskusers/${taskId}/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ received_approv: receivedApprov ? 1 : 0 }),
-      });
+  // const handleCheckboxChange = async (taskId, userId, receivedApprov) => {
+  //   try {
+  //     const response = await fetch(`http://localhost:5000/taskusers/${taskId}/${userId}`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ received_approv: receivedApprov ? 1 : 0 }),
+  //     });
 
-      if (!response.ok) {
-        console.error('Failed to update data on the server');
-      }
+  //     if (!response.ok) {
+  //       console.error('Failed to update data on the server');
+  //     }
 
-      // Refetch data after updating
-      fetchData();
-    } catch (error) {
-      console.error('Error updating data:', error);
-    }
-  };
+  //     // Refetch data after updating
+  //     fetchData();
+  //   } catch (error) {
+  //     console.error('Error updating data:', error);
+  //   }
+  // };
 
   if (!taskData) {
     return <div>Loading...</div>;
@@ -96,14 +97,14 @@ const TaskPartnerDetails = (props) => {
                   <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
                     {/* <MenuItemOption> */}
                     {user.user_name}
-                    <Checkbox ml={3}
+                    {/* <Checkbox ml={3}
                     key={user.user_id}
                     placement="left"
                     value={true}
                     defaultChecked={true}
                     isDisabled={user.is_done}
                     onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
-                    ></Checkbox>
+                    ></Checkbox> */}
                     {/* </MenuItemOption> */}
                   </Heading>
                   </>
@@ -130,14 +131,14 @@ const TaskPartnerDetails = (props) => {
                   <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
                     {/* <MenuItemOption> */}
                     {user.user_name}
-                    <Checkbox ml={3}
+                    {/* <Checkbox ml={3}
                     key={user.user_id}
                     placement="left"
                     value={false}
                     defaultChecked={false}
                     isDisabled={user.is_done}
                     onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
-                    ></Checkbox>
+                    ></Checkbox> */}
                     {/* </MenuItemOption> */}
                   </Heading>
                   </>
@@ -149,6 +150,7 @@ const TaskPartnerDetails = (props) => {
         </AccordionItem>
       </Accordion>
       </Card>
+      <TaskCheckbox {...{ taskId:"", userId:"", hasConnection:"" , isDone:""}} />
     </Box>
     
     </Container>

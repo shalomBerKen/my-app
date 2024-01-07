@@ -11,6 +11,7 @@ router.get('/:id/users', tasksController.getTaskUsers);
 router.get('/admin/:userId/:communityId', communitiesTasksController.getTasksForCommunityAdmin);
 router.get('/admin-one-task/:userId/:communityId/:taskId', tasksController.getTaskByIdForAdmin);
 router.get('/participant/:userId/:communityId', communitiesTasksController.getTasksForCommunityParticipant);
+router.get('/participant-one-task/:userId/:communityId/:taskId', tasksController.getTaskByIdForParticipant);
 
 router.post('/', tasksController.createTask);
 

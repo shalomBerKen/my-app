@@ -8,6 +8,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react'
+import CopyId from './CopyId';
 // import ErrorPage from "../pages/404"
 
 const TaskManageDetails = (props) => {

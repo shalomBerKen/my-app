@@ -12,6 +12,7 @@ import React, { useState, useEffect } from 'react';
 import ErrorPage from '../../pages/404';
 import { fetchAdminTasks } from '../../api';
 import { useParams, useNavigate } from 'react-router';
+import CopyId from './CopyId';
 
 export function TasksManager(params) {
 
@@ -79,6 +80,7 @@ export function TasksManager(params) {
             Add New Task
           </Button>
         </Card>
+          <CopyId id={communityId}/>
 
         {/* Create Task Form */}
         {/* <Card mt={3}>

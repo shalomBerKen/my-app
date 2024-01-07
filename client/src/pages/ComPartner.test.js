@@ -61,7 +61,7 @@ import axios from 'axios';
           const tasksData = await fetchParticipantTasks(userId, communityId);
           setData(tasksData);
           // setError()
-          console.log(tasksData);
+          // console.log(tasksData);
         } catch (error) {
           // setError(error.message)
           console.error('Error fetching admin tasks:', error.message);
