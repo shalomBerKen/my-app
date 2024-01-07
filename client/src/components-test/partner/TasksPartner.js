@@ -51,13 +51,13 @@ import {
     return (
       <>
         <Container maxW="container.md">
-          <Heading size="md" textAlign={'center'} pb={12}>
+          {/* <Heading size="md" textAlign={'center'} pb={12}>
             {data?.community?.community_name}
           </Heading>
   
           <Heading size="md" textAlign={'center'} pb={12}>
             {data?.community?.community_details}
-          </Heading>
+          </Heading> */}
           {/* Task List */}
           <Card mb={24}>
             <CardHeader></CardHeader>
@@ -67,7 +67,7 @@ import {
                 data={data}
               />
             </CardBody>
-            <Button
+            {/* <Button
               w={40}
               m={6}
               rightIcon={<AddIcon />}
@@ -76,7 +76,7 @@ import {
               onClick={()=>navigate("new-task")}
             >
               Add New Task
-            </Button>
+            </Button> */}
           </Card>
   
           {/* Create Task Form */}

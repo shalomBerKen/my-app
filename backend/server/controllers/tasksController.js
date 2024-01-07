@@ -89,7 +89,7 @@ exports.getTaskByIdForParticipant = async (req, res) => {
         'WHERE tasks.task_id = ?',
         [taskId]
       );
-
+    
       if (rows.length === 0) {
         res.status(404).json({ message: 'Task not found' });
       } else {

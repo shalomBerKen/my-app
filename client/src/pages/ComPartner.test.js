@@ -87,7 +87,7 @@ import axios from 'axios';
         </Heading>
             </CardHeader>
   
-            <CardBody>
+            {/* <CardBody>
               <Stack divider={<StackDivider />} spacing="4">
                 {data?.tasks?.[0] ? data.tasks.map((task, index) => {
                   return (
@@ -115,10 +115,10 @@ import axios from 'axios';
                   );
                 }) : <><Heading size={'s'}color={'gray'}>There are still no tasks in this community</Heading></>}
               </Stack>
-            </CardBody>
+            </CardBody> */}
+          <Outlet/>
           </Card>
 
-          <Outlet/>
         </Container>
       </>
     );

@@ -25,29 +25,11 @@ const TaskCheckbox = ({ taskId, userId, hasConnection , isDone}) => {
           console.error('Error updating task user:', error.message);
         }
       };
-  const handleChange = async () => {
-    try {
-      let response;
 
-      if (hasConnection) {
-        response = await axios.delete(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
-      } else {
-        response = await axios.post(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
-      }
-
-      if (response.status === 200) {
-        handleCheckboxChange(taskId);
-      } else {
-        console.error('Error updating task user:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error updating task user:', error.message);
-    }
-  };
 
   return (
     <Checkbox
-      onChange={handleChange}
+      onChange={()=>{handleCheckboxChange(taskId)}}
       colorScheme="green"
       defaultChecked={hasConnection}
       isDisabled={isDone}

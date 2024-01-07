@@ -9,6 +9,7 @@ import {
   AccordionIcon,
 } from '@chakra-ui/react'
 import TaskCheckbox from './TaskCheckbox';
+import axios from 'axios';
 // import ErrorPage from "../pages/404"
 
 const TaskPartnerDetails = (props) => {
@@ -40,26 +41,35 @@ const TaskPartnerDetails = (props) => {
     fetchData(); 
   }, [userId, communityId, taskId ]);
 
-  // const handleCheckboxChange = async (taskId, userId, receivedApprov) => {
-  //   try {
-  //     const response = await fetch(`http://localhost:5000/taskusers/${taskId}/${userId}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ received_approv: receivedApprov ? 1 : 0 }),
-  //     });
+  const isUserMember = (usersArray, userId) => {
+    const userFound = usersArray.find(user => user.user_id == userId);
+    return userFound ;
+  };
 
-  //     if (!response.ok) {
-  //       console.error('Failed to update data on the server');
-  //     }
 
-  //     // Refetch data after updating
-  //     fetchData();
-  //   } catch (error) {
-  //     console.error('Error updating data:', error);
-  //   }
-  // };
+  const handleCheckboxChange = async () => {
+    try {
+      let response;
+
+      if (isUserMember(taskData, userId)) {
+        // If the checkbox is checked, delete the relationship
+        response = await axios.delete(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
+      } else {
+        // If the checkbox is unchecked, create the relationship
+        response = await axios.post(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
+      }
+
+      if (response.status === 200) {
+        // Check the status code to ensure a successful response
+        // Refetch data after updating
+        fetchData();
+      } else {
+        console.error('Error updating task user:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating task user:', error.message);
+    }
+  };
 
   if (!taskData) {
     return <div>Loading...</div>;
@@ -67,8 +77,6 @@ const TaskPartnerDetails = (props) => {
   const approvedVolunteers = taskData[0] ? taskData.filter((user) => user.received_approv === 1) : [];
   const waitingListVolunteers = taskData[0] ? taskData.filter((user) => user?.received_approv === 0) : [];
 
-
-  // Rest of the component rendering logic using taskData
   return (
     <Container maxW="container.md">
     <Box
@@ -80,7 +88,7 @@ const TaskPartnerDetails = (props) => {
       <Heading size="lg" m={6}>{taskData[0].task_name}</Heading>
       <Text m={6}>{taskData[0].task_details}</Text>
       {/* Add other details as needed */}
-      <Accordion allowMultiple>
+      <Accordion defaultIndex={[1]} allowMultiple>
         <AccordionItem>
           <h2>
             <AccordionButton>
@@ -94,18 +102,8 @@ const TaskPartnerDetails = (props) => {
           {approvedVolunteers.length > 0 ? (
               approvedVolunteers.map((user, userIndex) => (<>
                 
-                  <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
-                    {/* <MenuItemOption> */}
+                  <Heading size={'m'} key={userIndex} display={'flex'} justifyContent={'space-between'} defaultValue={user.user_name} type='checkbox'>
                     {user.user_name}
-                    {/* <Checkbox ml={3}
-                    key={user.user_id}
-                    placement="left"
-                    value={true}
-                    defaultChecked={true}
-                    isDisabled={user.is_done}
-                    onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
-                    ></Checkbox> */}
-                    {/* </MenuItemOption> */}
                   </Heading>
                   </>
                 ))
@@ -128,18 +126,8 @@ const TaskPartnerDetails = (props) => {
           {waitingListVolunteers.length > 0 ? (
               waitingListVolunteers.map((user, userIndex) => (<>
                 
-                  <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
-                    {/* <MenuItemOption> */}
+                  <Heading size={'m'} key={userIndex} display={'flex'} justifyContent={'space-between'} defaultValue={user.user_name} type='checkbox'>
                     {user.user_name}
-                    {/* <Checkbox ml={3}
-                    key={user.user_id}
-                    placement="left"
-                    value={false}
-                    defaultChecked={false}
-                    isDisabled={user.is_done}
-                    onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
-                    ></Checkbox> */}
-                    {/* </MenuItemOption> */}
                   </Heading>
                   </>
                 ))
@@ -150,9 +138,17 @@ const TaskPartnerDetails = (props) => {
         </AccordionItem>
       </Accordion>
       </Card>
-      <TaskCheckbox {...{ taskId:"", userId:"", hasConnection:"" , isDone:""}} />
+      <Checkbox
+          margin={12}
+          onChange={handleCheckboxChange}
+          colorScheme="green"
+          defaultChecked={isUserMember(taskData, userId)}
+          isDisabled={isUserMember(taskData, userId)?.is_done}
+        >
+          <b>I want it</b>
+        </Checkbox>
     </Box>
-    
+  {console.log()}
     </Container>
   );
 };
