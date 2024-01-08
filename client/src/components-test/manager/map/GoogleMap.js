@@ -7,7 +7,7 @@ import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 const MapContainer = () => {
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [mapCenter, setMapCenter] = useState({ lat: -34.397, lng: 150.644 });
+  const [mapCenter, setMapCenter] = useState({lat: 31.99, lng: 34.89});
   const [response, setResponse] = useState('');
   
   const { isLoaded, loadError } = useJsApiLoader({

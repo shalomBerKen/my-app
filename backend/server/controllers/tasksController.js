@@ -170,8 +170,8 @@ exports.updateTask = async (req, res) => {
 
   try {
     const [result] = await db.query(
-      'UPDATE tasks SET task_name = ?, task_details = ?, task_date = ?, is_done = ? WHERE id_task = ?',
-      [task_name, task_details, task_date, is_done, taskId]
+      'UPDATE tasks SET task_name = ?, task_details = ?, is_done = ? WHERE task_id = ?',
+      [task_name, task_details, is_done, taskId]
     );
 
     if (result.affectedRows === 0) {

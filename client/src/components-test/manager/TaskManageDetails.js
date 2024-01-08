@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Heading, Text, Container,Card , Checkbox} from '@chakra-ui/react';
+import { Box, Heading, Text, Container,Card , Checkbox, Switch, Stack } from '@chakra-ui/react';
 import {
   Accordion,
   AccordionItem,
@@ -8,7 +8,6 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react'
-import CopyId from './CopyId';
 // import ErrorPage from "../pages/404"
 
 const TaskManageDetails = (props) => {
@@ -17,8 +16,11 @@ const TaskManageDetails = (props) => {
 
   const { id, taskId } = useParams();
   const communityId = id
-  const [taskData, setTaskData] = useState(null);
   const [error, setError] = useState(false);
+  const [taskData, setTaskData] = useState(null);
+  const [isTaskDone, setIsTaskDone] = useState();
+
+
 
 
   
@@ -27,6 +29,7 @@ const TaskManageDetails = (props) => {
       const response = await fetch(`http://localhost:5000/tasks/admin-one-task/${userId}/${communityId}/${taskId}`);
       const data = await response.json();
       setTaskData(data);
+      setIsTaskDone(data[0]?.is_done === 0)
       setError(false)
     } catch (error) {
       setError(true)
@@ -60,6 +63,28 @@ const TaskManageDetails = (props) => {
       console.error('Error updating data:', error);
     }
   };
+
+  const handleSwitchChange = async (taskName, taskDetails, taskId, isDone) => {
+    try {
+      const response = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ task_name: taskName, task_details: taskDetails ,is_done: isDone ? 0 : 1 }),
+      });
+  
+      if (!response.ok) {
+        console.error('Failed to update task status on the server');
+      } else {
+        // Update the local state
+        setIsTaskDone(isDone);
+      }
+    } catch (error) {
+      console.error('Error updating task status:', error);
+    }
+  };
+  
 
   if (!taskData) {
     return <div>Loading...</div>;
@@ -102,7 +127,7 @@ const TaskManageDetails = (props) => {
                     placement="left"
                     value={true}
                     defaultChecked={true}
-                    isDisabled={user.is_done}
+                    isDisabled={isTaskDone == 0}
                     onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
                     ></Checkbox>
                     {/* </MenuItemOption> */}
@@ -136,7 +161,7 @@ const TaskManageDetails = (props) => {
                     placement="left"
                     value={false}
                     defaultChecked={false}
-                    isDisabled={user.is_done}
+                    isDisabled={isTaskDone == 0}
                     onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
                     ></Checkbox>
                     {/* </MenuItemOption> */}
@@ -150,6 +175,15 @@ const TaskManageDetails = (props) => {
         </AccordionItem>
       </Accordion>
       </Card>
+      <Stack margin={6}>
+      <Text color={'gray'}>When the task is done, please lock it by turning the switch gray.</Text>
+      <Switch
+          defaultChecked={isTaskDone}
+          size='lg'
+          onChange={() => handleSwitchChange(taskData[0].task_name,taskData[0].task_details,taskId, !isTaskDone)}
+        />
+
+      </Stack>
     </Box>
     
     </Container>

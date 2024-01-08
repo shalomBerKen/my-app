@@ -2,49 +2,58 @@ import {SimpleGrid,Card,CardHeader,Heading, CardBody, Text, CardFooter, Button, 
 import { Link,Outlet } from 'react-router-dom';
 import React, { useState, useEffect, } from 'react';
 import { fetchUserMnagCom, fetchUserPartCom } from '../api';
+import axios from 'axios';
 // import {UserContext} from '../App'
 // import  {useUser}  from '..context/UserContext';
 
 
 export default function Overview(props){
-
+  const [userData, setUserData] = useState();
   const [userMnagCom, setUserMnagCom] = useState();
   const [userPartCom, setUserPartCom] = useState();
   const userId = localStorage.getItem('user_id');
   // const { userId, setUserId } = useUser();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/users/${userId}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchMnagData = async () => {
       try {
-        const userData = await fetchUserMnagCom(userId);
-        setUserMnagCom(userData);
+        const userMnagData = await fetchUserMnagCom(userId);
+        setUserMnagCom(userMnagData);
       } catch (error) {
         // Handle the error, if needed
       }
     };
 
-    fetchUserData();
+    fetchMnagData();
   }, [userId]);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchPartData = async () => {
       try {
-        const userData = await fetchUserPartCom(userId);
-        setUserPartCom(userData);
+        const userPartData = await fetchUserPartCom(userId);
+        setUserPartCom(userPartData);
       } catch (error) {
         // Handle the error, if needed
       }
     };
 
-    fetchUserData();
+    fetchPartData();
   }, [userId]);
 
-  const userName = props.userData.userName
-  // const {partner} = props.userData.communities;
-  // const { manag} = props.userData.communities;
-
-  // const user = useContext(UserContext);
+  const userName = userData.user_name
 
     return(
         <>
