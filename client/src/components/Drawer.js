@@ -1,12 +1,11 @@
 import {
   Drawer,
   DrawerBody,
-  // DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
+  DrawerFooter,
   DrawerCloseButton,
-  // Container,
 } from '@chakra-ui/react';
 
 import React from 'react';
@@ -50,6 +49,13 @@ export default function DrawerBar(props) {
             <SideMenu userData={props.userData}/>
 
           </DrawerBody>
+          <DrawerFooter>
+          <Link to={"/"}>
+            <Button colorScheme="teal" variant="ghost" onClick={()=>{onClose() ; localStorage.setItem('user_id', "");}}>
+              Log Out
+            </Button>
+            </Link>
+            </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>
