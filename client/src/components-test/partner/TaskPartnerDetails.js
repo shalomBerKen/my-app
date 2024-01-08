@@ -100,12 +100,12 @@ const TaskPartnerDetails = (props) => {
           </h2>
           <AccordionPanel pb={4}>
           {approvedVolunteers.length > 0 ? (
-              approvedVolunteers.map((user, userIndex) => (<>
+              approvedVolunteers.map((user, userIndex) => (<div key={user.user_name}>
                 
                   <Heading size={'m'} key={userIndex} display={'flex'} justifyContent={'space-between'} defaultValue={user.user_name} type='checkbox'>
                     {user.user_name}
                   </Heading>
-                  </>
+                  </div>
                 ))
             ) : (
               <Heading size={'s'}color={'gray'}>There are still no Approved volunteers</Heading>
@@ -124,12 +124,12 @@ const TaskPartnerDetails = (props) => {
           </h2>
           <AccordionPanel pb={4}>
           {waitingListVolunteers.length > 0 ? (
-              waitingListVolunteers.map((user, userIndex) => (<>
+              waitingListVolunteers.map((user, userIndex) => (<div key={user.user_name}>
                 
                   <Heading size={'m'} key={userIndex} display={'flex'} justifyContent={'space-between'} defaultValue={user.user_name} type='checkbox'>
                     {user.user_name}
                   </Heading>
-                  </>
+                  </div>
                 ))
             ) : (
               <Heading size={'s'} color={'gray'}>There is no waiting list yet</Heading>

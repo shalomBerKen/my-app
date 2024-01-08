@@ -106,7 +106,7 @@ const TaskManageDetails = (props) => {
       <Text m={6}>{taskData[0].task_details}</Text>
       {/* Add other details as needed */}
       <Accordion allowMultiple>
-        <AccordionItem>
+        <AccordionItem >
           <h2>
             <AccordionButton>
               <Box as="span" flex='1' textAlign='left'>
@@ -117,9 +117,9 @@ const TaskManageDetails = (props) => {
           </h2>
           <AccordionPanel pb={4}>
           {approvedVolunteers.length > 0 ? (
-              approvedVolunteers.map((user, userIndex) => (<>
+              approvedVolunteers.map((user, userIndex) => (<div key={user.user_id}>
                 
-                  <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
+                  <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={user.user_id} defaultValue={user.user_name} type='checkbox'>
                     {/* <MenuItemOption> */}
                     {user.user_name}
                     <Checkbox ml={3}
@@ -132,7 +132,7 @@ const TaskManageDetails = (props) => {
                     ></Checkbox>
                     {/* </MenuItemOption> */}
                   </Heading>
-                  </>
+                  </div>
                 ))
             ) : (
               <Heading size={'s'}color={'gray'}>There are still no Approved volunteers</Heading>
@@ -151,9 +151,9 @@ const TaskManageDetails = (props) => {
           </h2>
           <AccordionPanel pb={4}>
           {waitingListVolunteers.length > 0 ? (
-              waitingListVolunteers.map((user, userIndex) => (<>
+              waitingListVolunteers.map((user, userIndex) => (< div key={user.user_id}>
                 
-                  <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={userIndex} defaultValue={user.user_name} type='checkbox'>
+                  <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={user.user_id} defaultValue={user.user_name} type='checkbox'>
                     {/* <MenuItemOption> */}
                     {user.user_name}
                     <Checkbox ml={3}
@@ -166,7 +166,7 @@ const TaskManageDetails = (props) => {
                     ></Checkbox>
                     {/* </MenuItemOption> */}
                   </Heading>
-                  </>
+                  </div>
                 ))
             ) : (
               <Heading size={'s'} color={'gray'}>There is no waiting list yet</Heading>

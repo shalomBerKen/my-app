@@ -34,7 +34,6 @@ export default function Overview(props){
       try {
         const userMnagData = await fetchUserMnagCom(userId);
         setUserMnagCom(userMnagData);
-        console.log(userMnagData);
       } catch (error) {
         // Handle the error, if needed
       }
@@ -70,7 +69,7 @@ export default function Overview(props){
         {/* <Heading size={'s'} m={8}>
             My communities
         </Heading> */}
-        <Tabs variant='soft-rounded' colorScheme='green'isFitted>
+        <Tabs variant='soft-rounded' colorScheme="teal" isFitted>
           <TabList>
             <Tab>manage communities</Tab>
             <Tab>participate communities</Tab>
