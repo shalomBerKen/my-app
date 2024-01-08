@@ -43,7 +43,6 @@ exports.updateTaskUser = async (req, res) => {
   const taskId = req.params.taskId;
   const userId = req.params.userId;
   const { received_approv } = req.body;
-  console.log(received_approv)
 
   try {
     const [result] = await db.query('UPDATE `task_users` SET `received_approv` = ? WHERE (`task_id` = ?) and (`user_id` = ?)',[received_approv, taskId, userId]);
