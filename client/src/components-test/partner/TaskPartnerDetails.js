@@ -14,8 +14,6 @@ import axios from 'axios';
 
 const TaskPartnerDetails = (props) => {
   const userId = localStorage.getItem('user_id');
-  
-
   const { id, taskId } = useParams();
   const communityId = id
   const [taskData, setTaskData] = useState(null);
@@ -50,8 +48,9 @@ const TaskPartnerDetails = (props) => {
   const handleCheckboxChange = async () => {
     try {
       let response;
-
+      console.log(taskData, userId);
       if (isUserMember(taskData, userId)) {
+
         // If the checkbox is checked, delete the relationship
         response = await axios.delete(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
       } else {

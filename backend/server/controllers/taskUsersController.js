@@ -79,7 +79,7 @@ exports.deleteTaskUser = async (req, res) => {
   const taskId = req.params.taskId;
 
   try {
-    const result = await db.query('DELETE FROM `task_users` WHERE `user_id` = ? AND `task_id` = ?', [userId, taskId]);
+    const [result] = await db.query('DELETE FROM `task_users` WHERE `user_id` = ? AND `task_id` = ?', [userId, taskId]);
     // console.log('DELETE FROM `task_users` WHERE `user_id` = ? AND `task_id` = ?', [userId, taskId]);
     if (result.affectedRows > 0) {
       res.json({ message: 'Task-user relationship deleted successfully' });

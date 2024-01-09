@@ -1,6 +1,6 @@
 // TaskListComponent.js
 import React from 'react';
-import { StackDivider, Stack,} from '@chakra-ui/react';
+import { StackDivider, Stack, Text} from '@chakra-ui/react';
 import TaskInListManage from './TaskInListManage';
 
 const TaskListManager = ({ data, handleTaskToggle }) => {
@@ -14,10 +14,7 @@ const TaskListManager = ({ data, handleTaskToggle }) => {
           handleTaskToggle={handleTaskToggle}
         />
       ))}
-      {/* <ButtonGroup variant="outline" spacing="6" ml={6}>
-        <Button colorScheme="blue">Save</Button>
-        <Button>Cancel</Button>
-      </ButtonGroup> */}
+      {data?.names?.length === 0 && <Text color={'gray'}>There are currently no tasks in this community yet.</Text>}
     </Stack>
   );
 };

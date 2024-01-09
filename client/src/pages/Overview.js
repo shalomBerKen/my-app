@@ -69,7 +69,7 @@ export default function Overview(props){
         {/* <Heading size={'s'} m={8}>
             My communities
         </Heading> */}
-        <Tabs variant='soft-rounded' colorScheme="teal" isFitted>
+        <Tabs variant='soft-rounded' colorScheme="teal"isFitted>
           <TabList>
             <Tab>manage communities</Tab>
             <Tab>participate communities</Tab>

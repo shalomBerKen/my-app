@@ -86,36 +86,6 @@ import axios from 'axios';
           {data?.community?.community_details}
         </Heading>
             </CardHeader>
-  
-            {/* <CardBody>
-              <Stack divider={<StackDivider />} spacing="4">
-                {data?.tasks?.[0] ? data.tasks.map((task, index) => {
-                  return (
-                    <Box
-                      key={index}
-                      p={'auto'}
-                      // display={'flex'}
-                      justifyContent={'center'}
-                      alignItems={'center'}
-                      textAlign={'center'}
-                    >
-                      <Heading size="xs" textTransform="uppercase">
-                        {task.task_name}
-                      </Heading>
-                      <Text fontSize="sm">{task.task_details}</Text>
-                      <Checkbox
-                        onChange={() => handleCheckboxChange(task.task_id, task.has_connection)}
-                        colorScheme="green"
-                        defaultChecked={task.is_done === 1 ? (task.has_connection === 1 && task.has_approval === 1) : task.has_connection === 1}
-                        isDisabled={task.is_done === 1}
-                      >
-                        I want it
-                      </Checkbox>
-                    </Box>
-                  );
-                }) : <><Heading size={'s'}color={'gray'}>There are still no tasks in this community</Heading></>}
-              </Stack>
-            </CardBody> */}
           <Outlet/>
           </Card>
 

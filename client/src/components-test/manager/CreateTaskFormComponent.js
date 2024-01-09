@@ -2,7 +2,7 @@ import React, { useState  } from 'react';
 import { useParams, useNavigate } from 'react-router';
 
 import axios from 'axios';
-import { FormControl, FormLabel, Input, FormHelperText, Button } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, FormHelperText, Button , Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box} from '@chakra-ui/react';
 
 import MapContainer from './map/GoogleMap'
 
@@ -100,7 +100,24 @@ console.log(formData);
         </Button>
       </FormControl>
     </form>
-      <MapContainer/>
+    <div style={{ width: '600px', margin: 'auto', marginBottom: "16px" }}>
+      <Accordion>
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box as="span" flex='1' textAlign='left'>
+                Add map to your task
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <MapContainer/>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+      </div>
+
     </>
   );
 };
