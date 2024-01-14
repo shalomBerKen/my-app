@@ -12,7 +12,7 @@ import {
 import { Formik, Form, Field } from 'formik';
 import { useNavigate , Link as ReactRouterLink} from 'react-router-dom';
 
-export default function LogIn(props) {
+export default function SignUp() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -32,12 +32,12 @@ export default function LogIn(props) {
 
   return (
     <Container textAlign={'center'} mt={48}>
-      <Heading m={12}>log in</Heading>
+      <Heading m={12}>Sign Up</Heading>
       <Formik
         initialValues={{ name: '', password: '' }}
         onSubmit={async (values, actions) => {
           try {
-            const response = await fetch('http://localhost:5000/users/check-credentials', {
+            const response = await fetch('http://localhost:5000/users/', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -49,21 +49,15 @@ export default function LogIn(props) {
             });
 
             if (response.ok) {
-              // Authentication successful, get the user data from the response
-              const userData = await response.json();
-
-              // Save user_id in local storage
-              localStorage.setItem('user_id', userData.user_id);
-
-              // Navigate to the home page
-              // Authentication successful, navigate to the home page
-              navigate('/home');
+              // Registration successful, you may handle the response as needed
+              // For example, redirect to login page
+              navigate('/login');
             } else {
-              // Authentication failed, handle the error
-              setErrorMessage('Incorrect name or password');
+              // Registration failed, handle the error
+              setErrorMessage('Registration failed. Please try again.');
             }
           } catch (error) {
-            console.error('Error authenticating user:', error);
+            console.error('Error registering user:', error);
           }
         }}
         validate={validateCredentials}
@@ -91,20 +85,18 @@ export default function LogIn(props) {
               )}
             </Field>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-            <Button mt={4} colorScheme='teal' isLoading={props.isSubmitting} type='submit'>
+            <Button
+              mt={4}
+              colorScheme='teal'
+              isLoading={props.isSubmitting}
+              type='submit'
+            >
               Submit
             </Button>
-
-            {/* Add the "Sign up" link */}
-            {/* <Link to="/signup">
-              <p style={{ marginTop: '16px' }}>
-                Don't have an account yet? <b>Sign up</b>
-              </p>
-            </Link> */}
-            <ChakraLink as={ReactRouterLink} to='/signup'>
+            <ChakraLink as={ReactRouterLink} to='/login'>
              <p style={{ marginTop: '16px' }}>
 
-               Don't have an account yet? <b>Sign up</b>
+             Do you already have an account? <b>Login</b>
              </p>
             </ChakraLink>
           </Form>

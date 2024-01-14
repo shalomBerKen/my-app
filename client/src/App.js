@@ -29,6 +29,7 @@ import { TasksManager } from './components-test/manager/TasksManager';
 import { TasksPartner } from './components-test/partner/TasksPartner';
 import TaskPartnerDetails from './components-test/partner/TaskPartnerDetails';
 import TaskManageDetails from './components-test/manager/TaskManageDetails';
+import SignUp from './pages/SignUp';
 // import  {UserProvider}  from '';
 
 let userData1 = {
@@ -120,6 +121,8 @@ function App() {
       </Box>
         <Routes>
           <Route path="/" element={<LogIn userData={userData} />} />
+          <Route path='/signup' element={<SignUp/>}/>
+          <Route path="/login" element={<LogIn userData={userData} />} />
           <Route  element={<Home userData={userData} />}>
             {/* <Route path="/"  element={<Overview userData={userData.communities}/>}/> */}
             <Route path="home" element={<Overview userData={userData} />} />

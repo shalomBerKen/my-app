@@ -6,6 +6,7 @@ import {
   AccordionButton,
   Box,
   Wrap,
+  Text,
 } from '@chakra-ui/react';
 import { Button, Stack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
@@ -71,8 +72,8 @@ export default function SideMenu(props) {
                     </Link>
                   );
                 })}
-                <br />
-
+                {userMnagCom?.length === 0 && <Text color={'gray'}>You don't have any communities you manage yet.</Text>}
+                
               </Wrap>
             </Stack>
           </AccordionPanel>
@@ -99,6 +100,7 @@ export default function SideMenu(props) {
                     </Link>
                   );
                 })}
+                {userPartCom?.length === 0 && <Text color={'gray'}>You don't have any communities you're participating in yet.</Text>}
               </Wrap>
             </Stack>
           </AccordionPanel>
