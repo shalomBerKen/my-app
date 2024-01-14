@@ -51,6 +51,15 @@ exports.createUser = async (req, res) => {
   const { user_name, user_password } = req.body;
 
   try {
+    // Check if the username already exists
+    const [existingUser] = await db.query('SELECT user_id FROM users WHERE user_name = ?', [user_name]);
+
+    if (existingUser.length > 0) {
+      // Username already exists, send an appropriate message
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+
+    // If the username is unique, proceed with the insertion
     const [result] = await db.query('INSERT INTO users (user_name, user_password) VALUES (?, ?)', [user_name, user_password]);
     const insertedUserId = result.insertId;
 

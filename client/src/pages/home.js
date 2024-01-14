@@ -9,16 +9,6 @@ export function Home(props) {
     <>
     <DrawerBar userData={props.userData}/>
     <Outlet/>
-      {/* <Container maxW="container.xl">
-        <Communities/> */}
-        {/* <Tablet />
-        <Routes>
-          <Route path="/communities" element={<Communities />} />
-          <Route path="/join" element={<Communities />} />
-          <Route path="/manage" element={<TaskList />} />
-          <Route />
-        </Routes> */}
-      {/* </Container> */}
     </>
   );
 }
