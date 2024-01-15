@@ -26,6 +26,7 @@ const TaskPartnerDetails = (props) => {
       const response = await fetch(`http://localhost:5000/tasks/participant-one-task/${userId}/${communityId}/${taskId}`);
       const data = await response.json();
       setTaskData(data);
+      console.log(data);
       setError(false)
     } catch (error) {
       setError(true)
@@ -142,7 +143,7 @@ const TaskPartnerDetails = (props) => {
           onChange={handleCheckboxChange}
           colorScheme="green"
           defaultChecked={isUserMember(taskData, userId)}
-          isDisabled={isUserMember(taskData, userId)?.is_done}
+          isDisabled={taskData?.[0]?.is_done}
         >
           <b>I want it</b>
         </Checkbox>
