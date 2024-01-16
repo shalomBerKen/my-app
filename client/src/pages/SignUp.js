@@ -72,7 +72,7 @@ export default function SignUp() {
               {({ field, form }) => (
                 <FormControl isInvalid={form.errors.name && form.touched.name}>
                   <FormLabel>User name</FormLabel>
-                  <Input {...field} placeholder='name' />
+                  <Input {...field} placeholder='user name' />
                   <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                 </FormControl>
               )}
@@ -88,7 +88,7 @@ export default function SignUp() {
                     {...field}
                     pr='4.5rem'
                     type={show ? 'text' : 'password'}
-                    placeholder='Enter password'
+                    placeholder='password'
                   />
                   <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>
