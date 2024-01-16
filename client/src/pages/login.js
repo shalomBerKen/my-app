@@ -7,6 +7,8 @@ import {
   Button,
   Container,
   Heading,
+  InputRightElement,
+  InputGroup,
   Link  as  ChakraLink
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
@@ -14,6 +16,8 @@ import { useNavigate , Link as ReactRouterLink} from 'react-router-dom';
 
 export default function LogIn(props) {
   const navigate = useNavigate();
+  const [show, setShow] = React.useState(false)
+  const handleClick = () => setShow(!show)
   const [errorMessage, setErrorMessage] = useState('');
 
   function validateCredentials(values) {
@@ -85,10 +89,27 @@ export default function LogIn(props) {
                   isInvalid={form.errors.password && form.touched.password}
                 >
                   <FormLabel>Password</FormLabel>
-                  <Input {...field} placeholder='password' />
+                  <InputGroup size='md'>
+                  <Input
+                    {...field}
+                    pr='4.5rem'
+                    type={show ? 'text' : 'password'}
+                    placeholder='Enter password'
+                  />
+                  <InputRightElement width='4.5rem'>
+                    <Button h='1.75rem' size='sm' onClick={handleClick}>
+                      {show ? 'Hide' : 'Show'}
+                    </Button>
+                  </InputRightElement>
+                  </InputGroup>
+
+
+
+                  {/* <Input {...field} placeholder='password' /> */}
                   <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                 </FormControl>
               )}
+              
             </Field>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <Button mt={4} colorScheme='teal' isLoading={props.isSubmitting} type='submit'>
