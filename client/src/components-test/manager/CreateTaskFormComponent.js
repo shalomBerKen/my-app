@@ -29,6 +29,7 @@ const CreateTaskFormComponent = () => {
     task_details: '',
     task_date: '',
     is_done: false,
+    address: '',
   });
 
   const handleChange = (e) => {
@@ -64,7 +65,7 @@ const CreateTaskFormComponent = () => {
         ...formData,
         task_date: formattedDateTime,
       });
-console.log(formData);
+// console.log(formData);
       const response = await axios.post('http://localhost:5000/tasks/', {...formData, task_date: formattedDateTime,});
       console.log('Task created successfully:', response.data);
       navigat(`..`)
@@ -94,6 +95,18 @@ console.log(formData);
         />
         <FormHelperText>
           Describe the nature of your task and the goals you promote.
+        </FormHelperText>
+        <br />
+        <FormLabel isRequired={false}>Address (Optional)</FormLabel>
+        <Input
+          isRequired={false}
+          type="text"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+        />
+        <FormHelperText>
+          Provide an address if needed.
         </FormHelperText>
         <Button colorScheme="blue" mt={12} type="submit" >
           create
