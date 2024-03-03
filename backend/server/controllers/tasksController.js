@@ -124,7 +124,7 @@ exports.getTaskUsers = async (req, res) => {
 
 
 exports.createTask = async (req, res) => {
-  const { community_id, task_name, task_details, task_date, is_done } = req.body;
+  const { community_id, task_name, task_details, task_date, is_done, address } = req.body;
 
   let connection;
 
@@ -136,8 +136,8 @@ exports.createTask = async (req, res) => {
     await connection.beginTransaction();
 
     const [taskResult] = await connection.query(
-      'INSERT INTO tasks (community_id, task_name, task_details, task_date, is_done) VALUES (?, ?, ?, ?, ?)',
-      [community_id, task_name, task_details, task_date, is_done]
+      'INSERT INTO tasks (community_id, task_name, task_details, task_date, is_done ,location) VALUES (?, ?, ?, ?, ?, ?)',
+      [community_id, task_name, task_details, task_date, is_done, address]
     );
 
     // Commit the transaction if both steps are successful
