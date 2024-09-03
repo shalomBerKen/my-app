@@ -11,11 +11,11 @@ import {
 const MapContainer = ({ formData, handleChange }) => {
   const [markerPosition, setMarkerPosition] = useState(null);
   const [mapCenter, setMapCenter] = useState({ lat: 31.99, lng: 34.89 });
-  const [inputValue, setInputValue] = useState('');
   const [response, setResponse] = useState('');
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    
   });
 
   const onMapClick = event => {
@@ -24,9 +24,6 @@ const MapContainer = ({ formData, handleChange }) => {
     geocode({ location: event.latLng });
   };
 
-  const handleInputChange = e => {
-    setInputValue(e.target.value);
-  };
 
   const handleSearch = () => {
     // geocode({ address: inputValue });

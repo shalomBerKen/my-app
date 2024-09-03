@@ -4,10 +4,10 @@ import { Outlet } from 'react-router-dom';
 // import { Communities } from './communities';
 // import { TaskList } from '../components/TaskList';
 import DrawerBar from '../components/Drawer';
-export function Home(props) {
+export function Home() {
   return (
     <>
-    <DrawerBar userData={props.userData}/>
+    <DrawerBar/>
     <Outlet/>
     </>
   );

@@ -8,11 +8,10 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react'
-import TaskCheckbox from './TaskCheckbox';
 import axios from 'axios';
 // import ErrorPage from "../pages/404"
 
-const TaskPartnerDetails = (props) => {
+const TaskPartnerDetails = () => {
   const userId = localStorage.getItem('user_id');
   const { id, taskId } = useParams();
   const communityId = id
@@ -28,9 +27,9 @@ const TaskPartnerDetails = (props) => {
       setTaskData(data);
       console.log(data);
       setError(false)
-    } catch (error) {
+    } catch (e) {
       setError(true)
-      console.error('Error fetching data:', error);
+      console.error('Error fetching data:', error || e);
     }
   };
   

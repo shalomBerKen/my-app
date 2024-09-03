@@ -9,7 +9,7 @@ import axios from 'axios';
 // import  {useUser}  from '..context/UserContext';
 
 
-export default function Overview(props){
+export default function Overview(){
   const [userData, setUserData] = useState();
   const [userMnagCom, setUserMnagCom] = useState();
   const [userPartCom, setUserPartCom] = useState();

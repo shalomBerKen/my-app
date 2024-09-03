@@ -14,7 +14,7 @@ import {
 import { Formik, Form, Field } from 'formik';
 import { useNavigate , Link as ReactRouterLink} from 'react-router-dom';
 
-export default function LogIn(props) {
+export default function LogIn() {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false)
   const handleClick = () => setShow(!show)

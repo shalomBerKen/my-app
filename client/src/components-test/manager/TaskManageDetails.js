@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Heading, Text, Container,Card , Checkbox, Switch, Stack } from '@chakra-ui/react';
 import {
@@ -20,28 +20,23 @@ const TaskManageDetails = (props) => {
   const [taskData, setTaskData] = useState(null);
   const [isTaskDone, setIsTaskDone] = useState();
 
-
-
-
-  
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await fetch(`http://localhost:5000/tasks/admin-one-task/${userId}/${communityId}/${taskId}`);
       const data = await response.json();
       setTaskData(data);
       setIsTaskDone(data[0]?.is_done === 0)
+      console.log(data[0]?.is_done === 0);
       setError(false)
-    } catch (error) {
+    } catch (e) {
       setError(true)
-      console.error('Error fetching data:', error);
+      console.error('Error fetching data:', error || e);
     }
-  };
+  });
   
   useEffect(() => {
-    // Fetch data from the server and update the state
-
     fetchData();
-  }, [userId, communityId, taskId ]);
+  }, [userId, communityId, taskId]);
 
   const handleCheckboxChange = async (taskId, userId, receivedApprov) => {
     try {
@@ -92,7 +87,6 @@ const TaskManageDetails = (props) => {
   const approvedVolunteers = taskData[0] ? taskData.filter((user) => user.received_approv === 1) : [];
   const waitingListVolunteers = taskData[0] ? taskData.filter((user) => user?.received_approv === 0) : [];
 
-
   // Rest of the component rendering logic using taskData
   return (
     <Container maxW="container.md">
@@ -127,7 +121,7 @@ const TaskManageDetails = (props) => {
                     placement="left"
                     value={true}
                     defaultChecked={true}
-                    isDisabled={isTaskDone == 0}
+                    isDisabled={isTaskDone === false}
                     onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
                     ></Checkbox>
                     {/* </MenuItemOption> */}
@@ -161,7 +155,7 @@ const TaskManageDetails = (props) => {
                     placement="left"
                     value={false}
                     defaultChecked={false}
-                    isDisabled={isTaskDone == 0}
+                    isDisabled={isTaskDone === 0}
                     onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
                     ></Checkbox>
                     {/* </MenuItemOption> */}

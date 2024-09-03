@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import { useClipboard , Box, Input,Button, FormHelperText, Text} from '@chakra-ui/react'
+import { useClipboard , Box, Input,Button, Text} from '@chakra-ui/react'
 
 export default function CopyId({id}) {
     const placeholder = "text to be copied...";

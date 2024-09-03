@@ -14,7 +14,7 @@ import { useState , useEffect} from 'react';
 import { fetchUserMnagCom, fetchUserPartCom } from '../api';
 
 
-export default function SideMenu(props) {
+export default function SideMenu() {
   // const { partner, manag } = props.userData.communities;
 
   const [userMnagCom, setUserMnagCom] = useState();

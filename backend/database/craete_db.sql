@@ -4,7 +4,8 @@ CREATE TABLE `tasks`(
     `task_name` VARCHAR(255) NOT NULL,
     `task_details` VARCHAR(255) NOT NULL,
     `task_date` DATE NOT NULL,
-    `is_done` TINYINT NOT NULL
+    `is_done` TINYINT NOT NULL,
+    `location` VARCHAR(255)
 );
 CREATE TABLE `users`(
     `user_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

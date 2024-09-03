@@ -46,7 +46,7 @@ export default function DrawerBar(props) {
           </DrawerHeader>
           <DrawerBody>
 
-            <SideMenu userData={props.userData}/>
+            <SideMenu/>
 
           </DrawerBody>
           <DrawerFooter>

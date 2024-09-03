@@ -19,14 +19,9 @@ import {
 import MapContainer from './map/GoogleMap';
 
 const CreateTaskFormComponent = () => {
-  const [selectedLocation, setSelectedLocation] = useState(null);
 
-  const handleLocationSelect = location => {
-    setSelectedLocation(location);
-  };
 
   const navigat = useNavigate();
-  // const userId = 1; // for just testing
   const { id } = useParams();
   const [formData, setFormData] = useState({
     community_id: id,
