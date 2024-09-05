@@ -1,12 +1,10 @@
+import axiosInstance from './axiosInstance';
+
 export const fetchUserMnagCom = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/usersCommunities/${userId}/manager-communities`);
+      const response = await axiosInstance.get(`/usersCommunities/${userId}/manager-communities`);
   
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      const userData = await response.json();
+      const userData = response.data;
       return userData;
     } catch (error) {
       console.error('Error fetching manager communities data:', error.message);
@@ -16,13 +14,10 @@ export const fetchUserMnagCom = async (userId) => {
   
   export const fetchUserPartCom = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/usersCommunities/${userId}/participant-communities`);
+      const response = await axiosInstance.get(`/usersCommunities/${userId}/participant-communities`);
   
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
   
-      const userData = await response.json();
+      const userData = response.data;
       return userData;
     } catch (error) {
       console.error('Error fetching participant communities data:', error.message);

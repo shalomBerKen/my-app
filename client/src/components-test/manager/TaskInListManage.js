@@ -1,18 +1,10 @@
-// TaskComponent.js
 import React from 'react';
 import {
   Box,
-  // Menu,
-  // MenuButton,
-  // MenuList,
-  // MenuItem,
-  // MenuOptionGroup,
   Button,
   Heading,
   Text,
-  // Checkbox
 } from '@chakra-ui/react';
-// import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { useNavigate} from "react-router-dom"
 
 const TaskInListManage = ({ task, index, handleTaskToggle }) => {
@@ -26,9 +18,7 @@ const TaskInListManage = ({ task, index, handleTaskToggle }) => {
       alignItems={'center'}
       size={'xs'}
     >
-      <Box 
-      // textAlign={'center'}
-      >
+      <Box>
         <Heading size="xs" textTransform="uppercase">
           {task.task_name}
         </Heading>

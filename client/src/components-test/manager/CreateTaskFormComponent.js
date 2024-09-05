@@ -103,16 +103,6 @@ const CreateTaskFormComponent = () => {
           <FormHelperText>
             Describe the nature of your task and the goals you promote.
           </FormHelperText>
-          {/* <br />
-          <FormLabel isRequired={false}>Address (Optional)</FormLabel>
-          <Input
-            isRequired={false}
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-          />
-          <FormHelperText>Provide an address if needed.</FormHelperText> */}
           <Button colorScheme="blue" mt={12} type="submit">
             create
           </Button>
@@ -128,19 +118,7 @@ const CreateTaskFormComponent = () => {
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
-            {/* </h2> */}
             <AccordionPanel pb={4} >
-              {/* <FormControl w={'xl'} m={'auto'} >
-                <FormLabel isRequired={false}>Address (Optional)</FormLabel>
-                <Input
-                  isRequired={false}
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                />
-                <FormHelperText>Provide an address if needed.</FormHelperText>
-              </FormControl> */}
               <MapContainer formData={formData} handleChange={handleChange} />
             </AccordionPanel>
           </AccordionItem>

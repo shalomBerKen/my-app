@@ -34,8 +34,8 @@ const CreateTaskFormComponent = () => {
   const { id } = useParams();
   const [formData, setFormData] = useState({
     community_id: id,
-    task_name: '',
-    task_details: '',
+    task_name: ' ',
+    task_details: ' ',
     task_date: '',
     is_done: false,
   });
