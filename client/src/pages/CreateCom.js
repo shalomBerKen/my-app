@@ -8,7 +8,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { useNavigate  } from 'react-router-dom';
-
+import axiosInstance from '../axiosInstance';
 export default function CreateCom(props) {
   const userId = localStorage.getItem('user_id');
 
@@ -22,24 +22,18 @@ export default function CreateCom(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     try {
-      const response = await fetch('http://localhost:5000/communities', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          community_name: input.name,
-          community_details: input.description,
-          user_id: userId,
-          is_manager: 1
-          // Add other required fields if any
-        }),
+      const response = await axiosInstance.post('/communities', {
+        community_name: input.name,
+        community_details: input.description,
+        user_id: userId,
+        is_manager: 1
+        // Add other required fields if any
       });
-
-      if (response.ok) {
-
-        const result = await response.json();
+  
+      if (response.status >= 200 && response.status < 300) {
+        const result = await response.data;
         const communityId = result.community.id;
         
         // Navigate to the new community page

@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate , Link as ReactRouterLink} from 'react-router-dom';
-
+import axiosInstance from '../axiosInstance';
 export default function LogIn() {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false)
@@ -41,20 +41,15 @@ export default function LogIn() {
         initialValues={{ name: '', password: '' }}
         onSubmit={async (values, actions) => {
           try {
-            const response = await fetch('http://localhost:5000/users/check-credentials', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                user_name: values.name,
-                user_password: values.password,
-              }),
+            const response = await axiosInstance.post('/users/check-credentials', {
+              user_name: values.name,
+              user_password: values.password,
             });
-
-            if (response.ok) {
+        
+            if (response.status >= 200 && response.status < 300) {
               // Authentication successful, get the user data from the response
-              const userData = await response.json();
+              const userData = response.data;
+        
 
               // Save user_id in local storage
               localStorage.setItem('user_id', userData.user_id);
@@ -103,9 +98,6 @@ export default function LogIn() {
                   </InputRightElement>
                   </InputGroup>
 
-
-
-                  {/* <Input {...field} placeholder='password' /> */}
                   <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                 </FormControl>
               )}
@@ -115,13 +107,6 @@ export default function LogIn() {
             <Button mt={4} colorScheme='teal' isLoading={props.isSubmitting} type='submit'>
               Submit
             </Button>
-
-            {/* Add the "Sign up" link */}
-            {/* <Link to="/signup">
-              <p style={{ marginTop: '16px' }}>
-                Don't have an account yet? <b>Sign up</b>
-              </p>
-            </Link> */}
             <ChakraLink as={ReactRouterLink} to='/signup'>
              <p style={{ marginTop: '16px' }}>
 

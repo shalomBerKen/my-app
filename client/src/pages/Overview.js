@@ -2,11 +2,10 @@ import {SimpleGrid,Card,CardHeader,Heading, CardBody, Text, CardFooter, Button, 
 import { Link,Outlet } from 'react-router-dom';
 import React, { useState, useEffect, } from 'react';
 import { fetchUserMnagCom, fetchUserPartCom } from '../api';
-// import ManagedCommunities from "../components-test/home-page/ManagedCommunities"
-// import ParticipatedCommunities from "../components-test/home-page/ManagedCommunities"
+
 import axios from 'axios';
-// import {UserContext} from '../App'
-// import  {useUser}  from '..context/UserContext';
+import axiosInstance from '../axiosInstance';
+
 
 
 export default function Overview(){
@@ -14,12 +13,11 @@ export default function Overview(){
   const [userMnagCom, setUserMnagCom] = useState();
   const [userPartCom, setUserPartCom] = useState();
   const userId = localStorage.getItem('user_id');
-  // const { userId, setUserId } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/users/${userId}`);
+        const response = await axiosInstance.get(`/users/${userId}`);
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -62,13 +60,10 @@ export default function Overview(){
         <Outlet />
         <Heading size={'md'} textAlign={'center'}>
             {userName}
-            {/* {user} */}
+
         </Heading>
 
         <Container maxW={'xl'} mt={8}>
-        {/* <Heading size={'s'} m={8}>
-            My communities
-        </Heading> */}
         <Tabs variant='soft-rounded' colorScheme="teal"isFitted>
           <TabList>
             <Tab>manage communities</Tab>

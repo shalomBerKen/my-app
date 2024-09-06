@@ -2,25 +2,17 @@ import React from 'react';
 import {
   ChakraProvider,
   Box,
-  // Text,
-  // Link,
-  // VStack,
-  // Code,
+
   Grid,
   theme,
   Container,
 } from '@chakra-ui/react';
-// import { Tablet } from './components/Tablet';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
-// import { Logo } from './Logo';
 import { Routes, Route } from 'react-router-dom';
-// import { TaskList } from './components/TaskList';
-// import { Communities } from './pages/communities';
 import { Home } from './pages/home';
 import LogIn from './pages/login';
 import ComPartner from './pages/ComPartner.test';
 import ComManage from './pages/ComManage';
-// import ComManage from './ComManage.test';
 import Overview from './pages/Overview';
 import CreateCom from './pages/CreateCom';
 import ConnectCom from './pages/ConnectCom';
@@ -48,12 +40,10 @@ function App() {
             <Route path="home" element={<Overview/>} />
             <Route path="new" element={<CreateCom  />} />
             <Route path="connect" element={<ConnectCom />} />
-            
             <Route path="comp/:id" element={<ComPartner />}>
               <Route path='/comp/:id/' element={<TasksPartner />} />
               <Route path='/comp/:id/:taskId' element={<TaskPartnerDetails />} />
             </Route>
-            
             <Route path="coma/:id" element={<ComManage />} >
               <Route path='/coma/:id/' element={<TasksManager />} />
               <Route path='/coma/:id/:taskId' element={<TaskManageDetails />} />

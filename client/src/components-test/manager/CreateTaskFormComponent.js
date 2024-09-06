@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
-
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import {
   FormControl,
   FormLabel,
@@ -65,7 +64,7 @@ const CreateTaskFormComponent = () => {
         task_date: formattedDateTime,
       });
       // console.log(formData);
-      const response = await axios.post('http://localhost:5000/tasks/', {
+      const response = await axiosInstance.post('/tasks/', {
         ...formData,
         task_date: formattedDateTime,
       });

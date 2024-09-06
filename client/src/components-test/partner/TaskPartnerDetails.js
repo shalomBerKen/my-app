@@ -8,8 +8,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react'
-import axios from 'axios';
-// import ErrorPage from "../pages/404"
+import axiosInstance from '../../axiosInstance';
 
 const TaskPartnerDetails = () => {
   const userId = localStorage.getItem('user_id');
@@ -22,8 +21,8 @@ const TaskPartnerDetails = () => {
   
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/tasks/participant-one-task/${userId}/${communityId}/${taskId}`);
-      const data = await response.json();
+      const response = await axiosInstance.get(`/tasks/participant-one-task/${userId}/${communityId}/${taskId}`);
+      const data = response.data;
       setTaskData(data);
       console.log(data);
       setError(false)
@@ -48,19 +47,16 @@ const TaskPartnerDetails = () => {
   const handleCheckboxChange = async () => {
     try {
       let response;
-      console.log(taskData, userId);
       if (isUserMember(taskData, userId)) {
 
         // If the checkbox is checked, delete the relationship
-        response = await axios.delete(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
+        response = await axiosInstance.delete(`/taskUsers/${taskId}/${userId}`);
       } else {
         // If the checkbox is unchecked, create the relationship
-        response = await axios.post(`http://localhost:5000/taskUsers/${taskId}/${userId}`);
+        response = await axiosInstance.post(`/taskUsers/${taskId}/${userId}`);
       }
 
       if (response.status === 200) {
-        // Check the status code to ensure a successful response
-        // Refetch data after updating
         fetchData();
       } else {
         console.error('Error updating task user:', response.statusText);
@@ -86,7 +82,6 @@ const TaskPartnerDetails = () => {
       <Card display={'flex'}>
       <Heading size="lg" m={6}>{taskData[0].task_name}</Heading>
       <Text m={6}>{taskData[0].task_details}</Text>
-      {/* Add other details as needed */}
       <Accordion defaultIndex={[1]} allowMultiple>
         <AccordionItem>
           <h2>

@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, Input, FormHelperText, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate  } from 'react-router-dom';
-
+import axiosInstance from "../axiosInstance";
 
 export default function ConnectCom() {
     const navigate  = useNavigate ();
@@ -14,27 +14,21 @@ export default function ConnectCom() {
     e.preventDefault();
 
     // Assuming you have user_id available (you may get it from your authentication system)
-
     const user_id = localStorage.getItem('user_id');
-
     // Validate if the input is not empty
     if (!input.trim()) {
-      // Handle error, display a message, etc.
       return;
     }
 
     const community_id = input.trim();
 
     try {
-      const response = await fetch('http://localhost:5000/usersCommunities/participants', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user_id, community_id }),
+      const response = await axiosInstance.post('/usersCommunities/participants', {
+        user_id,
+        community_id
       });
-
-      if (response.ok) {
+  
+      if (response.status >= 200 && response.status < 300) {
         // Handle success, maybe show a success message to the user
         console.log('Successfully connected to the community');
         navigate(`/Comp/${community_id}`);

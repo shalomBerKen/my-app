@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance';
 import { Box, Heading, Text, Container,Card , Checkbox, Switch, Stack } from '@chakra-ui/react';
 import {
   Accordion,
@@ -8,11 +9,9 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react'
-// import ErrorPage from "../pages/404"
 
 const TaskManageDetails = (props) => {
   const userId = localStorage.getItem('user_id');
-  
 
   const { id, taskId } = useParams();
   const communityId = id
@@ -22,8 +21,8 @@ const TaskManageDetails = (props) => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:5000/tasks/admin-one-task/${userId}/${communityId}/${taskId}`);
-      const data = await response.json();
+      const response = await axiosInstance.get(`/tasks/admin-one-task/${userId}/${communityId}/${taskId}`);
+      const data = response.data;
       setTaskData(data);
       setIsTaskDone(data[0]?.is_done === 0)
       console.log(data[0]?.is_done === 0);
@@ -40,15 +39,11 @@ const TaskManageDetails = (props) => {
 
   const handleCheckboxChange = async (taskId, userId, receivedApprov) => {
     try {
-      const response = await fetch(`http://localhost:5000/taskusers/${taskId}/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ received_approv: receivedApprov ? 1 : 0 }),
+      const response = await axiosInstance.put(`/taskusers/${taskId}/${userId}`, {
+        received_approv: receivedApprov ? 1 : 0,
       });
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         console.error('Failed to update data on the server');
       }
 
@@ -61,15 +56,13 @@ const TaskManageDetails = (props) => {
 
   const handleSwitchChange = async (taskName, taskDetails, taskId, isDone) => {
     try {
-      const response = await fetch(`http://localhost:5000/tasks/${taskId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ task_name: taskName, task_details: taskDetails ,is_done: isDone ? 0 : 1 }),
+      const response = await axiosInstance.put(`/tasks/${taskId}`, {
+        task_name: taskName,
+        task_details: taskDetails,
+        is_done: isDone ? 0 : 1,
       });
-  
-      if (!response.ok) {
+
+      if (response.status !== 200) {
         console.error('Failed to update task status on the server');
       } else {
         // Update the local state
@@ -87,7 +80,6 @@ const TaskManageDetails = (props) => {
   const approvedVolunteers = taskData[0] ? taskData.filter((user) => user.received_approv === 1) : [];
   const waitingListVolunteers = taskData[0] ? taskData.filter((user) => user?.received_approv === 0) : [];
 
-  // Rest of the component rendering logic using taskData
   return (
     <Container maxW="container.md">
     <Box
@@ -98,7 +90,6 @@ const TaskManageDetails = (props) => {
       <Card display={'flex'}>
       <Heading size="lg" m={6}>{taskData[0].task_name}</Heading>
       <Text m={6}>{taskData[0].task_details}</Text>
-      {/* Add other details as needed */}
       <Accordion allowMultiple>
         <AccordionItem >
           <h2>

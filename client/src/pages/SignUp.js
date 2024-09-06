@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate , Link as ReactRouterLink} from 'react-router-dom';
-
+import axiosInstance from '../axiosInstance';
 export default function SignUp() {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false)
@@ -41,18 +41,12 @@ export default function SignUp() {
         initialValues={{ name: '', password: '' }}
         onSubmit={async (values, actions) => {
           try {
-            const response = await fetch('http://localhost:5000/users/', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                user_name: values.name,
-                user_password: values.password,
-              }),
+            const response = await axiosInstance.post('/users/', {
+              user_name: values.name,
+              user_password: values.password,
             });
-
-            if (response.ok) {
+        
+            if (response.status >= 200 && response.status < 300) {
               // Registration successful, you may handle the response as needed
               // For example, redirect to login page
               navigate('/login');

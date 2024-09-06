@@ -28,13 +28,10 @@ export const fetchUserMnagCom = async (userId) => {
 
   export const fetchAdminTasks = async (userId, communityId) => {
     try {
-      const response = await fetch(`http://localhost:5000/tasks/admin/${userId}/${communityId}`);
+      const response = await axiosInstance.get(`/tasks/admin/${userId}/${communityId}`);
   
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
   
-      const tasksData = await response.json();
+      const tasksData = await response.data;
       return tasksData;
     } catch (error) {
       console.error('Error fetching admin tasks data:', error.message);
@@ -44,13 +41,9 @@ export const fetchUserMnagCom = async (userId) => {
   
   export const fetchParticipantTasks = async (userId, communityId) => {
     try {
-      const response = await fetch(`http://localhost:5000/tasks/participant/${userId}/${communityId}`);
+      const response = await axiosInstance.get(`/tasks/participant/${userId}/${communityId}`);
   
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      const tasksData = await response.json();
+      const tasksData = await response.data;
       return tasksData;
     } catch (error) {
       console.error('Error fetching participant tasks data:', error.message);
