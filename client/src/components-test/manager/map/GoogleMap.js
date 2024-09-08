@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import {
-  FormControl,
-  FormLabel,
-  Input,
-  FormHelperText,
   Button
 } from '@chakra-ui/react';
 
-const MapContainer = ({ formData, handleChange }) => {
+const MapContainer = ({ formData }) => {
   const [markerPosition, setMarkerPosition] = useState(null);
   const [mapCenter, setMapCenter] = useState({ lat: 31.99, lng: 34.89 });
   const [response, setResponse] = useState('');
@@ -26,7 +22,6 @@ const MapContainer = ({ formData, handleChange }) => {
 
 
   const handleSearch = () => {
-    // geocode({ address: inputValue });
     geocode({ address: formData.address });
   };
 
@@ -57,34 +52,16 @@ const MapContainer = ({ formData, handleChange }) => {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <div style={{ margin: 'auto', marginBottom: '16px' }}>
-      <FormControl w={'xl'} m={'auto'}>
-        <FormLabel isRequired={false}>Address (Optional)</FormLabel>
-        <Input
-          isRequired={false}
-          type="text"
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-        />
-        <FormHelperText>Provide an address if needed.</FormHelperText>
-      </FormControl>
+    <div style={{ margin: 'auto', marginBottom: '16px'}}>
       <div style={{ marginTop: '16px' , marginBottom: '16px'}}>
-        {/* <input
-          type="text"
-          placeholder="Enter a location"
-          value={inputValue}
-          onChange={handleInputChange}
-        /> */}
-          <Button colorScheme='teal' size='xs'onClick={handleSearch}>
-          Search
+          <Button colorScheme='teal' onClick={handleSearch}>
+          See location on the map
           </Button>
-        {/* <button onClick={handleSearch}>Search</button> */}
       </div>
       <GoogleMap
         mapContainerStyle={{ width: '500px', height: '500px', margin: 'auto' }}
         center={mapCenter}
-        zoom={8}
+        zoom={10}
         onClick={onMapClick}
       >
         {markerPosition && <Marker position={markerPosition} />}
