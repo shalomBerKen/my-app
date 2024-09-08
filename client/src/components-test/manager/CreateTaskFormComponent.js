@@ -8,7 +8,7 @@ import {
   FormHelperText,
   Button,
   Box,
-  Flex,  // נוסיף Flex מ-Chakra UI
+  Flex,
 } from '@chakra-ui/react';
 
 import MapContainer from './map/GoogleMap';
@@ -101,6 +101,11 @@ const CreateTaskFormComponent = () => {
             <FormHelperText>
               Please provide the task location.
             </FormHelperText>
+            <br />
+            <Button colorScheme='teal' onClick={formData.handleSearch}>
+              See location on the map
+            </Button>
+            <br />
             <Button colorScheme="blue" mt={12} type="submit">
               Create
             </Button>
@@ -108,7 +113,7 @@ const CreateTaskFormComponent = () => {
         </form>
       </Box>
       <Box flex="1" p={4} maxWidth="600px">
-        <MapContainer formData={formData} />
+        <MapContainer formData={formData} setFormData={setFormData} />
       </Box>
     </Flex>
   );

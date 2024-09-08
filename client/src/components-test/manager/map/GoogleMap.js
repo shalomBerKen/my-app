@@ -1,36 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import {
-  Button
-} from '@chakra-ui/react';
 
-const MapContainer = ({ formData }) => {
+const MapContainer = ({ formData, setFormData }) => {
   const [markerPosition, setMarkerPosition] = useState(null);
   const [mapCenter, setMapCenter] = useState({ lat: 31.99, lng: 34.89 });
   const [response, setResponse] = useState('');
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    
   });
 
-  const onMapClick = event => {
+  const onMapClick = (event) => {
     setMarkerPosition({ lat: event.latLng.lat(), lng: event.latLng.lng() });
     setMapCenter({ lat: event.latLng.lat(), lng: event.latLng.lng() });
     geocode({ location: event.latLng });
   };
 
-
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     geocode({ address: formData.address });
-  };
+  }, [formData.address]);
+  useEffect(() => {
+    if (setFormData) {
+      setFormData((prev) => ({
+        ...prev,
+        handleSearch,
+      }));
+    }
+  }, [setFormData, handleSearch]);
 
-  const geocode = request => {
+  const geocode = (request) => {
     const geocoder = new window.google.maps.Geocoder();
 
     geocoder
       .geocode(request)
-      .then(result => {
+      .then((result) => {
         const { results } = result;
 
         if (results.length > 0) {
@@ -43,7 +46,7 @@ const MapContainer = ({ formData }) => {
 
         return results;
       })
-      .catch(e => {
+      .catch((e) => {
         alert('Geocode was not successful for the following reason: ' + e);
       });
   };
@@ -52,12 +55,7 @@ const MapContainer = ({ formData }) => {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <div style={{ margin: 'auto', marginBottom: '16px'}}>
-      <div style={{ marginTop: '16px' , marginBottom: '16px'}}>
-          <Button colorScheme='teal' onClick={handleSearch}>
-          See location on the map
-          </Button>
-      </div>
+    <div style={{ margin: 'auto', marginBottom: '16px', alignContent: 'center', display: 'flex', flexDirection: 'column'}}>
       <GoogleMap
         mapContainerStyle={{ width: '500px', height: '500px', margin: 'auto' }}
         center={mapCenter}
