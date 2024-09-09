@@ -25,7 +25,7 @@ const TaskManageDetails = (props) => {
       const data = response.data;
       setTaskData(data);
       setIsTaskDone(data[0]?.is_done === 0)
-      console.log(data[0]?.is_done === 0);
+      console.log(data[0]);
       setError(false)
     } catch (e) {
       setError(true)
@@ -89,6 +89,7 @@ const TaskManageDetails = (props) => {
     >
       <Card display={'flex'}>
       <Heading size="lg" m={6}>{taskData[0].task_name}</Heading>
+      <Text ml={6} fontSize="sm">{taskData[0].task_date.substring(0, 10)}</Text>
       <Text m={6}>{taskData[0].task_details}</Text>
       <Accordion allowMultiple>
         <AccordionItem >
@@ -105,7 +106,6 @@ const TaskManageDetails = (props) => {
               approvedVolunteers.map((user, userIndex) => (<div key={user.user_id}>
                 
                   <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={user.user_id} defaultValue={user.user_name} type='checkbox'>
-                    {/* <MenuItemOption> */}
                     {user.user_name}
                     <Checkbox ml={3}
                     key={user.user_id}
@@ -115,7 +115,6 @@ const TaskManageDetails = (props) => {
                     isDisabled={isTaskDone === false}
                     onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
                     ></Checkbox>
-                    {/* </MenuItemOption> */}
                   </Heading>
                   </div>
                 ))
@@ -139,7 +138,6 @@ const TaskManageDetails = (props) => {
               waitingListVolunteers.map((user, userIndex) => (< div key={user.user_id}>
                 
                   <Heading size={'m'} display={'flex'} justifyContent={'space-between'} key={user.user_id} defaultValue={user.user_name} type='checkbox'>
-                    {/* <MenuItemOption> */}
                     {user.user_name}
                     <Checkbox ml={3}
                     key={user.user_id}
@@ -149,7 +147,6 @@ const TaskManageDetails = (props) => {
                     isDisabled={isTaskDone === 0}
                     onChange={() => handleCheckboxChange(user.task_id, user.user_id, !user.received_approv)}
                     ></Checkbox>
-                    {/* </MenuItemOption> */}
                   </Heading>
                   </div>
                 ))

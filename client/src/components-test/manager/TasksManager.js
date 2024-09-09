@@ -55,14 +55,11 @@ export function TasksManager(params) {
         <Heading size="md" textAlign={'center'} pb={12}>
           {data?.community?.community_name}
         </Heading>
-
         <Heading size="md" textAlign={'center'} pb={12}>
           {data?.community?.community_details}
         </Heading>
-        {/* Task List */}
         <Card mb={24}>
           <CardHeader></CardHeader>
-
           <CardBody>
             <TaskListManager
               data={data}
@@ -81,15 +78,6 @@ export function TasksManager(params) {
           </Button>
         </Card>
           <CopyId id={communityId}/>
-
-        {/* Create Task Form */}
-        {/* <Card mt={3}>
-          <CardHeader>
-            <Heading size="md" textAlign={'center'} pb={12}>
-              Create new task
-            </Heading>
-          </CardHeader>
-        </Card> */}
       </Container>
     </>
   );

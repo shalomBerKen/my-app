@@ -23,10 +23,6 @@ export default function CopyId({id}) {
           <Button onClick={onCopy}>{hasCopied ? "Copied!" : "Copy community code"}</Button>
             <Text color={'gray'}>Copy the community code and share it with community members.</Text>
         </Box>
-        {/* <Editable placeholder="Paste here">
-          <EditablePreview width="100%" />
-          <EditableInput />
-        </Editable> */}
       </>
     )
   }

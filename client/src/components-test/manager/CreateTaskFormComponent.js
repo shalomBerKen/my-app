@@ -8,10 +8,10 @@ import {
   FormHelperText,
   Button,
   Box,
-  Flex,
+  Flex, Heading
 } from '@chakra-ui/react';
 
-import MapContainer from './map/GoogleMap';
+import MapContainer from '../map/GoogleMap';
 
 const CreateTaskFormComponent = () => {
   const navigate = useNavigate();
@@ -64,6 +64,8 @@ const CreateTaskFormComponent = () => {
   return (
     <Flex direction={{ base: 'column', md: 'row' }} w="full" p={6} alignItems="flex-start">
       <Box flex="1" p={4}>
+        <Heading>Create New Task</Heading>
+        <br />
         <form onSubmit={handleSubmit}>
           <FormControl isRequired>
             <FormLabel>Task Name</FormLabel>
