@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
-const MapContainer = ({ formData, setFormData }) => {
+const MapContainer = ({ address , onAddressChange}) => { 
   const [markerPosition, setMarkerPosition] = useState(null);
   const [mapCenter, setMapCenter] = useState({ lat: 31.99, lng: 34.89 });
   const [response, setResponse] = useState('');
@@ -10,23 +10,11 @@ const MapContainer = ({ formData, setFormData }) => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
-  const onMapClick = (event) => {
-    setMarkerPosition({ lat: event.latLng.lat(), lng: event.latLng.lng() });
-    setMapCenter({ lat: event.latLng.lat(), lng: event.latLng.lng() });
-    geocode({ location: event.latLng });
-  };
-
-  const handleSearch = useCallback(() => {
-    geocode({ address: formData.address });
-  }, [formData.address]);
   useEffect(() => {
-    if (setFormData) {
-      setFormData((prev) => ({
-        ...prev,
-        handleSearch,
-      }));
+    if (isLoaded && address) {
+      geocode({ address });
     }
-  }, [setFormData, handleSearch]);
+  }, [isLoaded, address]);
 
   const geocode = (request) => {
     const geocoder = new window.google.maps.Geocoder();
@@ -37,9 +25,13 @@ const MapContainer = ({ formData, setFormData }) => {
         const { results } = result;
 
         if (results.length > 0) {
-          setMapCenter(results[0].geometry.location);
-          setMarkerPosition(results[0].geometry.location);
+          const location = results[0].geometry.location;
+          setMapCenter(location);
+          setMarkerPosition(location);
           setResponse(JSON.stringify(result, null, 2));
+          if (onAddressChange) {
+            onAddressChange(results[0].formatted_address);
+          }
         } else {
           alert('No results found');
         }
@@ -49,6 +41,24 @@ const MapContainer = ({ formData, setFormData }) => {
       .catch((e) => {
         alert('Geocode was not successful for the following reason: ' + e);
       });
+  };
+  const handleMapClick = (event) => {
+    const clickedLat = event.latLng.lat();
+    const clickedLng = event.latLng.lng();
+    setMarkerPosition({ lat: clickedLat, lng: clickedLng });
+    setMapCenter({ lat: clickedLat, lng: clickedLng });
+
+    // Reverse geocoding
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ location: { lat: clickedLat, lng: clickedLng } }, (results, status) => {
+      if (status === "OK") {
+        if (results[0]) {
+          if (onAddressChange) {
+            onAddressChange(results[0].formatted_address);
+          }
+        }
+      }
+    });
   };
 
   if (loadError) return <div>Error loading maps</div>;
@@ -60,7 +70,6 @@ const MapContainer = ({ formData, setFormData }) => {
         mapContainerStyle={{ width: '500px', height: '500px', margin: 'auto' }}
         center={mapCenter}
         zoom={10}
-        onClick={onMapClick}
       >
         {markerPosition && <Marker position={markerPosition} />}
         <div id="response-container">

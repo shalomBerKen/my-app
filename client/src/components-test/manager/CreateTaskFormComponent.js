@@ -8,7 +8,8 @@ import {
   FormHelperText,
   Button,
   Box,
-  Flex, Heading
+  Flex,
+  Heading
 } from '@chakra-ui/react';
 
 import MapContainer from '../map/GoogleMap';
@@ -22,8 +23,9 @@ const CreateTaskFormComponent = () => {
     task_details: '',
     task_date: '',
     is_done: false,
-    address: '', 
+    address: '',
   });
+  const [searchAddress, setSearchAddress] = useState('');
 
   const handleChange = (e) => {
     let value = e.target.value;
@@ -31,6 +33,17 @@ const CreateTaskFormComponent = () => {
       ...formData,
       [e.target.name]: value,
     });
+  };
+
+  const handleAddressChange = (newAddress) => {
+    setFormData({
+      ...formData,
+      address: newAddress,
+    });
+  };
+
+  const handleSearchAddress = () => {
+    setSearchAddress(formData.address);
   };
 
   const handleSubmit = async (e) => {
@@ -63,61 +76,62 @@ const CreateTaskFormComponent = () => {
 
   return (
     <Flex direction={{ base: 'column', md: 'row' }} w="full" p={6} alignItems="flex-start">
-      <Box flex="1" p={4}>
-        <Heading>Create New Task</Heading>
+    <Box flex="1" p={4}>
+      <Heading>Create New Task</Heading>
         <br />
-        <form onSubmit={handleSubmit}>
-          <FormControl isRequired>
-            <FormLabel>Task Name</FormLabel>
-            <Input
-              type="text"
-              name="task_name"
-              value={formData.task_name}
-              onChange={handleChange}
-              required
-            />
-            <FormHelperText>
-              It is recommended to choose a short and catchy name.
-            </FormHelperText>
-            <br />
-            <FormLabel>Description</FormLabel>
-            <Input
-              type="text"
-              name="task_details"
-              value={formData.task_details}
-              onChange={handleChange}
-              required
-            />
-            <FormHelperText>
-              Describe the nature of your task and the goals you promote.
-            </FormHelperText>
-            <br />
-            <FormLabel>Address</FormLabel>
-            <Input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-            <FormHelperText>
-              Please provide the task location.
-            </FormHelperText>
-            <br />
-            <Button colorScheme='teal' onClick={formData.handleSearch}>
+          <form onSubmit={handleSubmit}>
+            <FormControl isRequired>
+              <FormLabel>Task Name</FormLabel>
+              <Input
+                type="text"
+                name="task_name"
+                value={formData.task_name}
+                onChange={handleChange}
+                required
+              />
+              <FormHelperText>
+                It is recommended to choose a short and catchy name.
+                </FormHelperText>
+                <br />
+              <FormLabel>Description</FormLabel>
+              <Input
+                type="text"
+                name="task_details"
+                value={formData.task_details}
+                onChange={handleChange}
+                required
+              />
+              <FormHelperText>
+                Describe the nature of your task and the goals you promote.
+                </FormHelperText>
+                <br />
+              <FormLabel>Address</FormLabel>
+              <Input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+              />
+              <FormHelperText>
+                Please provide the task location.
+                </FormHelperText>
+                <br />
+
+            <Button colorScheme='teal' onClick={handleSearchAddress} mb={4}>
               See location on the map
             </Button>
             <br />
-            <Button colorScheme="blue" mt={12} type="submit">
+            <Button type="submit"  mt={12} colorScheme="blue">
               Create
             </Button>
-          </FormControl>
-        </form>
-      </Box>
-      <Box flex="1" p={4} maxWidth="600px">
-        <MapContainer formData={formData} setFormData={setFormData} />
-      </Box>
-    </Flex>
+            </FormControl>
+          </form>
+        </Box>
+        <Box flex="1" p={4} maxWidth="600px">
+          <MapContainer address={searchAddress} onAddressChange={handleAddressChange} />
+        </Box>
+      </Flex>
   );
 };
 

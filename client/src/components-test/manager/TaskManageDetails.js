@@ -1,38 +1,44 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
-import { Box, Heading, Text, Container,Card , Checkbox, Switch, Stack } from '@chakra-ui/react';
+import { Box, Heading, Text, Container, Card, Checkbox, Switch, Stack } from '@chakra-ui/react';
 import {
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import MapContainer from '../map/GoogleMap';
 
 const TaskManageDetails = (props) => {
   const userId = localStorage.getItem('user_id');
-
   const { id, taskId } = useParams();
-  const communityId = id
+  const communityId = id;
   const [error, setError] = useState(false);
   const [taskData, setTaskData] = useState(null);
   const [isTaskDone, setIsTaskDone] = useState();
+  const [taskAddress, setTaskAddress] = useState(null);
 
   const fetchData = useCallback(async () => {
     try {
       const response = await axiosInstance.get(`/tasks/admin-one-task/${userId}/${communityId}/${taskId}`);
       const data = response.data;
       setTaskData(data);
-      setIsTaskDone(data[0]?.is_done === 0)
+      setIsTaskDone(data[0]?.is_done === 0);
+      setError(false);
       console.log(data[0]);
-      setError(false)
+
+      const address = data[0]?.location;
+      if (address != null) {
+        setTaskAddress(address); 
+      }
     } catch (e) {
-      setError(true)
+      setError(true);
       console.error('Error fetching data:', error || e);
     }
-  });
-  
+  }, [userId, communityId, taskId]);
+
   useEffect(() => {
     fetchData();
   }, [userId, communityId, taskId]);
@@ -65,34 +71,33 @@ const TaskManageDetails = (props) => {
       if (response.status !== 200) {
         console.error('Failed to update task status on the server');
       } else {
-        // Update the local state
         setIsTaskDone(isDone);
       }
     } catch (error) {
       console.error('Error updating task status:', error);
     }
   };
-  
 
   if (!taskData) {
     return <div>Loading...</div>;
   }
+
   const approvedVolunteers = taskData[0] ? taskData.filter((user) => user.received_approv === 1) : [];
   const waitingListVolunteers = taskData[0] ? taskData.filter((user) => user?.received_approv === 0) : [];
 
   return (
     <Container maxW="container.md">
-    <Box
-      p={'auto'}
-      justifyContent={'center'}
-      alignItems={'center'}
-    >
-      <Card display={'flex'}>
-      <Heading size="lg" m={6}>{taskData[0].task_name}</Heading>
-      <Text ml={6} fontSize="sm">{taskData[0].task_date.substring(0, 10)}</Text>
-      <Text m={6}>{taskData[0].task_details}</Text>
-      <Accordion allowMultiple>
-        <AccordionItem >
+      <Box p={'auto'} justifyContent={'center'} alignItems={'center'}>
+        <Card display={'flex'}>
+          <Heading size="lg" m={6}>{taskData[0].task_name}</Heading>
+          <Text ml={6} fontSize="sm">{taskData[0].task_date.substring(0, 10)}</Text>
+          <Text m={6}>{taskData[0].task_details}</Text>
+
+          {/* העברת הכתובת לקומפוננטת המפה */}
+          {taskAddress && <MapContainer address={taskAddress} />}
+
+          <Accordion allowMultiple>
+          <AccordionItem >
           <h2>
             <AccordionButton>
               <Box as="span" flex='1' textAlign='left'>
