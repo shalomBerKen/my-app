@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useCallback} from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Heading, Text, Container,Card , Checkbox} from '@chakra-ui/react';
 import {
@@ -9,6 +9,7 @@ import {
   AccordionIcon,
 } from '@chakra-ui/react'
 import axiosInstance from '../../axiosInstance';
+import MapContainer from '../map/GoogleMap';
 
 const TaskPartnerDetails = () => {
   const userId = localStorage.getItem('user_id');
@@ -16,25 +17,28 @@ const TaskPartnerDetails = () => {
   const communityId = id
   const [taskData, setTaskData] = useState(null);
   const [error, setError] = useState(false);
-
+  const [taskAddress, setTaskAddress] = useState(null);
 
   
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await axiosInstance.get(`/tasks/participant-one-task/${userId}/${communityId}/${taskId}`);
       const data = response.data;
       setTaskData(data);
       console.log(data);
-      setError(false)
+      setError(false);
+
+      const address = data[0]?.location;
+      if (address != null) {
+        setTaskAddress(address); 
+      }
     } catch (e) {
       setError(true)
       console.error('Error fetching data:', error || e);
     }
-  };
+  }, [userId, communityId, taskId]);
   
   useEffect(() => {
-    // Fetch data from the server and update the state
-
     fetchData(); 
   }, [userId, communityId, taskId ]);
 
@@ -81,7 +85,13 @@ const TaskPartnerDetails = () => {
     >
       <Card display={'flex'}>
       <Heading size="lg" m={6}>{taskData[0].task_name}</Heading>
-      <Text m={6}>{taskData[0].task_details}</Text>
+          <Text ml={6} fontSize="sm">{taskData[0].task_date.substring(0, 10)}</Text>
+          <Text m={6}>{taskData[0].task_details}</Text>
+      
+      {/* העברת הכתובת לקומפוננטת המפה */}
+      {taskAddress && <MapContainer address={taskAddress} />}
+      {taskAddress && <Text m={'auto'} mb={6}>{taskAddress}</Text>}
+      <br/>
       <Accordion defaultIndex={[1]} allowMultiple>
         <AccordionItem>
           <h2>
