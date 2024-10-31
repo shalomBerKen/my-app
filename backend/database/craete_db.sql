@@ -31,3 +31,14 @@ CREATE TABLE `users_communities`(
     `is_manager` BIGINT NOT NULL,
 	PRIMARY KEY(`community_id`, `user_id`)
 );
+
+CREATE TABLE notifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT, 
+  message TEXT,
+  task_id INT,
+  community_id INT,
+  is_manager BOOLEAN,
+  is_read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
