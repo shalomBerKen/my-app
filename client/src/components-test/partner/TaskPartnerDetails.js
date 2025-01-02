@@ -1,24 +1,41 @@
-import React, { useState, useEffect ,useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Heading, Text, Container,Card , Checkbox} from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Text,
+  Container,
+  Card,
+  Button,
+  Flex,
+  Stack,
+  useColorModeValue,
+  Icon,
+  Badge,
+} from '@chakra-ui/react';
 import {
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import axiosInstance from '../../axiosInstance';
 import MapContainer from '../map/GoogleMap';
 
 const TaskPartnerDetails = () => {
   const userId = localStorage.getItem('user_id');
   const { id, taskId } = useParams();
-  const communityId = id
+  const communityId = id;
   const [taskData, setTaskData] = useState(null);
   const [error, setError] = useState(false);
   const [taskAddress, setTaskAddress] = useState(null);
 
+  // Define all color values at the start of the component
+  const heroBg = useColorModeValue('blue.500', 'blue.600');
+  const accordionBg = useColorModeValue('gray.100', 'gray.700');
+  const accordionHoverBg = useColorModeValue('gray.200', 'gray.600');
+  const volunteerBoxBg = useColorModeValue('gray.50', 'gray.700');
   
   const fetchData = useCallback(async () => {
     try {
@@ -30,33 +47,30 @@ const TaskPartnerDetails = () => {
 
       const address = data[0]?.location;
       if (address != null) {
-        setTaskAddress(address); 
+        setTaskAddress(address);
       }
     } catch (e) {
-      setError(true)
+      setError(true);
       console.error('Error fetching data:', error || e);
     }
   }, [userId, communityId, taskId]);
-  
+
   useEffect(() => {
-    fetchData(); 
-  }, [userId, communityId, taskId ]);
+    fetchData();
+  }, [userId, communityId, taskId]);
 
   const isUserMember = (usersArray, userId) => {
     const userFound = usersArray.find(user => user.user_id == userId);
-    return userFound ;
+    return userFound;
   };
 
 
-  const handleCheckboxChange = async () => {
+  const handleVolunteerClick = async () => {
     try {
       let response;
       if (isUserMember(taskData, userId)) {
-
-        // If the checkbox is checked, delete the relationship
         response = await axiosInstance.delete(`/taskUsers/${taskId}/${userId}`);
       } else {
-        // If the checkbox is unchecked, create the relationship
         response = await axiosInstance.post(`/taskUsers/${taskId}/${userId}`);
       }
 
@@ -73,88 +87,173 @@ const TaskPartnerDetails = () => {
   if (!taskData) {
     return <div>Loading...</div>;
   }
+
   const approvedVolunteers = taskData[0] ? taskData.filter((user) => user.received_approv === 1) : [];
   const waitingListVolunteers = taskData[0] ? taskData.filter((user) => user?.received_approv === 0) : [];
+  const isVolunteered = isUserMember(taskData, userId);
 
   return (
-    <Container maxW="container.md">
-    <Box
-      p={'auto'}
-      justifyContent={'center'}
-      alignItems={'center'}
-    >
-      <Card display={'flex'}>
-      <Heading size="lg" m={6}>{taskData[0].task_name}</Heading>
-          <Text ml={6} fontSize="sm">{taskData[0].task_date.substring(0, 10)}</Text>
-          <Text m={6}>{taskData[0].task_details}</Text>
-      
-      {/* העברת הכתובת לקומפוננטת המפה */}
-      {taskAddress && <MapContainer address={taskAddress} />}
-      {taskAddress && <Text m={'auto'} mb={6}>{taskAddress}</Text>}
-      <br/>
-      <Accordion defaultIndex={[1]} allowMultiple>
+    <Container maxW="container.lg">
+      {/* Hero Section with Task Details */}
+      <Box
+        bg={heroBg}
+        color="white"
+        borderRadius="xl"
+        p={8}
+        mb={6}
+        position="relative"
+        overflow="hidden"
+      >
+        {/* Decorative Circle */}
+        <Box
+          position="absolute"
+          top="-20%"
+          right="-10%"
+          width="300px"
+          height="300px"
+          bg="whiteAlpha.100"
+          borderRadius="full"
+        />
+        
+        <Stack spacing={4}>
+          <Heading size="xl">{taskData[0].task_name}</Heading>
+          <Text fontSize="lg">
+            {new Date(taskData[0].task_date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </Text>
+          
+          {/* Volunteer Button */}
+          <Button
+            size="lg"
+            bg={isVolunteered ? "green.500" : "white"}
+            color={isVolunteered ? "white" : "blue.500"}
+            onClick={handleVolunteerClick}
+            isDisabled={taskData[0]?.is_done}
+            _hover={{
+              transform: 'translateY(-2px)',
+              boxShadow: 'lg',
+              bg: isVolunteered ? "green.600" : "gray.100"
+            }}
+            transition="all 0.2s"
+            mb={4}
+          >
+            {isVolunteered ? '✓ Volunteered' : 'I Want to Volunteer!'}
+          </Button>
+        </Stack>
+      </Box>
+
+      {/* Task Details Card */}
+      <Card mb={6} p={6}>
+        <Stack spacing={4}>
+          <Text fontSize="lg">{taskData[0].task_details}</Text>
+          
+          {/* Map and Address */}
+          {taskAddress && (
+            <>
+              <MapContainer address={taskAddress} />
+              <Flex align="center" color="gray.600">
+                <Icon as={LocationIcon} mr={2} />
+                <Text>{taskAddress}</Text>
+              </Flex>
+            </>
+          )}
+        </Stack>
+      </Card>
+
+      {/* Volunteers Accordion */}
+      <Accordion defaultIndex={[0]} allowMultiple>
         <AccordionItem>
           <h2>
-            <AccordionButton>
-              <Box as="span" flex='1' textAlign='left'>
-              Approved volunteers
+            <AccordionButton
+              bg={accordionBg}
+              _hover={{ bg: accordionHoverBg }}
+            >
+              <Box flex='1' textAlign='left'>
+                Approved Volunteers
+                <Badge ml={2} colorScheme="green">
+                  {approvedVolunteers.length}
+                </Badge>
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-          {approvedVolunteers.length > 0 ? (
-              approvedVolunteers.map((user, userIndex) => (<div key={user.user_name}>
-                
-                  <Heading size={'m'} key={userIndex} display={'flex'} justifyContent={'space-between'} defaultValue={user.user_name} type='checkbox'>
-                    {user.user_name}
-                  </Heading>
-                  </div>
-                ))
+            {approvedVolunteers.length > 0 ? (
+              approvedVolunteers.map((user) => (
+                <Box
+                  key={user.user_name}
+                  p={3}
+                  mb={2}
+                  bg={volunteerBoxBg}
+                  borderRadius="md"
+                >
+                  <Text fontWeight="medium">{user.user_name}</Text>
+                </Box>
+              ))
             ) : (
-              <Heading size={'s'}color={'gray'}>There are still no Approved volunteers</Heading>
+              <Text color="gray.500">No approved volunteers yet</Text>
             )}
           </AccordionPanel>
         </AccordionItem>
 
         <AccordionItem>
           <h2>
-            <AccordionButton>
-              <Box as="span" flex='1' textAlign='left'>
-              Waiting List
+            <AccordionButton
+              bg={accordionBg}
+              _hover={{ bg: accordionHoverBg }}
+            >
+              <Box flex='1' textAlign='left'>
+                Waiting List
+                <Badge ml={2} colorScheme="purple">
+                  {waitingListVolunteers.length}
+                </Badge>
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-          {waitingListVolunteers.length > 0 ? (
-              waitingListVolunteers.map((user, userIndex) => (<div key={user.user_name}>
-                
-                  <Heading size={'m'} key={userIndex} display={'flex'} justifyContent={'space-between'} defaultValue={user.user_name} type='checkbox'>
-                    {user.user_name}
-                  </Heading>
-                  </div>
-                ))
+            {waitingListVolunteers.length > 0 ? (
+              waitingListVolunteers.map((user) => (
+                <Box
+                  key={user.user_name}
+                  p={3}
+                  mb={2}
+                  bg={volunteerBoxBg}
+                  borderRadius="md"
+                >
+                  <Text fontWeight="medium">{user.user_name}</Text>
+                </Box>
+              ))
             ) : (
-              <Heading size={'s'} color={'gray'}>There is no waiting list yet</Heading>
+              <Text color="gray.500">No volunteers in waiting list</Text>
             )}
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-      </Card>
-      <Checkbox
-          margin={12}
-          onChange={handleCheckboxChange}
-          colorScheme="green"
-          defaultChecked={isUserMember(taskData, userId)}
-          isDisabled={taskData?.[0]?.is_done}
-        >
-          <b>I want it</b>
-        </Checkbox>
-    </Box>
-  {console.log()}
     </Container>
   );
 };
+
+// Simple Location Icon component
+const LocationIcon = (props) => (
+  <svg
+    stroke="currentColor"
+    fill="none"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    height="1em"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+);
 
 export default TaskPartnerDetails;
