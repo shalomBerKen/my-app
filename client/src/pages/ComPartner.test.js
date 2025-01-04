@@ -37,7 +37,7 @@ import {fetchParticipantTasks} from "../api"
 
     return (
       <>
-        <Container maxW="container.md">
+        <Container maxW="container.xl">
 
           <Card>
             <CardHeader>
